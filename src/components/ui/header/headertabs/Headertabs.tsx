@@ -7,6 +7,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Link } from "react-router-dom";
 import { IRoute, IMenuOption } from "../Header";
 import { MouseEvent } from "../../../App";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 interface IProps {
   value: number;
@@ -23,12 +24,42 @@ interface IProps {
 
 const useStyles = makeStyles((theme) => ({
   tabContainer: {
+    ...theme.typography,
     marginLeft: "auto", //pushes the tab container to the right as much as possible
   },
   tab: {
     ...theme.typography,
     minWidth: 10,
-    marginRight: '45px',
+    marginRight: "55px",
+    fontFamily: "Raleway",
+    // color: 'white',
+    fontSize: "1.1rem",
+    // fontWeight: 500,
+    textTransform: "none", // Remove the button transformation styles
+    "&:hover": {
+      color: "white",
+    },
+  },
+  indicator: {
+    height: "3.7px",
+  },
+  shoppingcart: {
+    left: '0',
+    color: theme.palette.common.antiqueWhite,
+    marginTop: "auto",
+    marginBottom: "auto",
+    padding: "5px 15px",
+    borderLeft: `2.7px solid ${theme.palette.common.dimegray}`,
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: theme.palette.common.orange,
+      borderLeft: "2.7px solid white",
+    },
+  },
+  shopcartBtn: {
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
   },
   button: {
     borderRadius: "50px",
@@ -42,12 +73,12 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     backgroundColor: theme.palette.common.antiqueWhite,
-    color: "white",
-    boxShadow: "0px 0px 0px transparent",
+    color: theme.palette.common.brown,
+    // boxShadow: "0px 0px 0px transparent",
   },
   menuItem: {
     ...theme.typography,
-    fontWeight: 700,
+    fontWeight: 400,
     opacity: 0.7,
     fontSize: "1rem",
     textTransform: "none",
@@ -55,19 +86,23 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
-})); // tabContainer .tab, menuItem, .menu, .button
+}));
 
 export default function Headertabs(props: IProps) {
   const classes = useStyles(); //useStyles is a funct that will build the classes object
 
   const handleChange = (e: any, value: number) => props.setValue(value);
 
+  const shoppingcartIcon = ( 
+      <ShoppingCartIcon className={classes.shoppingcart} />
+  );
   return (
     <>
       <Tabs
         value={props.value}
         onChange={handleChange}
         className={classes.tabContainer}
+        classes={{ indicator: classes.indicator }}
       >
         {props.routes.map((route: IRoute) => (
           <Tab
@@ -78,8 +113,9 @@ export default function Headertabs(props: IProps) {
             component={Link}
             to={route.link}
             onMouseOver={route.mouseOver}
-            label={route.name}
-          ></Tab>
+            label={route.name === "Cart" ? shoppingcartIcon : route.name}
+          />
+          // {route.link === "'/shoppingcart'" ? shoppingcartIcon : null}
         ))}
       </Tabs>
       <Menu
@@ -103,7 +139,6 @@ export default function Headertabs(props: IProps) {
               props.setValue(1);
               props.handleClose();
             }}
-           
             selected={i === props.selectedIndex}
           >
             {option.name}

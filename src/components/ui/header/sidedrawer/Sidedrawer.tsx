@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Link } from "react-router-dom";
 import { IRoute } from "../Header";
@@ -7,15 +7,17 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from "@material-ui/icons/Menu";
+
+import instagram from "../../../../assets/instagram.svg";
+import facebook from "../../../../assets/facebook.svg";
+import Grid from "@material-ui/core/Grid/Grid";
 
 interface IProps {
   value: number;
-  setValue: (value: number) => number;
+  setValue: React.Dispatch<React.SetStateAction<number>>;
   selectedIndex?: number;
   routes: IRoute[];
-  openDrawer: boolean;
-  setOpenDrawer: Dispatch<SetStateAction<boolean>>;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   drawer: {
-    backgroundColor: theme.palette.common.blue,
+    backgroundColor: theme.palette.common.antiqueWhite,
   },
   drawerItem: {
     ...theme.typography,
-    color: "white",
+    color: theme.palette.common.brown,
     opacity: 0.7,
   },
   drawerIcon: {
@@ -45,20 +47,26 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  svgGridContainer: {
+    height: '100px',
+    marginTop: '50px',
+    paddingLeft: '10px'
+  }
 }));
 
 export default function Sidedrawer(props: IProps) {
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const classes = useStyles();
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
     <>
       <SwipeableDrawer
         disableBackdropTransition={iOS}
         disableDiscovery={iOS}
-        open={props.openDrawer}
-        onClose={() => props.setOpenDrawer(false)}
-        onOpen={() => props.setOpenDrawer(true)}
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
       >
         <div className={classes.toolbarMargin} />
@@ -66,14 +74,13 @@ export default function Sidedrawer(props: IProps) {
           {props.routes.map((route: IRoute) => (
             <ListItem
               key={`${route.link} + ${route.name}`}
-              divider
               button
               component={Link}
               to={route.link}
               selected={props.value === route.activeIndex}
               classes={{ selected: classes.drawerItemSelected }}
               onClick={() => {
-                props.setOpenDrawer(false);
+                setOpenDrawer(false);
                 props.setValue(route.activeIndex);
               }}
             >
@@ -82,11 +89,39 @@ export default function Sidedrawer(props: IProps) {
               </ListItemText>
             </ListItem>
           ))}
+          <Grid
+            container
+            className={classes.svgGridContainer}
+            direction="column"
+            justify="space-around"
+
+          >
+            <Grid
+              item
+              xs={4}
+              component={"a"}
+              href="https://www.facebook.com/BensonBracelets-140144486639840/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img src={facebook} alt="Link To Instagram" />
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              component={"a"}
+              href="https://www.instagram.com/bensonbraceletz/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img src={instagram} alt="Link To Instagram" />
+            </Grid>
+          </Grid>
         </List>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
-        onClick={() => props.setOpenDrawer(!props.openDrawer)}
+        onClick={() => setOpenDrawer(!openDrawer)}
         disableRipple
       >
         <MenuIcon className={classes.drawerIcon} />
