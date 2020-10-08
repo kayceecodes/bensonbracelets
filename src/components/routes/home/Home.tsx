@@ -1,7 +1,10 @@
-import React, { CSSProperties, FunctionComponent } from "react";
+import React, { CSSProperties, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+
 import { motion } from "framer-motion";
 
 import { IPageAnimations, IMotions } from "../../../Interfaces";
+
 import { Parallax } from "react-parallax";
 
 import HeroMobileImg5 from "../../../images/bracelets/heroImgMobile5.jpg";
@@ -17,15 +20,24 @@ import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import Aos from 'aos';
+import Aos from "aos";
 import "aos/dist/aos.css";
 
+import sassClasses from "./Home.module.scss";
+
+import Footer from "../../ui/footer/Footer";
+
+import { bracelets } from "../../../data/Data";
+
 interface IProps {
+  setValue: (value: number) => void;
+  setSelectedIndex: (value: number) => void;
+  // routes: IRoute[];
   pageStyle: CSSProperties;
   pageAnimations: IPageAnimations;
   motions: IMotions;
 }
-
+const letterSpacing = "2.8px";
 const useStyles = makeStyles((theme) => ({
   root: {},
   sectionMargin: {
@@ -36,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
       margin: "35px",
     },
   },
-  button: {
+  featuredButton: {
     textTransform: "none",
     letterSpacing: "2.8px",
     backgroundColor: "rgb(0, 0, 0, 0.005)",
@@ -59,9 +71,6 @@ const useStyles = makeStyles((theme) => ({
       padding: "0 45px",
     },
     // boxShadow: '0px 0px 17px rgba(0, 0, 0, 1)',
-  },
-  buttonWrapper: {
-    color: "white",
   },
   wrapper: {
     top: 0,
@@ -101,16 +110,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  header: {
+  featuredBraceletsHeader: {
     fontFamily: "Raleway",
     color: "rgba(74,63,53, 0.85)",
     marginTop: "15px",
-
-    [theme.breakpoints.up("sm")]: {
+    // fontSize: "1.7rem",
+    [theme.breakpoints.up("md")]: {
       fontSize: "2.4rem",
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.7rem",
     },
   },
   paragraph: {
@@ -120,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "850px",
     margin: "80px auto 0px",
     paddingBottom: "80px",
-    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
+    borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
     [theme.breakpoints.up("sm")]: {
       margin: "140px auto 90px",
       fontSize: "1.10rem",
@@ -134,7 +140,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   braceletsContainer: {
-    margin: "70px 0",
+    margin: "70px auto",
+    borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
+    paddingBottom: "50px",
     [theme.breakpoints.down("sm")]: {
       margin: "5px auto",
     },
@@ -143,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
     // width: '60%',
     // width: '200px', //TEST OUT XS and the GRID SYSTEM
     [theme.breakpoints.up("sm")]: {
-      width: "280px",
+      width: "220px",
     },
     [theme.breakpoints.down("sm")]: {
       width: "140px",
@@ -151,9 +159,17 @@ const useStyles = makeStyles((theme) => ({
   },
   featuredPricesBtn: {
     border: "2px solid transparent",
+    marginTop: "15px",
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "25px",
+    },
     "&:hover": {
       border: `2px solid ${theme.palette.common.slateTan}`,
     },
+  },
+  featuredName: {
+    marginBottom: "-15px",
+    marginTop: "50px",
   },
   featuredPrices: {
     position: "absolute",
@@ -167,7 +183,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px auto",
     // border: `2px solid ${theme.palette.common.dimegray}`,
   },
-
 }));
 
 // const Parallaxpic: FunctionComponent<IParallaxMediaQuery> = (props) => {
@@ -182,7 +197,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Home(props: IProps) {
   const classes = useStyles();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const collectionsPath = '/collections/';
+  const matches = {
+    sm: useMediaQuery(theme.breakpoints.down("sm")),
+    md: useMediaQuery(theme.breakpoints.down("md")),
+    lg: useMediaQuery(theme.breakpoints.down("lg")),
+    xl: useMediaQuery(theme.breakpoints.down("xl")),
+  }; // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
+  const featuredBracelets = [
+    bracelets[0],
+    bracelets[1],
+    bracelets[2],
+  ];
+
+  useEffect(() => {
+    Aos.init({ duration: 900 });
+  }, []);
 
   const dimegrayOverlay: CSSProperties = {
     position: "absolute",
@@ -194,35 +224,39 @@ export default function Home(props: IProps) {
     zIndex: 3,
   };
 
-  const consoleValue = () =>
-    console.log("Console Value: 'sm'", theme.breakpoints.up("sm"));
-  console.log("Console Value: 'md'", theme.breakpoints.up("md"));
-  console.log("Console Value: 'lg'", theme.breakpoints.up("lg"));
+  function convertToRoute(nestedRoute: string, itemName: string) { // www.website.com/nestedRoute/itemName
+    itemName = nestedRoute + itemName
+    let spaces = new RegExp("[ ]+", "g");
+    let namedRoute = itemName.replace(spaces, "");
+    // return namedRoute;
+     let uppercase = new RegExp("[A-Z]", "g");
+
+    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase());
+  }
 
   return (
     <motion.div
-      style={props.pageStyle}
+      style={props.pageStyle} // Style of the page as a container
       initial={props.motions.initial}
       animate={props.motions.animate}
       exit={props.motions.exit}
-      variants={props.pageAnimations.variants}
+      variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
       transition={props.pageAnimations.transition}
     >
-      {/* TIP */}
       <div
         className={classes.wrapper}
-        style={{ overflow: `${matches ? "hidden" : ""}` }}
+        style={{ overflow: `${matches.sm ? "hidden" : ""}` }}
       >
         <div style={dimegrayOverlay} />
         <Parallax
           strength={630}
           style={{
             height: "600px",
-            minWidth: `${matches ? "800px" : "1400px"}`,
-          }} //hide scroll bar along with extra space
-          bgImage={matches ? HeroMobileImg5 : HeroParallax}
+            minWidth: `${matches.sm ? "800px" : "1400px"}`,
+          }}
+          bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
         >
-          <Button className={classes.button}>
+          <Button className={classes.featuredButton}>
             <p>Featured</p>
           </Button>
           <p className={classes.heroCompanyName}>Benson Bracelets</p>
@@ -231,9 +265,10 @@ export default function Home(props: IProps) {
 
       <div className={classes.sectionMargin} />
 
-      <Grid xs={12} container direction="column" justify="center">
+      <Grid container direction="column" justify="center">
         <Grid item xs={12}>
-          <Typography variant="h3" className={classes.header} component="h3">
+          {/* Header - About.. */}
+          <Typography variant="h2" component="h2">
             About Benson Bracelets
           </Typography>
         </Grid>
@@ -247,44 +282,102 @@ export default function Home(props: IProps) {
             dolorem. Odit, nisi. Id.
           </p>
         </Grid>
+        {/* Header - Featured Bracelets */}
+        <Typography component="h2" variant="h2" data-aos="fade-left">
+          Featured Bracelets
+        </Typography>
+        {/* Bracelet Container */}
         <Grid
           container
           direction="row"
-          alignContent="center"
-          justify="space-around"
+          justify="center"
           className={classes.braceletsContainer}
-          xs={12}
+          style={{ maxWidth: "78%" }}
         >
-          <Grid data-aos='fade-up' item xs={10} sm={4} style={{ position: "relative" }}>
-            <Button className={classes.featuredPricesBtn}>
+          <Grid
+            data-aos="fade-up"
+            item
+            xs={10}
+            sm={4}
+            style={{ position: "relative" }}
+          >
+            <Typography
+              className={classes.featuredName}
+              paragraph={true}
+              variant="caption"
+            >
+              {featuredBracelets[0].name}
+            </Typography>
+            <Button
+              className={classes.featuredPricesBtn}
+              component={Link}
+              to={convertToRoute(collectionsPath, featuredBracelets[0].name)}
+              onClick={() => props.setValue(1)}
+            >
               <Typography
                 className={classes.featuredPrices}
-                component="p"
                 paragraph={true}
+                variant="caption"
               >
                 $9.99
-              </Typography> 
+              </Typography>
               <img src={Bracelet1} className={classes.braceletImgs} />
             </Button>
           </Grid>
-          <Grid data-aos='fade-up' item xs={10} sm={4} style={{ position: "relative" }}>
-            <Button className={classes.featuredPricesBtn}>
+          <Grid
+            data-aos="fade-up"
+            item
+            xs={10}
+            sm={4}
+            style={{ position: "relative" }}
+          >
+            <Typography
+              className={classes.featuredName}
+              paragraph={true}
+              variant="caption"
+            >
+              {featuredBracelets[1].name}
+            </Typography>
+            <Button
+              className={classes.featuredPricesBtn}
+              component={Link}
+              to={convertToRoute(collectionsPath, featuredBracelets[1].name)}
+              onClick={() => props.setValue(1)}
+            >
               <Typography
                 className={classes.featuredPrices}
-                component="p"
                 paragraph={true}
+                variant="caption"
               >
                 $9.99
               </Typography>
               <img src={Bracelet2} className={classes.braceletImgs} />
             </Button>
           </Grid>
-          <Grid data-aos='fade-up' item xs={10} sm={4} style={{ position: "relative" }}>
-            <Button className={classes.featuredPricesBtn}>
+          <Grid
+            data-aos="fade-up"
+            item
+            xs={10}
+            sm={4}
+            style={{ position: "relative" }}
+          >
+            <Typography
+              className={classes.featuredName}
+              paragraph={true}
+              variant="caption"
+            >
+              {featuredBracelets[2].name}
+            </Typography>
+            <Button
+              className={classes.featuredPricesBtn}
+              component={Link}
+              to={convertToRoute(collectionsPath, featuredBracelets[2].name)}
+              onClick={() => props.setValue(1)}
+            >
               <Typography
                 className={classes.featuredPrices}
-                component="p"
                 paragraph={true}
+                variant="caption"
               >
                 $9.99
               </Typography>
@@ -293,6 +386,10 @@ export default function Home(props: IProps) {
           </Grid>
         </Grid>
       </Grid>
+      <Footer
+        setValue={props.setValue}
+        setSelectedIndex={props.setSelectedIndex}
+      />
     </motion.div>
   );
 }

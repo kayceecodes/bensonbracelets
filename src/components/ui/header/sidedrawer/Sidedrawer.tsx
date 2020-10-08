@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+
 import { Link } from "react-router-dom";
 import { IRoute } from "../Header";
+
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import ListItem from "@material-ui/core/ListItem";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Grid from "@material-ui/core/Grid/Grid";
 
 import instagram from "../../../../assets/instagram.svg";
 import facebook from "../../../../assets/facebook.svg";
-import Grid from "@material-ui/core/Grid/Grid";
+
 
 interface IProps {
   value: number;
@@ -103,6 +106,7 @@ export default function Sidedrawer(props: IProps) {
               href="https://www.facebook.com/BensonBracelets-140144486639840/"
               rel="noopener noreferrer"
               target="_blank"
+              data-aos='fade-right'
             >
               <img src={facebook} alt="Link To Instagram" />
             </Grid>
@@ -113,6 +117,7 @@ export default function Sidedrawer(props: IProps) {
               href="https://www.instagram.com/bensonbraceletz/"
               rel="noopener noreferrer"
               target="_blank"
+              data-aos='fade-right'
             >
               <img src={instagram} alt="Link To Instagram" />
             </Grid>

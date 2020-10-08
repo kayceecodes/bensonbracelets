@@ -10,3 +10,10 @@ export interface IMotions {
   animate: string;
   exit: string;
 }
+
+export interface IBraceletData {
+    name: string;
+    price: number;
+    src: string;
+    category: string;
+}

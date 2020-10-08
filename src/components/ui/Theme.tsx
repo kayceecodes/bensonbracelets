@@ -1,5 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import { white } from "material-ui/styles/colors";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
+import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 
 const arcBlue = "#0B72B9";
 
@@ -11,6 +12,9 @@ const antiqueWhite = "#fbe6d4"; // 4 Brighter Highlight
 // const antiquePeach = '#fbddd4';// Brighter Highlight
 const dimegray = "#6e6656";
 // const brightMudBrown = '#523906'; // Highlight
+// const cadetBlue = rgb(95,158,160)
+
+const breakpoints = createBreakpoints({});
 
 declare module "@material-ui/core/styles/createTypography" {
   interface TypographyOptions {
@@ -26,12 +30,23 @@ declare module "@material-ui/core/styles/createTypography" {
       fontSize: string;
       color: string;
     };
-    p: {
+    caption: {
       color: string;
+      opacity?: string;
       fontFamily: string;
-      textTransform?: string;
       fontWeight?: number;
       fontSize: string;
+      textTransform?: string;
+      textAlign?: string;
+      margin?: string;
+    };
+    caption2: {
+      color: string;
+      opacity?: string;
+      fontFamily: string;
+      fontWeight?: number;
+      fontSize: string;
+      textTransform?: string;
       textAlign?: string;
       margin?: string;
     };
@@ -67,7 +82,30 @@ export default createMuiTheme({
       main: `${goldenRodOrange}`,
     },
   },
-  typography: {
+  props: {
+    MuiTypography: {
+      variantMapping: {
+       
+      },
+    },
+  },
+  typography: { // Typography take priority over classes objects for the classNames.
+    h2: {
+      fontFamily: 'Raleway',
+      color: dimegray,
+      fontSize: "1.65rem",
+      letterSpacing: '0.6px',
+      wordSpacing: '3.5px',
+    },
+    h3: {
+      fontFamily: 'Raleway',
+      color: dimegray,
+      fontSize: "1.15rem",
+      letterSpacing: '0.5px',
+      [breakpoints.up("sm")]: {
+        fontSize: '1.45rem'
+      },
+    },
     tab: {
       fontFamily: "Lora",
       textTransform: "none",
@@ -80,13 +118,37 @@ export default createMuiTheme({
       textTransform: "none",
       fontSize: "0.8rem",
     },
-    p: {
+    caption: {
       color: dimegray,
-      fontFamily: 'Raleway',
+      opacity: '0.9',
+      fontFamily: 'Roboto',
       fontSize: '0.85rem',
       fontWeight: 400,
       textAlign: 'center',
       margin: '0px auto',
+      textTransform: 'none',
+    },
+    caption2: {
+      color: dimegray,
+      opacity: '0.9',
+      fontFamily: 'Raleway',
+      fontSize: '0.95rem',
+      fontWeight: 400,
+      textAlign: 'center',
+      textTransform: 'none',
+      // margin: '0px auto',
+    },
+    body1: {
+      color: dimegray,
+      fontSize: '0.8rem',
+      fontFamily: 'Roboto',
+      lineHeight: 1.6,
+      [breakpoints.up("sm")]: {
+        fontSize: '1rem'
+      },
+    },
+    body2: {
+
     },
   },
 });

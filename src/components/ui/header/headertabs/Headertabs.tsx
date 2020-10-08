@@ -118,7 +118,7 @@ export default function Headertabs(props: IProps) {
           // {route.link === "'/shoppingcart'" ? shoppingcartIcon : null}
         ))}
       </Tabs>
-      <Menu
+      {/* <Menu
         id="simple-menu"
         anchorEl={props.anchorEl}
         open={props.openMenu}
@@ -144,7 +144,7 @@ export default function Headertabs(props: IProps) {
             {option.name}
           </MenuItem>
         ))}
-      </Menu>
+      </Menu> */}
     </>
   );
 }

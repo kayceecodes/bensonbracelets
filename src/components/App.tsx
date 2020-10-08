@@ -1,6 +1,6 @@
-import React, { useState, CSSProperties } from "react";
+import React, { useState, CSSProperties, useEffect } from "react";
 import Header from "../components/ui/header/Header";
-import Footer from "../components/ui/footer/Footer";
+// import Footer from "../components/ui/footer/Footer";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./ui/Theme";
 import { Switch, Route, useLocation } from "react-router-dom";
@@ -11,9 +11,15 @@ import Home from "../components/routes/home/Home";
 import Contact from "./routes/contact/Contact";
 import Shoppingcart from "./routes/shoppingcart/Shoppingcart";
 import Collections from "./routes/collections/Collections";
-import Luxury from "./routes/collections/luxury/Luxury";
-import Fraternitysorority from "./routes/collections/fraternitysorority/Fraternitysorority";
-import Teamcolors from "./routes/collections/teamcolors/Teamcolors";
+import Displayitem from "./routes/collections/displayitem/Displayitem";
+
+// import Luxury from "./routes/collections/luxury/Luxury";
+// import Fraternitysorority from "./routes/collections/fraternitysorority/Fraternitysorority";
+// import Teamcolors from "./routes/collections/teamcolors/Teamcolors";
+import ScrollToTop from "./ui/scrolltotop/ScrollToTop";
+
+import { IBraceletData } from "../Interfaces";
+import { bracelets } from "../data/Data";
 
 export type FormEvent = React.FormEvent<HTMLFormElement>;
 export type InputEvent = React.FormEvent<HTMLInputElement>;
@@ -23,14 +29,14 @@ const pageStyle: CSSProperties = {
   position: "absolute",
   width: "100%",
   textAlign: "center",
-  overflow: 'hidden',
+  overflow: "hidden",
 };
 
 const pageAnimations = {
   variants: {
     initial: {
       opacity: 0,
-      x: "-100vw",
+      x: "0vw",
       // scale: 0.95,
     },
     in: {
@@ -40,14 +46,14 @@ const pageAnimations = {
     },
     out: {
       opacity: 0,
-      x: "300px",
+      x: "0px",
       // scale: 1.3,
     },
   },
   transition: {
     type: "tween", // Tween: animation that looks like it's evolving/transforming into something else
     ease: "linear",
-    duration: 0.8,
+    duration: 0.35,
   },
 };
 
@@ -57,6 +63,14 @@ const motions = {
   exit: "out",
 };
 
+function convertToRoute(itemName: string) {
+  let spaces = new RegExp("[ ]+", "g");
+  let namedRoute = itemName.replace(spaces, "");
+  // return namedRoute;
+  let uppercase = new RegExp("[A-Z]", "g");
+  return namedRoute.replace(uppercase, (x: string) => x.toLowerCase());
+}
+
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [value, setValue] = useState(0);
@@ -64,6 +78,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ScrollToTop />
       <Header
         value={value}
         setValue={setValue}
@@ -72,10 +87,12 @@ function App() {
       />
 
       <div
-        style={{ 
+        style={{
           position: "relative",
-          //  overflow: "hidden", 
-           height: "100vh" }}
+          //  overflow: "hidden",
+          // backgroundColor: `${ location.pathname === '/collections' ? 'rgb(240,240,240)' : '#fff' }`,
+          height: "100vh",
+        }}
       >
         <AnimatePresence>
           <Switch location={location} key={location.pathname}>
@@ -87,6 +104,8 @@ function App() {
                   pageStyle={pageStyle}
                   pageAnimations={pageAnimations}
                   motions={motions}
+                  setValue={setValue}
+                  setSelectedIndex={setSelectedIndex}
                 />
               )}
             />
@@ -98,12 +117,36 @@ function App() {
                   pageStyle={pageStyle}
                   pageAnimations={pageAnimations}
                   motions={motions}
+                  setValue={setValue}
+                  setSelectedIndex={setSelectedIndex}
                 />
               )}
             />
-            <Route
+            {bracelets.map((item) => {
+              return (
+                <Route
+                  key={item.name + item.category}
+                  exact
+                  path={"/collections/" + convertToRoute(item.name)}
+                  component={() => (
+                    <Displayitem
+                      name={item.name}
+                      price={item.price}
+                      category={item.category}
+                      src={item.src}
+                      pageStyle={pageStyle}
+                      pageAnimations={pageAnimations}
+                      motions={motions}
+                      setValue={setValue}
+                      setSelectedIndex={setSelectedIndex}
+                    />
+                  )}
+                />
+              );
+            })}
+            {/* <Route
               exact
-              path="/luxury"
+              path="/collections/luxury"
               component={() => (
                 <Luxury
                   pageStyle={pageStyle}
@@ -114,7 +157,7 @@ function App() {
             />
             <Route
               exact
-              path="/fraternitysorority"
+              path="/collections/fraternitysorority"
               component={() => (
                 <Fraternitysorority
                   pageStyle={pageStyle}
@@ -125,7 +168,7 @@ function App() {
             />
             <Route
               exact
-              path="/teamcolors"
+              path="/collections/teamcolors"
               component={() => (
                 <Teamcolors
                   pageStyle={pageStyle}
@@ -133,7 +176,7 @@ function App() {
                   motions={motions}
                 />
               )}
-            />
+            /> */}
             <Route
               exact
               path="/contact"
@@ -159,12 +202,13 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
-      <Footer
+      {/* <Footer 
         value={value}
         setValue={setValue}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-      />
+       
+      /> */}
     </ThemeProvider>
   );
 }

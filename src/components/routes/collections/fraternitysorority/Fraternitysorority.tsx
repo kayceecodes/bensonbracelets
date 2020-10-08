@@ -29,7 +29,7 @@ export default function Fraternitysorority(props: IProps) {
       variants={props.pageAnimations.variants}
       transition={props.pageAnimations.transition}
     >
-      <h1>Teamcolors</h1>
+      <h1>Fraternity Sorority</h1>
     </motion.div>
   );
 }
