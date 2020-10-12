@@ -1,42 +1,44 @@
-import React, { useState, CSSProperties, useEffect } from "react";
-import Header from "../components/ui/header/Header";
-// import Footer from "../components/ui/footer/Footer";
-import { ThemeProvider } from "@material-ui/styles";
-import theme from "./ui/Theme";
-import { Switch, Route, useLocation } from "react-router-dom";
+import React, { useState, CSSProperties, SyntheticEvent } from "react";
+import Header from '../components/ui/header/Header';
+// import Footer from '../components/ui/footer/Footer';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './ui/Theme';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from 'framer-motion';
 
-import Home from "../components/routes/home/Home";
-import Contact from "./routes/contact/Contact";
-import Shoppingcart from "./routes/shoppingcart/Shoppingcart";
-import Collections from "./routes/collections/Collections";
-import Displayitem from "./routes/collections/displayitem/Displayitem";
+import Home from '../components/routes/home/Home';
+import Contact from './routes/contact/Contact';
+import Shoppingcart from './routes/shoppingcart/Shoppingcart';
+import Collections from './routes/collections/Collections';
+import Displayitem from './routes/collections/displayitem/Displayitem';
 
-// import Luxury from "./routes/collections/luxury/Luxury";
-// import Fraternitysorority from "./routes/collections/fraternitysorority/Fraternitysorority";
-// import Teamcolors from "./routes/collections/teamcolors/Teamcolors";
-import ScrollToTop from "./ui/scrolltotop/ScrollToTop";
+// import Luxury from './routes/collections/luxury/Luxury';
+// import Fraternitysorority from './routes/collections/fraternitysorority/Fraternitysorority';
+// import Teamcolors from './routes/collections/teamcolors/Teamcolors';
+import ScrollToTop from './ui/scrolltotop/ScrollToTop';
 
-import { IBraceletData } from "../Interfaces";
-import { bracelets } from "../data/Data";
+import { bracelets } from '../data/Data';
+
+import { easeInOutCubic } from '../utils/Easing';
+import jump from "jump.js";
 
 export type FormEvent = React.FormEvent<HTMLFormElement>;
 export type InputEvent = React.FormEvent<HTMLInputElement>;
 export type MouseEvent = React.MouseEvent<HTMLElement>;
 
 const pageStyle: CSSProperties = {
-  position: "absolute",
-  width: "100%",
-  textAlign: "center",
-  overflow: "hidden",
+  position: 'absolute',
+  width: '100%',
+  textAlign: 'center',
+  overflow: 'hidden',
 };
 
 const pageAnimations = {
   variants: {
     initial: {
       opacity: 0,
-      x: "0vw",
+      x: '0vw',
       // scale: 0.95,
     },
     in: {
@@ -46,21 +48,21 @@ const pageAnimations = {
     },
     out: {
       opacity: 0,
-      x: "0px",
+      x: '0px',
       // scale: 1.3,
     },
   },
   transition: {
-    type: "tween", // Tween: animation that looks like it's evolving/transforming into something else
-    ease: "linear",
+    type: 'tween', // Tween: animation that looks like it's evolving/transforming into something else
+    ease: 'linear',
     duration: 0.35,
   },
 };
 
 const motions = {
-  initial: "initial",
-  animate: "in",
-  exit: "out",
+  initial: 'initial',
+  animate: 'in',
+  exit: 'out',
 };
 
 function convertToRoute(itemName: string) {
@@ -76,6 +78,20 @@ function App() {
   const [value, setValue] = useState(0);
   const location = useLocation();
 
+  const scrollEvent = (event: SyntheticEvent) => {
+    const target = event.target as HTMLTextAreaElement;
+    console.log('Current Scroll Position: ', target.scrollTop);
+  }
+
+  const setJump = (
+    jumpingTarget: string | number | Element // Jump based on where the jump() is called from
+  ) =>
+    jump(jumpingTarget, {
+      duration: 800,
+      offset: -55,
+      easing: easeInOutCubic,
+    });
+
   return (
     <ThemeProvider theme={theme}>
       <ScrollToTop />
@@ -88,10 +104,11 @@ function App() {
 
       <div
         style={{
-          position: "relative",
+          // position: "relative",
+          // position: "absolute",
           //  overflow: "hidden",
           // backgroundColor: `${ location.pathname === '/collections' ? 'rgb(240,240,240)' : '#fff' }`,
-          height: "100vh",
+          // height: "100vh",
         }}
       >
         <AnimatePresence>
@@ -106,6 +123,7 @@ function App() {
                   motions={motions}
                   setValue={setValue}
                   setSelectedIndex={setSelectedIndex}
+                  jumpTo={setJump}
                 />
               )}
             />
@@ -119,6 +137,7 @@ function App() {
                   motions={motions}
                   setValue={setValue}
                   setSelectedIndex={setSelectedIndex}
+                  jumpTo={setJump}
                 />
               )}
             />
@@ -203,11 +222,9 @@ function App() {
         </AnimatePresence>
       </div>
       {/* <Footer 
-        value={value}
         setValue={setValue}
-        selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-       
+        
       /> */}
     </ThemeProvider>
   );

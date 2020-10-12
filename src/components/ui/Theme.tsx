@@ -1,5 +1,4 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 
 const arcBlue = "#0B72B9";
@@ -11,7 +10,7 @@ const antiqueWhite = "#fbe6d4"; // 4 Brighter Highlight
 
 // const antiquePeach = '#fbddd4';// Brighter Highlight
 const dimegray = "#6e6656";
-// const brightMudBrown = '#523906'; // Highlight
+const brightMudBrown = 'rgb(46,34,16)'; // Highlight
 // const cadetBlue = rgb(95,158,160)
 
 const breakpoints = createBreakpoints({});
@@ -61,6 +60,7 @@ declare module "@material-ui/core/styles/createPalette" {
     orange: string;
     antiqueWhite: string;
     dimegray: string;
+    brightMudBrown: string;
   }
 }
 
@@ -73,6 +73,7 @@ export default createMuiTheme({
       orange: `${goldenRodOrange}`,
       antiqueWhite: `${antiqueWhite}`,
       dimegray: `${dimegray}`,
+      brightMudBrown: `${brightMudBrown}`,
     },
     primary: {
       main: `${slateTan}`,

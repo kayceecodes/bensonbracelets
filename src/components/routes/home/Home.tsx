@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { motion } from "framer-motion";
 
@@ -23,8 +23,6 @@ import Typography from "@material-ui/core/Typography";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-import sassClasses from "./Home.module.scss";
-
 import Footer from "../../ui/footer/Footer";
 
 import { bracelets } from "../../../data/Data";
@@ -32,12 +30,12 @@ import { bracelets } from "../../../data/Data";
 interface IProps {
   setValue: (value: number) => void;
   setSelectedIndex: (value: number) => void;
-  // routes: IRoute[];
   pageStyle: CSSProperties;
   pageAnimations: IPageAnimations;
   motions: IMotions;
+  jumpTo: (jumpingTarget: string | number | Element) => void;
 }
-const letterSpacing = "2.8px";
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   sectionMargin: {
@@ -77,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     position: "relative",
     zIndex: 0,
-    opacity: 0.95,
+    opacity: 0.93,
     [theme.breakpoints.up("sm")]: {
       overflow: "none",
     },
@@ -140,11 +138,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   braceletsContainer: {
-    margin: "70px auto",
-    borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
+    margin: "5px auto",
     paddingBottom: "50px",
-    [theme.breakpoints.down("sm")]: {
-      margin: "5px auto",
+    [theme.breakpoints.up("sm")]: {
+      margin: "70px auto 100px",
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginBottom: "140px",
     },
   },
   braceletImgs: {
@@ -197,18 +197,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Home(props: IProps) {
   const classes = useStyles();
   const theme = useTheme();
-  const collectionsPath = '/collections/';
+  const collectionsPath = "/collections/";
   const matches = {
     sm: useMediaQuery(theme.breakpoints.down("sm")),
     md: useMediaQuery(theme.breakpoints.down("md")),
     lg: useMediaQuery(theme.breakpoints.down("lg")),
     xl: useMediaQuery(theme.breakpoints.down("xl")),
   }; // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
-  const featuredBracelets = [
-    bracelets[0],
-    bracelets[1],
-    bracelets[2],
-  ];
+  const featuredBracelets = [bracelets[0], bracelets[1], bracelets[2]];
 
   useEffect(() => {
     Aos.init({ duration: 900 });
@@ -219,177 +215,207 @@ export default function Home(props: IProps) {
     top: 0,
     width: "100%",
     height: "100%",
-    backgroundColor: theme.palette.common.dimegray,
-    opacity: 0.6,
+    backgroundColor: theme.palette.common.brightMudBrown,
+    opacity: 0.8,
     zIndex: 3,
   };
 
-  function convertToRoute(nestedRoute: string, itemName: string) { // www.website.com/nestedRoute/itemName
-    itemName = nestedRoute + itemName
+  function convertToRoute(nestedRoute: string, itemName: string) {
+    // www.website.com/nestedRoute/itemName
+    itemName = nestedRoute + itemName;
     let spaces = new RegExp("[ ]+", "g");
     let namedRoute = itemName.replace(spaces, "");
     // return namedRoute;
-     let uppercase = new RegExp("[A-Z]", "g");
+    let uppercase = new RegExp("[A-Z]", "g");
 
     return namedRoute.replace(uppercase, (x: string) => x.toLowerCase());
   }
 
   return (
-    <motion.div
-      style={props.pageStyle} // Style of the page as a container
-      initial={props.motions.initial}
-      animate={props.motions.animate}
-      exit={props.motions.exit}
-      variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
-      transition={props.pageAnimations.transition}
-    >
-      <div
-        className={classes.wrapper}
-        style={{ overflow: `${matches.sm ? "hidden" : ""}` }}
+    <div>
+      <motion.div
+        style={props.pageStyle} // Style of the page as a container
+        initial={props.motions.initial}
+        animate={props.motions.animate}
+        exit={props.motions.exit}
+        variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
+        transition={props.pageAnimations.transition}
       >
-        <div style={dimegrayOverlay} />
-        <Parallax
-          strength={630}
+        <div
+          className={classes.wrapper}
           style={{
-            height: "600px",
-            minWidth: `${matches.sm ? "800px" : "1400px"}`,
+            overflow: `${matches.sm ? "hidden" : ""}`,
+            position: "relative",
+            top: "0px",
+            left: "0px",
+            right: "0px",
+            bottom: "0px",
           }}
-          bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
         >
-          <Button className={classes.featuredButton}>
-            <p>Featured</p>
-          </Button>
-          <p className={classes.heroCompanyName}>Benson Bracelets</p>
-        </Parallax>
-      </div>
+          <div style={dimegrayOverlay} />
+          <Parallax
+            strength={550}
+            style={{
+              height: "600px",
+              minWidth: `${matches.sm ? "800px" : "1400px"}`,
+            }}
+            bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
+          >
+            <Button
+              className={classes.featuredButton}
+              onClick={() => props.jumpTo("#featuredBracelets")}
+            >
+              <p>Featured</p>
+            </Button>
+            <p className={classes.heroCompanyName}>Benson Bracelets</p>
+          </Parallax>
+        </div>
 
-      <div className={classes.sectionMargin} />
+        <div className={classes.sectionMargin} />
 
-      <Grid container direction="column" justify="center">
-        <Grid item xs={12}>
-          {/* Header - About.. */}
-          <Typography variant="h2" component="h2">
-            About Benson Bracelets
+        <Grid container direction="column" justify="center">
+          <Grid item xs={12}>
+            {/* Header - About.. */}
+            <Typography variant="h2" component="h2">
+              About Benson Bracelets
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <p className={classes.paragraph}>
+              {" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+              minima maxime temporibus at deleniti eum sapiente vitae iure velit
+              maiores aliquid ea quo pariatur quidem reiciendis quas,
+              consequatur corrupti officiis earum corporis recusandae quasi
+              consequuntur nisi dolorem. Odit, nisi. Id.
+            </p>
+          </Grid>
+          {/* Header - Featured Bracelets */}
+          <Typography
+            component="h2"
+            variant="h2"
+            data-aos="fade-left"
+            id="featuredBracelets"
+          >
+            Featured Bracelets
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <p className={classes.paragraph}>
-            {" "}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-            minima maxime temporibus at deleniti eum sapiente vitae iure velit
-            maiores aliquid ea quo pariatur quidem reiciendis quas, consequatur
-            corrupti officiis earum corporis recusandae quasi consequuntur nisi
-            dolorem. Odit, nisi. Id.
-          </p>
-        </Grid>
-        {/* Header - Featured Bracelets */}
-        <Typography component="h2" variant="h2" data-aos="fade-left">
-          Featured Bracelets
-        </Typography>
-        {/* Bracelet Container */}
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          className={classes.braceletsContainer}
-          style={{ maxWidth: "78%" }}
-        >
+          {/* Bracelet Container */}
           <Grid
-            data-aos="fade-up"
-            item
-            xs={10}
-            sm={4}
-            style={{ position: "relative" }}
+            container
+            direction="row"
+            justify="center"
+            className={classes.braceletsContainer}
+            style={{ maxWidth: "78%" }}
           >
-            <Typography
-              className={classes.featuredName}
-              paragraph={true}
-              variant="caption"
-            >
-              {featuredBracelets[0].name}
-            </Typography>
-            <Button
-              className={classes.featuredPricesBtn}
-              component={Link}
-              to={convertToRoute(collectionsPath, featuredBracelets[0].name)}
-              onClick={() => props.setValue(1)}
+            <Grid
+              data-aos="fade-up"
+              item
+              xs={10}
+              sm={4}
+              style={{ position: "relative" }}
             >
               <Typography
-                className={classes.featuredPrices}
+                className={classes.featuredName}
                 paragraph={true}
                 variant="caption"
               >
-                $9.99
+                {featuredBracelets[0].name}
               </Typography>
-              <img src={Bracelet1} className={classes.braceletImgs} />
-            </Button>
-          </Grid>
-          <Grid
-            data-aos="fade-up"
-            item
-            xs={10}
-            sm={4}
-            style={{ position: "relative" }}
-          >
-            <Typography
-              className={classes.featuredName}
-              paragraph={true}
-              variant="caption"
-            >
-              {featuredBracelets[1].name}
-            </Typography>
-            <Button
-              className={classes.featuredPricesBtn}
-              component={Link}
-              to={convertToRoute(collectionsPath, featuredBracelets[1].name)}
-              onClick={() => props.setValue(1)}
+              <Button
+                className={classes.featuredPricesBtn}
+                component={Link}
+                to={convertToRoute(collectionsPath, featuredBracelets[0].name)}
+                onClick={() => props.setValue(1)}
+              >
+                <Typography
+                  className={classes.featuredPrices}
+                  paragraph={true}
+                  variant="caption"
+                >
+                  $9.99
+                </Typography>
+                <img
+                  src={Bracelet1}
+                  className={classes.braceletImgs}
+                  alt="bracelet"
+                />
+              </Button>
+            </Grid>
+            <Grid
+              data-aos="fade-up"
+              item
+              xs={10}
+              sm={4}
+              style={{ position: "relative" }}
             >
               <Typography
-                className={classes.featuredPrices}
+                className={classes.featuredName}
                 paragraph={true}
                 variant="caption"
               >
-                $9.99
+                {featuredBracelets[1].name}
               </Typography>
-              <img src={Bracelet2} className={classes.braceletImgs} />
-            </Button>
-          </Grid>
-          <Grid
-            data-aos="fade-up"
-            item
-            xs={10}
-            sm={4}
-            style={{ position: "relative" }}
-          >
-            <Typography
-              className={classes.featuredName}
-              paragraph={true}
-              variant="caption"
-            >
-              {featuredBracelets[2].name}
-            </Typography>
-            <Button
-              className={classes.featuredPricesBtn}
-              component={Link}
-              to={convertToRoute(collectionsPath, featuredBracelets[2].name)}
-              onClick={() => props.setValue(1)}
+              <Button
+                className={classes.featuredPricesBtn}
+                component={Link}
+                to={convertToRoute(collectionsPath, featuredBracelets[1].name)}
+                onClick={() => props.setValue(1)}
+              >
+                <Typography
+                  className={classes.featuredPrices}
+                  paragraph={true}
+                  variant="caption"
+                >
+                  $9.99
+                </Typography>
+                <img
+                  src={Bracelet2}
+                  className={classes.braceletImgs}
+                  alt="bracelet"
+                />
+              </Button>
+            </Grid>
+            <Grid
+              data-aos="fade-up"
+              item
+              xs={10}
+              sm={4}
+              style={{ position: "relative" }}
             >
               <Typography
-                className={classes.featuredPrices}
+                className={classes.featuredName}
                 paragraph={true}
                 variant="caption"
               >
-                $9.99
+                {featuredBracelets[2].name}
               </Typography>
-              <img src={Bracelet3} className={classes.braceletImgs} />
-            </Button>
+              <Button
+                className={classes.featuredPricesBtn}
+                component={Link}
+                to={convertToRoute(collectionsPath, featuredBracelets[2].name)}
+                onClick={() => props.setValue(1)}
+              >
+                <Typography
+                  className={classes.featuredPrices}
+                  paragraph={true}
+                  variant="caption"
+                >
+                  $9.99
+                </Typography>
+                <img
+                  src={Bracelet3}
+                  className={classes.braceletImgs}
+                  alt="bracelet"
+                />
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Footer
-        setValue={props.setValue}
-        setSelectedIndex={props.setSelectedIndex}
-      />
-    </motion.div>
+        <Footer
+          setValue={props.setValue}
+          setSelectedIndex={props.setSelectedIndex}
+        />
+      </motion.div>
+    </div>
   );
 }

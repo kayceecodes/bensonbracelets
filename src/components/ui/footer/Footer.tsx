@@ -40,12 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
   footerContainer: {
     backgroundColor: "rgb(46,34,16)",
-    padding: "90px 0px",
-    marginTop: "100px",
-    // height: '400px',
+    padding: "110px 0px 50px",
+    position: 'relative',
+    // marginTop: "100px",
+    // height: '950px',
+    // width: '100%',
     [theme.breakpoints.up("lg")]: {
-      paddingLeft: "200px",
-      paddingRight: "200px",
+      // paddingLeft: "120px",
+      // paddingRight: "120px",
     },
   },
   footerNavigation: {
@@ -57,14 +59,19 @@ const useStyles = makeStyles((theme) => ({
   },
   iconWrapper: {
     width: "35px",
+    marginBottom: '20px',
     [theme.breakpoints.up("sm")]: {
       width: "45px",
+      marginBottom: '0px',
     },
   },
   footerRight: {
     marginTop: "50px",
     borderBottom: `2px solid ${theme.palette.common.dimegray}`,
-    paddingBottom: "60px",
+    //
+    //
+    //
+    // paddingBottom: "60px",
     [theme.breakpoints.up("sm")]: {
       borderLeft: `2px solid ${theme.palette.common.dimegray}`,
       borderBottom: "none",
@@ -74,15 +81,15 @@ const useStyles = makeStyles((theme) => ({
   footerbottombar: {
     height: "26px",
     color: theme.palette.common.slateTan,
-    position: "absolute",
-    bottom: "0.8%",
-    textAlign: 'center',
+    marginTop: '50px',
+    maxWidth: '260px',
+    // position: "absolute",
+    // bottom: "0.45%",
+    margin: '0px auto',
     [theme.breakpoints.up("sm")]: {
       borderTop: `1px solid ${theme.palette.common.dimegray}`,
+            // marginTop: '180px',
     },
-    [theme.breakpoints.down("xs")]: {
-        left: '2%'
-      },
   },
   footerNavBtn: {
     opacity: "0.75",
@@ -104,7 +111,7 @@ export default function Footer(props: IProps) {
       <Grid
         container
         className={classes.footerContainer}
-        style={matches.sm ? { height: "400px" } : { height: "inherit" }}
+        // style={matches.sm ? { height: "400px" } : { height: "inherit" }}
         justify={matches.sm ? "space-around" : "center"}
         alignContent={"center"}
         direction={matches.sm ? "row" : "column"}
@@ -148,23 +155,25 @@ export default function Footer(props: IProps) {
                 data-aos="fade-left"
               >
                 <Grid item className={classes.iconWrapper}>
-                  <img style={{ width: "100%" }} src={facebook} />
+                  <img style={{ width: "100%" }} src={facebook} alt='facebook' />
                 </Grid>
                 <Grid item className={classes.iconWrapper}>
                   <img
                     style={{ width: "100%", paddingTop: "0.15px" }}
-                    src={instagram}
+                    src={instagram} alt='instagram'
                   />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+        <Grid item xs={12} sm={4}>
         <div className={classes.footerbottombar}>
           <span style={{ opacity: 0.65 }}>
             &#169;Copyright 2020 Benson's Bracelets
           </span>
         </div>
+        </Grid>
       </Grid>
     </>
   );

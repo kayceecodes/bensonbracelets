@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect } from "react";
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   IBraceletData,
@@ -20,15 +20,11 @@ import Select from "@material-ui/core/Select";
 
 import theme from "../../../ui/Theme";
 
-import Footer from "../../../ui/footer/Footer";
-
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 
 interface IProps {
   setValue: React.Dispatch<React.SetStateAction<number>>;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
-  // routes: IRoute[];
   pageStyle: CSSProperties;
   pageAnimations: IPageAnimations;
   motions: IMotions;
@@ -111,8 +107,7 @@ export default function Displayitem(props: IProps) {
 
   useEffect(() => {
     props.setValue(1);
-    console.log("");
-  }, []);
+  }, );
 
   return (
     <>
@@ -133,7 +128,7 @@ export default function Displayitem(props: IProps) {
               spacing={matches.sm ? 8 : 3}
               justify="space-between"
             >
-              <Grid item xs={1} sm={1}> {/*Left Side of container - Arrow */}
+              <Grid item xs={1} sm={1}> {/*Left Side of container - the Back Arrow */}
                 <Typography variant="caption">
                 <Button onClick={() =>  goBackHandle()}>
                   <Icon className={classes.arrow}>arrow_back_ios</Icon>
@@ -147,23 +142,22 @@ export default function Displayitem(props: IProps) {
                 style={{
                   borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
                 }}
-              > {/* Right Side of Cantainer - Item Name */}
+              > {/* Right Side of Cantainer - The Item's Name */}
                 <Typography variant="h3" className={classes.itemName}>
                   {props.name}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <div className={classes.sectionMargin} />
-          <div className={classes.sectionMargin} />
+          <div className={classes.sectionMargin} /> {/*Separate Name from item's img and details*/}
           <Grid item>
             {/* Second Item in the main container of Displayitem component - img left & details/options right */}
             <Grid container direction="row" alignItems="center">
-              <Grid item sm={6}> {/* LEFT SIDE ITEM- IMG */}
-                <img src={props.src} className={classes.itemImg} />{" "}
+              <Grid item sm={6}> {/* LEFT SIDE OF ITEM - Img Of Bracelet */}
+                <img src={props.src} className={classes.itemImg} alt='bracelet displayed' />{" "}
                 {/* Img Of Item - Bracelet */}
               </Grid>
-              <Grid item sm={4}>{/* RIGHT SIDE ITEM - Details/Options */}
+              <Grid item sm={4}>{/* RIGHT SIDE OF ITEM - Details/Options */}
                 <Grid container alignItems="flex-end" justify='space-between' direction="column" className={classes.itemDetailsOptions}>
                   <Grid item><div className={classes.sectionMargin} /></Grid>
                   <Grid item><Typography variant="body1">Price: {props.price}</Typography></Grid>

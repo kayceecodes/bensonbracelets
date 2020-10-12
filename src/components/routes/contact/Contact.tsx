@@ -1,6 +1,7 @@
 import React, { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { IPageAnimations, IMotions } from "../../../Interfaces";
+import Grid from "@material-ui/core/Grid/Grid";
 
 interface IProps {
   // value: number,
@@ -29,7 +30,9 @@ export default function Contact(props: IProps) {
       variants={props.pageAnimations.variants}
       transition={props.pageAnimations.transition}
     >
-      <h1>Contact</h1>
+     <Grid container direction='column'>
+
+     </Grid>
     </motion.div>
   );
 }
