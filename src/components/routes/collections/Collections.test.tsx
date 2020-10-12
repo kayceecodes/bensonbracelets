@@ -7,4 +7,4 @@ import {
   IWrapper
 } from "../../../../test/testUtils";
 
-import ConnectedRegister, { Register } from "./Register";
+import ConnectedRegister, { Collections } from "./Collections";

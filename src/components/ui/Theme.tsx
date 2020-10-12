@@ -10,9 +10,9 @@ const antiqueWhite = "#fbe6d4"; // 4 Brighter Highlight
 
 // const antiquePeach = '#fbddd4';// Brighter Highlight
 const dimegray = "#6e6656";
-const brightMudBrown = 'rgb(46,34,16)'; // Highlight
+const brightMudBrown = 'rgba(46,34,16, 1)'; // Highlight
 // const cadetBlue = rgb(95,158,160)
-
+const kitkatOrange = 'rgba(205,100,45, 1)'
 const breakpoints = createBreakpoints({});
 
 declare module "@material-ui/core/styles/createTypography" {
@@ -61,6 +61,7 @@ declare module "@material-ui/core/styles/createPalette" {
     antiqueWhite: string;
     dimegray: string;
     brightMudBrown: string;
+    kitkatOrange: string,
   }
 }
 
@@ -74,6 +75,7 @@ export default createMuiTheme({
       antiqueWhite: `${antiqueWhite}`,
       dimegray: `${dimegray}`,
       brightMudBrown: `${brightMudBrown}`,
+      kitkatOrange: `${kitkatOrange}`,
     },
     primary: {
       main: `${slateTan}`,

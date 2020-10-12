@@ -21,8 +21,11 @@ import Aos from "aos";
 import BraceletCard from "./braceletcard/BraceletCard";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 
-import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import Icon from "@material-ui/core/Icon/Icon";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
+import useTheme from "@material-ui/core/styles/useTheme";
+
+import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 
 interface IProps {
   setValue: React.Dispatch<React.SetStateAction<number>>;
@@ -100,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     top: "45%",
     left: "-.05%",
-    padding: "15px 35px",
+    padding: "25px 35px",
     lineHeight: 3,
     listStyle: "none",
     borderRadius: "4px",
@@ -115,24 +118,37 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     fontFamily: "Raleway",
     letterSpacing: "1.8px",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.75rem",
+    },
   },
   filterDrawerBtnArrow: {
-    fontSize: '0.8rem',
-    color: theme.palette.common.orange
+    fontSize: "0.85rem",
+    color: theme.palette.common.kitkatOrange,
   },
 }));
 
-export let CATEGORIES:any = {
-  Luxury: {name: "Luxury", filterArrowPos: 1},
-  "Fraternity & Sorority": {name: "Fraternity & Sorority", filterArrowPos: 49},
-  "Team Colors": {name: "Team Colors", filterArrowPos: 97},
+export let CATEGORIES: any = {
+  Luxury: { name: "Luxury", filterArrowPos: 1 },
+  "Fraternity & Sorority": {
+    name: "Fraternity & Sorority",
+    filterArrowPos: 49,
+  },
+  "Team Colors": { name: "Team Colors", filterArrowPos: 97 },
 };
 
-export default function Collections(props: IProps) {
+export function Collections(props: IProps) {
   const classes = useStyles();
   const [revealCaption, setRevealCaption] = useState(false); // Caption 'Filter By:' above Luxury, Team Colors, Frat&Sor
   const [filterCategory, setFilterCategory] = useState<string>("");
   const [revealFilterDrawer, setRevealFilterDrawer] = useState(false);
+  const theme = useTheme();
+  const matches = {
+    sm: useMediaQuery(theme.breakpoints.up("sm")),
+    md: useMediaQuery(theme.breakpoints.up("md")),
+    lg: useMediaQuery(theme.breakpoints.up("lg")),
+    xl: useMediaQuery(theme.breakpoints.up("xl")),
+  }; // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
 
   const filteredBracelets =
     filterCategory === ""
@@ -149,8 +165,11 @@ export default function Collections(props: IProps) {
   };
 
   useScrollPosition(({ prevPos, currPos }) => {
+    let revealedPosition = 0;
+    revealedPosition = matches.md ? 750 : 0;
     console.log(-currPos.y); // Current Y is negative when scrolling down, you should use a negative symbol for +value.
-    if (-currPos.y >= 750) {
+
+    if (-currPos.y >= revealedPosition) {
       setRevealFilterDrawer(true);
     } else {
       setRevealFilterDrawer(false);
@@ -235,7 +254,9 @@ export default function Collections(props: IProps) {
                     <Button
                       className={classes.cardBtn}
                       onClick={() => {
-                        setFilterCategory(CATEGORIES["Fraternity & Sorority"].name);
+                        setFilterCategory(
+                          CATEGORIES["Fraternity & Sorority"].name
+                        );
                         props.jumpTo("#gallery");
                       }}
                     >
@@ -339,34 +360,54 @@ export default function Collections(props: IProps) {
             className={classes.filterDrawer}
             data-aos="fade-up"
           >
-              <motion.span
-              style={{position: 'absolute', left: '15px', color: filterCategory === '' ? 'white' : 'darkorange'}}
-               initial={{
-                 y: 1
-               }}
-               animate={{
-                y: filterCategory === '' ? 1 : CATEGORIES[`${filterCategory}`].filterArrowPos
-               }}
-               transition={{
-                 duration: 0.4
-               }}
-              >
+            <motion.span
+              style={{
+                position: "absolute",
+                left: "15px",
+                color: filterCategory === "" ? "white" : "darkorange",
+              }}
+              initial={{
+                y: 1,
+              }}
+              animate={{
+                y:
+                  filterCategory === ""
+                    ? 1
+                    : CATEGORIES[`${filterCategory}`].filterArrowPos,
+              }}
+              transition={{
+                duration: 0.4,
+              }}
+            >
+              {matches.sm ? (
                 <Icon className={classes.filterDrawerBtnArrow}>
-                arrow_forward_ios
+                  arrow_forward_ios
                 </Icon>
-              </motion.span>
+              ) : null}
+            </motion.span>
             <li>
               <Button
                 className={classes.filterDrawerBtn}
+                style={{
+                  color:
+                    filterCategory === CATEGORIES["Luxury"].name
+                      ? theme.palette.common.kitkatOrange
+                      : theme.palette.common.dimegray,
+                }}
                 onClick={() => setFilterCategory(CATEGORIES["Luxury"].name)}
               >
                 Luxury
               </Button>
-            
             </li>
             <li>
               <Button
                 className={classes.filterDrawerBtn}
+                style={{
+                  color:
+                    filterCategory === CATEGORIES["Fraternity & Sorority"].name
+                      ? theme.palette.common.kitkatOrange
+                      : theme.palette.common.dimegray,
+                }}
                 onClick={() =>
                   setFilterCategory(CATEGORIES["Fraternity & Sorority"].name)
                 }
@@ -377,7 +418,15 @@ export default function Collections(props: IProps) {
             <li>
               <Button
                 className={classes.filterDrawerBtn}
-                onClick={() => setFilterCategory(CATEGORIES["Team Colors"].name)}
+                style={{
+                  color:
+                    filterCategory === CATEGORIES["Team Colors"].name
+                      ? theme.palette.common.kitkatOrange
+                      : theme.palette.common.dimegray,
+                }}
+                onClick={() =>
+                  setFilterCategory(CATEGORIES["Team Colors"].name)
+                }
               >
                 Team Colors
               </Button>
@@ -388,3 +437,5 @@ export default function Collections(props: IProps) {
     </>
   );
 }
+
+export default Collections;

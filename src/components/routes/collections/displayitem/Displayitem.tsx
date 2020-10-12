@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import {
   IBraceletData,
@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Displayitem(props: IProps) {
   const classes = useStyles();
+  const location = useLocation();
   const [size, setSize] = React.useState<number>(0);
   const matches = {
     sm: useMediaQuery(theme.breakpoints.up("sm")),
@@ -103,7 +104,10 @@ export default function Displayitem(props: IProps) {
     setSize(event.target.value as number);
   };
 
-  const goBackHandle = () => history.goBack();
+  const goBackHandle = () => {
+    history.push('/collections');
+    // history.goBack();
+  }
 
   useEffect(() => {
     props.setValue(1);

@@ -60,7 +60,7 @@ export default function BraceletCard(props: IProps) {
 
   return (
     <Button component={Link} to={itemsRoute} onClick={() => props.setValue(1)}>
-      {categoryFirstInitial}
+      {/* {categoryFirstInitial} */}
       <div className={classes.braceletCard}>
         <Typography variant="caption">{props.name}</Typography>
 

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footerContainer: {
     backgroundColor: "rgb(46,34,16)",
-    padding: "110px 0px 50px",
+    padding: "120px 0px 90px",
     position: 'relative',
     // marginTop: "100px",
     // height: '950px',
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   footerbottombar: {
     height: "26px",
     color: theme.palette.common.slateTan,
-    marginTop: '50px',
+    marginTop: '100px',
     maxWidth: '260px',
     // position: "absolute",
     // bottom: "0.45%",
