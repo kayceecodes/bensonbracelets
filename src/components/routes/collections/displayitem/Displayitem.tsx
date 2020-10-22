@@ -90,7 +90,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Displayitem(props: IProps) {
   const classes = useStyles();
-  const location = useLocation();
   const [size, setSize] = React.useState<number>(0);
   const matches = {
     sm: useMediaQuery(theme.breakpoints.up("sm")),

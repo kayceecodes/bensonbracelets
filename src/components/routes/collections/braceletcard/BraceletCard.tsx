@@ -1,9 +1,11 @@
 import React, { SetStateAction } from "react";
 
+import { Link } from "react-router-dom";
+
 import { IBraceletData } from "../../../../Interfaces";
+
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography/Typography";
-import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button/Button";
 
 interface IProps {
@@ -34,13 +36,19 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "10px",
     },
   },
-  price: {
+  priceWrapper: {
+    padding: '2px 5px',
+    backgroundColor: '#fff9',
     position: "absolute",
     top: "35%",
-    left: "38%",
+    left: "29%",
+    borderRadius: '5px',
     [theme.breakpoints.up("sm")]: {
-        left: '36%',
-      },
+      left: '36%',
+    },
+  },
+  price: {
+    
   },
 }));
 
@@ -69,10 +77,11 @@ export default function BraceletCard(props: IProps) {
           alt="Bracelet - Product"
           className={classes.braceletImg}
         />
-
+        <div className={classes.priceWrapper}>
         <Typography variant="caption" className={classes.price}>
           ${props.price}
         </Typography>
+        </div>
       </div>
     </Button>
   );

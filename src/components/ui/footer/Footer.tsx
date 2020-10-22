@@ -60,6 +60,11 @@ const useStyles = makeStyles((theme) => ({
   iconWrapper: {
     width: "35px",
     marginBottom: '20px',
+    '&:hover': {
+      opacity: '0.3',
+      color: 'white',
+      cursor: 'pointer',
+    },
     [theme.breakpoints.up("sm")]: {
       width: "45px",
       marginBottom: '0px',
@@ -93,7 +98,13 @@ const useStyles = makeStyles((theme) => ({
   },
   footerNavBtn: {
     opacity: "0.75",
+    transition: 'color 0.3s, opacity 0.3s',
     color: theme.palette.common.slateTan,
+    '&:hover': {
+      opacity: '0.9',
+      color: 'white'
+    }
+
   },
 }));
 

@@ -27,12 +27,12 @@ import useTheme from "@material-ui/core/styles/useTheme";
 
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 
-interface IProps {
+export interface IProps {
   setValue: React.Dispatch<React.SetStateAction<number>>;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
   pageStyle: CSSProperties;
   pageAnimations: IPageAnimations;
-  motions: IMotions;
+  motions: any;
   jumpTo: (jumpingTarget: string | number | Element) => void;
 }
 
@@ -56,31 +56,33 @@ const useStyles = makeStyles((theme) => ({
   header: {
     borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
   },
-  card: {
+  categoryCard: {
     width: "240px",
     border: "0.5px solid rgba(0,0,0,0.1)",
     height: "340px",
-    backgroundColor: "rgba(165,152,136, 0.5)",
     padding: "6px 6px 0px",
     overflow: "hidden",
     transition: "background-color 0.2s",
+    
     // marginTop: "25px",
-    "&:hover": {
-      backgroundColor: "rgba(165,152,136, 0.15)",
-    },
   },
-  cardBtn: {
+  categoryCardBtn: {
     textTransform: "none",
     padding: "0px",
     height: "100%",
+    backgroundColor: "rgba(165,152,136, 0.35)",
     "&:hover": {
-      backgroundColor: "none",
+      backgroundColor: "rgba(165,152,136, 0.2)",
     },
+  },
+  categoryCardBtnActive: {
+    backgroundColor: "rgba(165,152,136, 0.95)",
+    boxShadow: "0px 0px 12px #52390680",
   },
   cardBtnLabel: {
     height: "99%",
   },
-  cardImgs: {
+  categoryCardImgs: {
     width: "100%",
     paddingBottom: "12px",
   },
@@ -97,13 +99,13 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `2.9px solid ${theme.palette.common.orange}`,
   },
   braceletCardWrapper: {
-    backgroundColor: "#ededed",
+    borderBottom: "0.8px solid #52390610",
   },
   filterDrawer: {
     position: "fixed",
     top: "45%",
-    left: "-.05%",
-    padding: "25px 35px",
+    left: "-0.11%",
+    padding: "5px 10px",
     lineHeight: 3,
     listStyle: "none",
     borderRadius: "4px",
@@ -112,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 3,
     color: theme.palette.common.dimegray,
     boxShadow: `0px 0px 12px #52390650`,
+    [theme.breakpoints.up("md")]: {
+      padding: "5px 35px",
+    },
   },
   filterDrawerBtn: {
     color: theme.palette.common.dimegray,
@@ -156,6 +161,9 @@ export function Collections(props: IProps) {
       : bracelets.filter((item) => item.category === filterCategory);
 
   useEffect(() => {
+    {
+      /* data-aos='fade-up or down'. This is a css effect when element appears */
+    }
     Aos.init({ duration: 900 });
   }, []);
 
@@ -167,8 +175,7 @@ export function Collections(props: IProps) {
   useScrollPosition(({ prevPos, currPos }) => {
     let revealedPosition = 0;
     revealedPosition = matches.md ? 750 : 0;
-    console.log(-currPos.y); // Current Y is negative when scrolling down, you should use a negative symbol for +value.
-
+    // console.log(-currPos.y); // Current Y is negative when scrolling down, you should use a negative symbol for +value.
     if (-currPos.y >= revealedPosition) {
       setRevealFilterDrawer(true);
     } else {
@@ -176,9 +183,14 @@ export function Collections(props: IProps) {
     }
   });
 
+  function checkProps() {
+    console.log("Motion Object: ", props.motions);
+    // console.log('Motion.Animate', props.motions.animate);
+  }
   return (
     <>
-      <div onScroll={(e) => scrollEvent(e)}>
+      {checkProps()}
+      <div onScroll={scrollEvent}>
         <motion.div
           style={props.pageStyle}
           initial={props.motions.initial}
@@ -189,8 +201,7 @@ export function Collections(props: IProps) {
         >
           <div className={classes.sectionMargin} />
           <div className={classes.sectionMargin} />
-          {/* <AnimatePresence>
-<Switch location={location} key={location.pathname}> */}
+
           <Grid
             container
             spacing={10}
@@ -224,14 +235,20 @@ export function Collections(props: IProps) {
                   {/*Container of the categories - card*/}
                   <Grid item data-aos="fade-up">
                     <Button
-                      className={classes.cardBtn}
+                        className={ classes.categoryCardBtn + ' ' +
+                        (filterCategory === CATEGORIES['Luxury'].name ? classes.categoryCardBtnActive : '')
+                        }
                       onClick={() => {
                         setFilterCategory(CATEGORIES["Luxury"].name);
                         props.jumpTo("#gallery");
                       }}
                     >
-                      <div className={classes.card}>
-                        <img src={luxury} className={classes.cardImgs} />
+                      <div className={classes.categoryCard}>
+                        <img
+                          src={luxury}
+                          className={classes.categoryCardImgs}
+                          alt="Category Of Benson Bracelets"
+                        />
                         <Grid
                           container
                           alignItems="center"
@@ -252,7 +269,9 @@ export function Collections(props: IProps) {
                   </Grid>
                   <Grid item data-aos="fade-up">
                     <Button
-                      className={classes.cardBtn}
+                      className={ classes.categoryCardBtn + ' ' +
+                      (filterCategory === CATEGORIES['Fraternity & Sorority'].name ? classes.categoryCardBtnActive : '')
+                      }
                       onClick={() => {
                         setFilterCategory(
                           CATEGORIES["Fraternity & Sorority"].name
@@ -260,8 +279,12 @@ export function Collections(props: IProps) {
                         props.jumpTo("#gallery");
                       }}
                     >
-                      <div className={classes.card}>
-                        <img src={fraternity} className={classes.cardImgs} />
+                      <div className={classes.categoryCard}>
+                        <img
+                          src={fraternity}
+                          className={classes.categoryCardImgs}
+                          alt="Category Of Benson Bracelets"
+                        />
                         <Grid
                           container
                           alignItems="center"
@@ -282,21 +305,27 @@ export function Collections(props: IProps) {
                   </Grid>
                   <Grid item data-aos="fade-up">
                     <Button
-                      className={classes.cardBtn}
+                      className={ classes.categoryCardBtn + ' ' +
+                      (filterCategory === CATEGORIES['Team Colors'].name ? classes.categoryCardBtnActive : '')
+                      }
                       onClick={() => {
                         setFilterCategory(CATEGORIES["Team Colors"].name);
                         props.jumpTo("#gallery");
                       }}
                     >
-                      <div className={classes.card}>
-                        <img src={teamcolors} className={classes.cardImgs} />
+                      <div className={classes.categoryCard}>
+                        <img
+                          src={teamcolors}
+                          className={classes.categoryCardImgs}
+                          alt="Category Of Benson Bracelets"
+                        />
                         <Grid
                           container
                           alignItems="center"
                           justify="center"
                           alignContent="center"
                         >
-                          <Grid item>
+                          <Grid item  id="gallery">
                             <Typography
                               className={classes.caption}
                               variant="caption"
@@ -323,11 +352,12 @@ export function Collections(props: IProps) {
                 direction="row"
                 justify="center"
                 spacing={8}
-                id="gallery"
+                // id="gallery"
               >
                 {filteredBracelets.map((item) => (
                   <Grid
                     item
+                    className={classes.braceletCardWrapper}
                     data-aos="fade-up"
                     xs={7}
                     sm={5}
@@ -335,11 +365,13 @@ export function Collections(props: IProps) {
                     key={item.name + item.src}
                   >
                     <BraceletCard
+                      data-testid={item.name + '/'+ item.category}
                       name={item.name}
                       price={item.price}
                       src={item.src}
                       category={item.category}
                       setValue={props.setValue}
+                      data-test={"braceletCard"}
                     />
                   </Grid>
                 ))}
@@ -379,7 +411,7 @@ export function Collections(props: IProps) {
                 duration: 0.4,
               }}
             >
-              {matches.sm ? (
+              {matches.md && filterCategory !== "" ? (
                 <Icon className={classes.filterDrawerBtnArrow}>
                   arrow_forward_ios
                 </Icon>

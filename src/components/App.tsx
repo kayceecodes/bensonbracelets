@@ -22,6 +22,7 @@ import { bracelets } from '../data/Data';
 
 import { easeInOutCubic } from '../utils/Easing';
 import jump from "jump.js";
+import { IMotions } from "../Interfaces";
 
 export type FormEvent = React.FormEvent<HTMLFormElement>;
 export type InputEvent = React.FormEvent<HTMLInputElement>;
@@ -34,7 +35,7 @@ const pageStyle: CSSProperties = {
   overflow: 'hidden',
 };
 
-const pageAnimations = {
+const pageAnimations: any = {
   variants: {
     initial: {
       opacity: 0,
@@ -59,7 +60,7 @@ const pageAnimations = {
   },
 };
 
-const motions = {
+const motions: IMotions = {
   initial: 'initial',
   animate: 'in',
   exit: 'out',
@@ -76,7 +77,7 @@ function convertToRoute(itemName: string) {
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [value, setValue] = useState(0);
-  const location = useLocation();
+  // const location = useLocation<string>();
 
   const scrollEvent = (event: SyntheticEvent) => {
     const target = event.target as HTMLTextAreaElement;
@@ -112,7 +113,7 @@ function App() {
         }}
       >
         <AnimatePresence>
-          <Switch location={location} key={location.pathname}>
+          <Switch>
             <Route
               exact
               path="/"

@@ -46,31 +46,45 @@ const useStyles = makeStyles((theme) => ({
       margin: "35px",
     },
   },
-  featuredButton: {
+  featuredHeroBtnWrapper: {
+   padding: '9px',
+   border: `1px solid ${theme.palette.common.orange}35`,
+   borderRadius: '3px',
+   position: "fixed",
+   left: "50%",
+   transform: "translate(-50%, -50%)",
+   zIndex: 3,
+
+   [theme.breakpoints.up("sm")]: {
+    top: "320px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    top: "170px",
+  },
+  },
+  featuredHeroButton: {
     textTransform: "none",
     letterSpacing: "2.8px",
     backgroundColor: "rgb(0, 0, 0, 0.005)",
     color: "white",
     border: "2.7px solid white",
     borderRadius: "0.3px",
-    position: "fixed",
-    left: "50%",
-    zIndex: 4,
-    transform: "translate(-50%, -50%)",
     textShadow: "0px 0px 8px rgba(0,0,0,0.99)",
+    transition: 'opacity 0.4s',
     [theme.breakpoints.up("sm")]: {
       font: "1.25rem Raleway",
-      top: "320px",
       padding: "0 70px",
     },
     [theme.breakpoints.down("sm")]: {
       font: "0.8rem Raleway",
-      top: "170px",
       padding: "0 45px",
+    },
+    '&:hover': {
+      opacity: '0.6', 
     },
     // boxShadow: '0px 0px 17px rgba(0, 0, 0, 1)',
   },
-  wrapper: {
+    overlayWrapper: {
     top: 0,
     width: "100%",
     position: "relative",
@@ -242,7 +256,7 @@ export default function Home(props: IProps) {
         transition={props.pageAnimations.transition}
       >
         <div
-          className={classes.wrapper}
+          className={classes.overlayWrapper}
           style={{
             overflow: `${matches.sm ? "hidden" : ""}`,
             position: "relative",
@@ -261,12 +275,14 @@ export default function Home(props: IProps) {
             }}
             bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
           >
+            <div className={classes.featuredHeroBtnWrapper}>
             <Button
-              className={classes.featuredButton}
+              className={classes.featuredHeroButton}
               onClick={() => props.jumpTo("#featuredBracelets")}
             >
               <p>Featured</p>
             </Button>
+            </div>
             <p className={classes.heroCompanyName}>Benson Bracelets</p>
           </Parallax>
         </div>
