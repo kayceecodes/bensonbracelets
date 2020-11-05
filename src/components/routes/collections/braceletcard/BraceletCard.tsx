@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   price: {
-    
   },
 }));
 

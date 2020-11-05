@@ -28,12 +28,12 @@ import useTheme from "@material-ui/core/styles/useTheme";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 
 export interface IProps {
-  setValue: React.Dispatch<React.SetStateAction<number>>;
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
-  pageStyle: CSSProperties;
-  pageAnimations: IPageAnimations;
-  motions: any;
-  jumpTo: (jumpingTarget: string | number | Element) => void;
+  setValue: React.Dispatch<React.SetStateAction<number>>
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>
+  pageStyle: CSSProperties
+  pageAnimations: IPageAnimations
+  motions: any
+  jumpTo: (jumpingTarget: string | number | Element) => void
 }
 
 {
@@ -365,7 +365,7 @@ export function Collections(props: IProps) {
                     key={item.name + item.src}
                   >
                     <BraceletCard
-                      data-testid={item.name + '/'+ item.category}
+                      data-testid={'bracelet-card'}
                       name={item.name}
                       price={item.price}
                       src={item.src}
@@ -379,12 +379,8 @@ export function Collections(props: IProps) {
             </Grid>
             {/* EO Cards CONTAINER - nested*/}
             {/* EO Cards ITEM */}
-
-            {/* </Switch>
-      </AnimatePresence> */}
           </Grid>
         </motion.div>
-
         {revealFilterDrawer === true ? (
           <Typography
             variant="body1"
