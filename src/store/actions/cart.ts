@@ -1,9 +1,9 @@
-import { IBraceletData } from '../../Interfaces';
+import { IBraceletData, ICartItems } from '../../Interfaces';
 import * as actionTypes from './actionTypes';
 
 export interface AddToCart {
     type: actionTypes.ADD_TO_CART;
-    item: IBraceletData;
+    item: ICartItems;
 }
 export interface RemoveFromCart {
     totalPriceRemoved: number;

@@ -1,10 +1,15 @@
-import { IBraceletData } from "../../Interfaces";
+import { IBraceletData, ICartItems } from "../../Interfaces";
 import * as actionTypes from "../actions/actionTypes";
 import { CartAction } from "../actions/cart";
 
-const initialState: { cartTotal: number; cartItems: Array<IBraceletData> } = {
+const initialState: { cartTotal: number; cartItems: Array<ICartItems> } = {
   cartTotal: 0,
-  cartItems: [],
+  cartItems: [{
+    name: 'first bracelet',
+    quantity: 2,
+    size: 4.5,
+    price: 35,
+  }],
 };
 
 const cart_reducer = (state = initialState, action: CartAction) => {
@@ -22,7 +27,7 @@ const cart_reducer = (state = initialState, action: CartAction) => {
         ...state,
         cartTotal: state.cartTotal - action.totalPriceRemoved,
         cartItems: state.cartItems.filter(
-          (item: IBraceletData) => item.id !== action.removedId
+          (item: any) => item.id !== action.removedId
         ),
       };
     default:

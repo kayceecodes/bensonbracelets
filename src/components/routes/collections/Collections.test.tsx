@@ -7,6 +7,7 @@ import { bracelets } from '../../../data/Data'
 
 import { queryHelpers } from '@testing-library/react'
 import { screen } from '@testing-library/dom'
+import userEvent from '@testing-library/user-event'
 
 export const queryAllByTestId = queryHelpers.queryAllByAttribute.bind(
   'bracelet-card', //the id I'm looking for
@@ -34,7 +35,7 @@ describe('When a filter is clicked', () => {
   //screen.debug
   //debug()
 
-    test('items shown are only related to the picked Category', () => {
-      fireEvent.click(getByText('Team Colors'))
-    })  
+    // test('items shown are only related to the picked Category', () => {
+    //   userEvent.click(getByText('Team Colors'))
+    // })  
 }) 
