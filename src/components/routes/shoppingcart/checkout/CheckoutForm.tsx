@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "15px 0px",
     width: "240px",
     [theme.breakpoints.up("sm")]: {
-      width: "330px",
+      width: "260px",
     },
   },
   borderStyle: {
@@ -111,24 +111,6 @@ export const CheckoutForm = (props: IFormProps) => {
     zipcode: "",
   })
 
-  const handleChangeName = (event: ChangeEvent) => {
-    setName(event.target.value)
-    console.log("Logging Handle Change Name: ", name)
-  }
-
-  const handleChangeAddress = (event: ChangeEvent) => {
-    setStreetAddress(event.target.value)
-  }
-
-  const handleChangeState = (event: ChangeEvent) => {
-    setStateLocation(event.target.value)
-  }
-
-  const handleChangeZipcode = (event: ChangeEvent) => {
-    setZipcode(event.target.value)
-    console.log("Loggging Handle Change Zipcode : ", zipcode)
-  }
-
   const classes = useStyles()
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent) => {
@@ -145,6 +127,7 @@ export const CheckoutForm = (props: IFormProps) => {
       throw e
     }
   }
+
   const handleClick = (value: any) => setStateLocation(value)
   
   return (
@@ -201,7 +184,7 @@ export const CheckoutForm = (props: IFormProps) => {
               >
                 {stateLocations.map(
                   (stateObj: { label: string; value: string }) => (
-                    <MenuItem key={stateObj.value} value={stateObj.value}  onClick={ () => handleClick(stateObj.value)}>
+                    <MenuItem key={stateObj.value} value={stateObj.value}  onClick={() => handleClick(stateObj.value)}>
                       {stateObj.label}
                     </MenuItem>
                   )

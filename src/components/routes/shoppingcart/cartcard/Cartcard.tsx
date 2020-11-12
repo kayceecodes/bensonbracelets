@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 0px 8px 10px #efefef50",
     height: "118px",
     position: "relative",
+    maxWidth: '600px',
     [theme.breakpoints.up("md")]: {
       maxWidth: "750px",
     },
@@ -35,16 +36,22 @@ const useStyles = makeStyles((theme) => ({
   },
   cartItemImg: {
     width: "50px",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       width: "70px",
     },
   },
   cartItemBtn: {
     // border: "0.5px solid lightGray",
     // borderRadius: "5px",
-    // padding: "4px 8px 2px",
     margin: "0px 2px",
+    // fontSize: '0.4rem',
+    boxShadow: '0px 0px 8px rgba(0,0,0,0.05)',
+    // padding: "2px 0px 2px",
     color: `${theme.palette.common.slateTan}`,
+    [theme.breakpoints.up("lg")]: {
+      width: "70px",
+      // padding: "1px 2px 1px",
+    },
   },
 }))
 
@@ -53,7 +60,7 @@ export default function Cartcard(props: ICartItems) {
 
   return (
     <Grid container direction="row" className={classes.cartCardContainer}>
-      <Grid item xs={3}>
+      <Grid item xs={2} md={3}>
         <Grid
           container
           className={classes.cartItemImgContainer}
@@ -64,13 +71,13 @@ export default function Cartcard(props: ICartItems) {
           <Grid item>
             <img
               className={classes.cartItemImg}
-              src={props.src}
+              src={Seashells}
               alt="Items in card"
             />
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={10} md={8}>
         <Grid
           container
           direction="row"
@@ -106,7 +113,6 @@ export default function Cartcard(props: ICartItems) {
               </Button>
             </Grid>
           </Grid>
-
           <Grid item>
             <Typography variant="body2">
               Qty <br />{props.quantity}

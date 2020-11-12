@@ -10,6 +10,8 @@ const antiqueWhite = "#fbe6d4"; // 4 Brighter Highlight
 
 // const antiquePeach = '#fbddd4';// Brighter Highlight
 const dimegray = "#6e6656";
+// const dimgray = 'rgba(94,108,132, 1)'
+
 const brightMudBrown = 'rgba(46,34,16, 1)'; // Highlight
 // const cadetBlue = rgb(95,158,160)
 const kitkatOrange = 'rgba(205,100,45, 1)'

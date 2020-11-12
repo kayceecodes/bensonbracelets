@@ -27,11 +27,18 @@ const useStyles = makeStyles((theme) => ({
       margin: "35px",
     },
   },
+  header: {
+    borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
+    padding: '0px 30px 30px',
+    width: '190px',
+    textAlign: 'center',
+    margin: '0 auto 70px',
+  },
   shoppingcartContainer: {
-    width: "90%",
+    width: "95%",
     margin: "0px auto",
     maxWidth: '1150px',
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       width: "85%",
     },
   },
@@ -50,14 +57,14 @@ const Shoppingcart = (props: IProps) => {
       transition={props.pageAnimations.transition}
     >
       <div className={classes.sectionMargin} />
-      <Grid container justify="center">
+      <Grid container justify="center" className={classes.header} >
         <Typography variant="h3">Checkout</Typography>
       </Grid>
       <div className={classes.sectionMargin} />
 
       <Grid
         container
-        justify="space-around"
+        justify="space-between"
         alignItems="center"
         className={classes.shoppingcartContainer}
       >
