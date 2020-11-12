@@ -4,19 +4,12 @@ import { IPageAnimations, IMotions, ICartItems } from "../../../Interfaces"
 import { connect } from "react-redux"
 import * as actionTypes from "../../../store/actions/index"
 import Cartcard from "./cartcard/Cartcard"
+import CheckoutForm from "./checkout/CheckoutForm"
+import Grid from "@material-ui/core/Grid/Grid"
+import Typography from "@material-ui/core/Typography/Typography"
+import makeStyles from "@material-ui/core/styles/makeStyles"
 
 interface IProps {
-  // value: number,
-  // setValue: React.Dispatch<React.SetStateAction<number>>
-  // selectedIndex: number,
-  // setSelectedIndex: (value: number) => void
-  // routes?: IRoute[]
-  // anchorEl?: HTMLElement,
-  // openMenu: boolean,
-  // menuOptions: IMenuOption[],
-  // handleClose: () => void,
-  // handleMenuItemClick:  (e: MouseEvent, i: number) => void,
-  // handleChange: () => any,
   pageStyle: MotionStyle
   pageAnimations: IPageAnimations
   motions: IMotions
@@ -24,8 +17,29 @@ interface IProps {
   addItem: () => any
   removeItem: () => any
 }
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  sectionMargin: {
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "60px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      margin: "35px",
+    },
+  },
+  shoppingcartContainer: {
+    width: "90%",
+    margin: "0px auto",
+    maxWidth: '1150px',
+    [theme.breakpoints.up("md")]: {
+      width: "85%",
+    },
+  },
+}))
 
 const Shoppingcart = (props: IProps) => {
+  const classes = useStyles()
+
   return (
     <motion.div
       style={props.pageStyle}
@@ -35,15 +49,41 @@ const Shoppingcart = (props: IProps) => {
       variants={props.pageAnimations.variants}
       transition={props.pageAnimations.transition}
     >
-      {props.cartItems.map((item: ICartItems) => (
-        <Cartcard
-          key={item.name + item.size}
-          name={item.name}
-          quantity={item.quantity}
-          size={item.size}
-          price={item.price}
-        />
-      ))}
+      <div className={classes.sectionMargin} />
+      <Grid container justify="center">
+        <Typography variant="h3">Checkout</Typography>
+      </Grid>
+      <div className={classes.sectionMargin} />
+
+      <Grid
+        container
+        justify="space-around"
+        alignItems="center"
+        className={classes.shoppingcartContainer}
+      >
+        <Grid item xs={12} md={6}>
+          <Grid container justify='center'>
+          {props.cartItems.map((item: ICartItems) => (
+            <Cartcard
+              key={item.name + item.size}
+              name={item.name}
+              quantity={item.quantity}
+              size={item.size}
+              price={item.price}
+              src={item.src}
+            />
+          ))}
+          </Grid>
+        </Grid>
+
+        <div className={classes.sectionMargin} />
+        <div className={classes.sectionMargin} />
+
+        <Grid item xs={12} md={6}>
+
+          <CheckoutForm />
+        </Grid>
+      </Grid>
     </motion.div>
   )
 }

@@ -1,8 +1,6 @@
 import React from "react";
 import Tabs from "@material-ui/core/Tabs";
-import Menu from "@material-ui/core/Menu";
 import Tab from "@material-ui/core/Tab";
-import MenuItem from "@material-ui/core/MenuItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Link } from "react-router-dom";
 import { IRoute, IMenuOption } from "../Header";

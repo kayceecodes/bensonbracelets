@@ -1,4 +1,4 @@
-import { IBraceletData, ICartItems } from "../../Interfaces";
+import { ICartItems } from "../../Interfaces";
 import * as actionTypes from "../actions/actionTypes";
 import { CartAction } from "../actions/cart";
 
@@ -9,6 +9,7 @@ const initialState: { cartTotal: number; cartItems: Array<ICartItems> } = {
     quantity: 2,
     size: 4.5,
     price: 35,
+    src: '',
   }],
 };
 

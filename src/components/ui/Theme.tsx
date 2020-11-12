@@ -109,6 +109,15 @@ export default createMuiTheme({
         fontSize: '1.45rem'
       },
     },
+    h4: {
+      fontFamily: 'Raleway',
+      color: dimegray,
+      fontSize: "0.9rem",
+      letterSpacing: '0.2px',
+      [breakpoints.up("sm")]: {
+        fontSize: '1.05rem'
+      },
+    },
     tab: {
       fontFamily: "Lora",
       textTransform: "none",
@@ -151,7 +160,13 @@ export default createMuiTheme({
       },
     },
     body2: {
-
+      color: dimegray,
+      fontSize: '0.75rem',
+      fontFamily: 'Roboto',
+      lineHeight: 1.55,
+      [breakpoints.up("sm")]: {
+        fontSize: '0.85rem'
+      },
     },
   },
 });

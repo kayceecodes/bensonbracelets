@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect } from "react";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   IBraceletData,

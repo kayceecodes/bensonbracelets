@@ -24,6 +24,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
+    "@types/react-stripe-elements": "^6.0.4",
     "@types/redux-thunk": "^2.1.0",
     "aos": "^2.3.4",
     "check-prop-types": "^1.1.2",
@@ -33,6 +34,7 @@
     "jump.js": "^1.0.2",
     "jumpto": "^1.1.0",
     "moxios": "^0.4.0",
+    "node": "^15.0.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -41,6 +43,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-stripe-elements": "^6.1.2",
     "redux": "^4.0.5",
     "typescript": "^3.9.7"
   },

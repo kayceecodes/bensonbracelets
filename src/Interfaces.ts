@@ -24,4 +24,5 @@ export interface ICartItems {
       quantity: number
       size: number
       price: number
+      src: string
 }[]

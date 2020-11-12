@@ -9,6 +9,8 @@ import { queryHelpers } from '@testing-library/react'
 import { screen } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
+import {IMotions} from '../../../Interfaces'
+
 export const queryAllByTestId = queryHelpers.queryAllByAttribute.bind(
   'bracelet-card', //the id I'm looking for
   'data-test-id' // the custom attribute
@@ -23,7 +25,7 @@ const baseProps: CollectionsProps = {
   setSelectedIndex: () => {},
   pageStyle: {},
   pageAnimations: {transition : {}, variants: {}},
-  motions: '',
+  motions: {animate:'', initial: '', exit: ''},
   jumpTo: (jumpingTarget: string | number | Element): void => {}
 }
 

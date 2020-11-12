@@ -1,4 +1,4 @@
-import { IBraceletData, ICartItems } from '../../Interfaces';
+import { ICartItems } from '../../Interfaces';
 import * as actionTypes from './actionTypes';
 
 export interface AddToCart {

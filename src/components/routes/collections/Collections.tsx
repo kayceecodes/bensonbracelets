@@ -32,15 +32,13 @@ export interface IProps {
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>
   pageStyle: CSSProperties
   pageAnimations: IPageAnimations
-  motions: any
+  motions: IMotions
   jumpTo: (jumpingTarget: string | number | Element) => void
 }
 
-{
+
   /* Collections will show the gallery of the products and the other routes with the 
 bracelets will simply be a filtered page the whole colleciton/gallery */
-}
-
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
     [theme.breakpoints.up("sm")]: {
@@ -63,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "6px 6px 0px",
     overflow: "hidden",
     transition: "background-color 0.2s",
-    
     // marginTop: "25px",
   },
   categoryCardBtn: {
@@ -161,9 +158,7 @@ export function Collections(props: IProps) {
       : bracelets.filter((item) => item.category === filterCategory);
 
   useEffect(() => {
-    {
       /* data-aos='fade-up or down'. This is a css effect when element appears */
-    }
     Aos.init({ duration: 900 });
   }, []);
 
@@ -175,7 +170,6 @@ export function Collections(props: IProps) {
   useScrollPosition(({ prevPos, currPos }) => {
     let revealedPosition = 0;
     revealedPosition = matches.md ? 750 : 0;
-    // console.log(-currPos.y); // Current Y is negative when scrolling down, you should use a negative symbol for +value.
     if (-currPos.y >= revealedPosition) {
       setRevealFilterDrawer(true);
     } else {
@@ -185,7 +179,6 @@ export function Collections(props: IProps) {
 
   function checkProps() {
     console.log("Motion Object: ", props.motions);
-    // console.log('Motion.Animate', props.motions.animate);
   }
   return (
     <>

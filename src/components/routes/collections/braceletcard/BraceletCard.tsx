@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BraceletCard(props: IProps) {
   const classes = useStyles();
-  const categoryFirstInitial = props.category[0]; //Help differentiate each card by type of bracelet luxury,teamcolors, or f&s
 
   function convertToRoute(itemName: string) {
     let spaces = new RegExp("[ ]+", "g");
