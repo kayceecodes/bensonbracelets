@@ -116,33 +116,6 @@ export default function Headertabs(props: IProps) {
           // {route.link === "'/shoppingcart'" ? shoppingcartIcon : null}
         ))}
       </Tabs>
-      {/* <Menu
-        id="simple-menu"
-        anchorEl={props.anchorEl}
-        open={props.openMenu}
-        onClose={props.handleClose}
-        classes={{ paper: classes.menu }}
-        MenuListProps={{ onMouseLeave: props.handleClose }}
-        style={{ zIndex: 1302 }}
-        keepMounted
-      >
-        {props.menuOptions.map((option: any, i) => (
-          <MenuItem
-            key={`${option}${i}`}
-            to={option.link}
-            component={Link}
-            classes={{ root: classes.menuItem }}
-            onClick={(event: MouseEvent) => {
-              props.handleMenuItemClick(event, i);
-              props.setValue(1);
-              props.handleClose();
-            }}
-            selected={i === props.selectedIndex}
-          >
-            {option.name}
-          </MenuItem>
-        ))}
-      </Menu> */}
     </>
   );
 }

@@ -5,12 +5,12 @@ const arcBlue = "#0B72B9";
 
 const slateTan = "#b9ac92"; // 1 Background
 const slateBrown = "#4a3f35"; // 2 Seconde BG
-const goldenRodOrange = "#ffa931"; // 3 Highlight
+const goldenRodOrange = "#ffa225"; // 3 Highlight
 const antiqueWhite = "#fbe6d4"; // 4 Brighter Highlight
 
 // const antiquePeach = '#fbddd4';// Brighter Highlight
 const dimegray = "#6e6656";
-// const dimgray = 'rgba(94,108,132, 1)'
+const dimGray = 'rgba(94,108,132, 0.95)'
 
 const brightMudBrown = 'rgba(46,34,16, 1)'; // Highlight
 // const cadetBlue = rgb(95,158,160)
@@ -56,14 +56,15 @@ declare module "@material-ui/core/styles/createTypography" {
 
 declare module "@material-ui/core/styles/createPalette" {
   interface CommonColors {
-    blue: string;
-    slateTan: string;
-    brown: string;
-    orange: string;
-    antiqueWhite: string;
-    dimegray: string;
-    brightMudBrown: string;
+    blue: string
+    slateTan: string
+    brown: string
+    orange: string
+    antiqueWhite: string
+    dimegray: string
+    brightMudBrown: string
     kitkatOrange: string,
+    dimGray: string
   }
 }
 
@@ -78,6 +79,7 @@ export default createMuiTheme({
       dimegray: `${dimegray}`,
       brightMudBrown: `${brightMudBrown}`,
       kitkatOrange: `${kitkatOrange}`,
+      dimGray: `${dimGray}`,
     },
     primary: {
       main: `${slateTan}`,
@@ -162,7 +164,7 @@ export default createMuiTheme({
       },
     },
     body2: {
-      color: dimegray,
+      color: dimGray,
       fontSize: '0.75rem',
       fontFamily: 'Roboto',
       lineHeight: 1.55,
@@ -171,4 +173,4 @@ export default createMuiTheme({
       },
     },
   },
-});
+})

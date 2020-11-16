@@ -129,7 +129,7 @@ export const CheckoutForm = (props: IFormProps) => {
   }
 
   const handleClick = (value: any) => setStateLocation(value)
-  
+
   return (
     <>
       <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
@@ -139,6 +139,8 @@ export const CheckoutForm = (props: IFormProps) => {
           justify="space-around"
           alignContent="space-around"
         >
+          {/*GRID ITEM 
+           -- NAME INPUT */}
           <Grid item>
             <FormControl className={classes.formTextFields}>
               <TextField
@@ -150,7 +152,8 @@ export const CheckoutForm = (props: IFormProps) => {
               />
             </FormControl>
           </Grid>
-
+          {/*GRID ITEM 
+           -- STREET ADDRESS INPUT */}
           <Grid item>
             <FormControl className={classes.formTextFields}>
               <TextField
@@ -162,7 +165,8 @@ export const CheckoutForm = (props: IFormProps) => {
               />
             </FormControl>
           </Grid>
-
+          {/*GRID ITEM 
+           -- STATE SELECTION INPUT */}
           <Grid item>
             <div
               style={{
@@ -176,15 +180,19 @@ export const CheckoutForm = (props: IFormProps) => {
                 select
                 label="Select"
                 value={stateLocation}
-               
                 helperText="Select your state"
                 variant="outlined"
                 size="small"
                 style={{ width: "140px" }}
               >
+                {/* stateloaction map() objects to each menu item for this Select-Textfield  */}
                 {stateLocations.map(
                   (stateObj: { label: string; value: string }) => (
-                    <MenuItem key={stateObj.value} value={stateObj.value}  onClick={() => handleClick(stateObj.value)}>
+                    <MenuItem
+                      key={stateObj.value}
+                      value={stateObj.value}
+                      onClick={() => handleClick(stateObj.value)}
+                    >
                       {stateObj.label}
                     </MenuItem>
                   )
@@ -193,24 +201,26 @@ export const CheckoutForm = (props: IFormProps) => {
               </TextField>
             </div>
           </Grid>
-
+          {/*GRID ITEM 
+            */}
           <Grid item>
             <FormControl className={classes.formTextFields}>
               <TextField
                 required
                 id="zipcode"
                 label="Zipcode"
-                onChange={handleChange('zipcode')}
+                onChange={handleChange("zipcode")}
                 value={values.zipcode}
               />
             </FormControl>
           </Grid>
+          {/*GRID ITEM 
+           -- STRIPE.JS CARD ELEMENT INPUT */}
           <Grid item xs={12}>
             <FormControl
               className={classes.formTextFields + " " + classes.borderStyle}
             >
-              {/* <CardElement /> */}
-              Currently Commented Out
+              <CardElement />
             </FormControl>
           </Grid>
         </Grid>

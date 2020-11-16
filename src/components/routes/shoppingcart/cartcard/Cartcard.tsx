@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import Seashells from "../../../../images/bracelets/bracelet1.jpg"
 
@@ -9,6 +9,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles"
 import Typography from "@material-ui/core/Typography/Typography"
 import Button from "@material-ui/core/Button/Button"
 import Icon from "@material-ui/core/Icon/Icon"
+import Aos from "aos"
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -24,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
     border: "0.5px solid lightGray",
     borderRadius: "4px",
     boxShadow: "0px 0px 8px 10px #efefef50",
-    height: "118px",
+    height: "130px",
     position: "relative",
     maxWidth: '600px',
+    margin: '0 auto',
     [theme.breakpoints.up("md")]: {
       maxWidth: "750px",
     },
@@ -57,9 +59,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cartcard(props: ICartItems) {
   const classes = useStyles()
+  useEffect(() => {
+    Aos.init({ duration: 900 });
+  }, []);
 
   return (
-    <Grid container direction="row" className={classes.cartCardContainer}>
+    <Grid data-aos='fade-right' container direction="row" className={classes.cartCardContainer}>
       <Grid item xs={2} md={3}>
         <Grid
           container
@@ -85,12 +90,14 @@ export default function Cartcard(props: ICartItems) {
           justify="space-around"
           style={{ height: "100%" }}
         >
+          {/* Name of Item
+               i.e. props.name from global state (redux) */}
           <Grid item>
-            <Typography variant="body1">
-              {props.name} <small style={{ color: "gray" }}>{props.size + '"'}</small>
+            <Typography style={{fontWeight: 'bold', letterSpacing: '0.5px'}} variant="body2">
+              {props.name} <span style={{ color: "#afafaf", fontSize: '0.68rem', letterSpacing: '0.5px', display: 'inline', }}>{props.size + '"'}</span>
             </Typography>
 
-            <Typography variant="body1">{props.price}</Typography>
+            <Typography variant="body2">{props.price}</Typography>
           </Grid>
           <Grid item>
             <Grid
@@ -99,12 +106,6 @@ export default function Cartcard(props: ICartItems) {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              {/* <div className={classes.cartItemBtn}>
-                <Icon>add</Icon>
-              </div>
-              <div className={classes.cartItemBtn}>
-                <Icon>remove</Icon>
-              </div> */}
               <Button variant="outlined" color="primary" className={classes.cartItemBtn}>
                 <Icon>add</Icon>
               </Button>
@@ -114,8 +115,8 @@ export default function Cartcard(props: ICartItems) {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography variant="body2">
-              Qty <br />{props.quantity}
+            <Typography style={{letterSpacing: '0.5px'}} variant="body2">
+              <strong>Qty</strong> <br />{props.quantity}
             </Typography>
           </Grid>
         </Grid>

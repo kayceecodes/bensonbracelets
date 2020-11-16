@@ -16,6 +16,7 @@ interface IProps {
   cartItems: ICartItems[]
   addItem: () => any
   removeItem: () => any
+  cartTotal: number
 }
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -29,17 +30,26 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
-    padding: '0px 30px 30px',
-    width: '190px',
-    textAlign: 'center',
-    margin: '0 auto 70px',
+    padding: "0px 30px 30px",
+    width: "190px",
+    textAlign: "center",
+    margin: "0 auto 70px",
   },
   shoppingcartContainer: {
     width: "95%",
     margin: "0px auto",
-    maxWidth: '1150px',
+    maxWidth: "1150px",
     [theme.breakpoints.up("lg")]: {
       width: "85%",
+    },
+  },
+  bottomBorder: {
+    marginTop: "50px",
+    border: `0.5px solid ${theme.palette.common.orange}`,
+    width: "280px",
+    margin: "0 auto",
+    [theme.breakpoints.up("sm")]: {
+      width: "450px",
     },
   },
 }))
@@ -57,7 +67,7 @@ const Shoppingcart = (props: IProps) => {
       transition={props.pageAnimations.transition}
     >
       <div className={classes.sectionMargin} />
-      <Grid container justify="center" className={classes.header} >
+      <Grid container justify="center" className={classes.header}>
         <Typography variant="h3">Checkout</Typography>
       </Grid>
       <div className={classes.sectionMargin} />
@@ -68,26 +78,37 @@ const Shoppingcart = (props: IProps) => {
         alignItems="center"
         className={classes.shoppingcartContainer}
       >
+        {/*CONTAINER will hold the
+         CART ITEM CARDS &
+         CHECKOUTFORM  components
+         */}
         <Grid item xs={12} md={6}>
-          <Grid container justify='center'>
-          {props.cartItems.map((item: ICartItems) => (
-            <Cartcard
-              key={item.name + item.size}
-              name={item.name}
-              quantity={item.quantity}
-              size={item.size}
-              price={item.price}
-              src={item.src}
-            />
-          ))}
+          <Grid container direction='column' justify="space-around" alignItems='center' spacing={4}>
+            <Grid item xs={12} style={{width: '100%'}}>
+              { props.cartItems.length > 0  ? props.cartItems.map((item: ICartItems, index) => (
+                <Cartcard
+                  key={item.name + item.size + index}
+                  name={item.name}
+                  quantity={item.quantity}
+                  size={item.size}
+                  price={item.price}
+                  src={item.src}
+                />
+              )) :'Cart Is Empty' }
+               <div className={classes.bottomBorder} />
+            </Grid>
+           
+            {/* CART TOTAL */}
+            <Grid item>
+              {props.cartTotal}
+              </Grid>
           </Grid>
         </Grid>
 
         <div className={classes.sectionMargin} />
         <div className={classes.sectionMargin} />
-
+                {/* CHECKOUTFORM */}
         <Grid item xs={12} md={6}>
-
           <CheckoutForm />
         </Grid>
       </Grid>
@@ -97,6 +118,7 @@ const Shoppingcart = (props: IProps) => {
 
 const mapStateToProps = (state: any) => ({
   cartItems: state.cart.cartItems,
+  cartTotal: state.cart.cartTotal,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({

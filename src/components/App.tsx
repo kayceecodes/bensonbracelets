@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties } from "react"
+import React, { useState, CSSProperties, useEffect } from "react"
 import Header from "../components/ui/header/Header"
 // import Footer from '../components/ui/footer/Footer';
 import { ThemeProvider } from "@material-ui/styles"
@@ -85,6 +85,65 @@ function App() {
   //   const target = event.target as HTMLTextAreaElement
   //   console.log("Current Scroll Position: ", target.scrollTop)
   // }
+
+  useEffect( () => {
+    // let cartItems = [{
+
+    //   name: 'Seashells',
+    //   src: '../../img1.jpg',
+    //   size: 3,
+    //   quantity: 14,
+    //   price: 32.85
+    //  },
+    //  {
+    //   name: 'Brown Stones',
+    //   src: '../../img2.jpg',
+    //   size: 9,
+    //   quantity: 22,
+    //   price: 32.85,
+    //  },
+    //  {
+    //   name: 'Sky Blue',
+    //   src: '../../img3.jpg',
+    //   size: 2,
+    //   quantity: 1,
+    //   price: 32.85,
+    //  }
+    //  ];
+     
+    //  let newCartItems = [{
+    //   name: 'Seashells',
+    //   src: '../../img1.jpg',
+    //   size: 3,
+    //   quantity: 14,
+    //   price: 32.85
+    //  }
+    //  ];
+    //  const newCartItem = {
+    //   name: 'Seashells',
+    //   src: '../../img1.jpg',
+    //   size: 3,
+    //   quantity: 14,
+    //   price: 32.85  
+    //  }
+
+    //  const itemQuantity = newCartItems.map( ( newItem: any, index: number ) => {
+    //   return cartItems.map( (item: any, i: number) => {
+    //       if(newItem.name == item.name && newItem.size == item.size) {
+    //         return item.quantity + newItem.quantity
+    //       } 
+    //     })  
+    //  })
+     
+
+    //  for(let i = 0; i < cartItems.length; i++) {
+    //     if(newCartItem.name == cartItems[i].name && newCartItem.size == cartItems[i].size) {
+    //       cartItems[i].quantity = newCartItem.quantity + cartItems[i].quantity
+    //     }
+    // }
+
+    //  console.log('Seashells new Qty: ', cartItems[0].quantity)
+  })
 
   const setJump = (
     jumpingTarget: string | number | Element // Jump based on where the jump() is called from

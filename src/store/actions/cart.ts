@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 
 export interface AddToCart {
     type: actionTypes.ADD_TO_CART;
-    item: ICartItems;
+    payload: ICartItems;
 }
 export interface RemoveFromCart {
     totalPriceRemoved: number;
@@ -11,13 +11,20 @@ export interface RemoveFromCart {
     type: actionTypes.REMOVE_FROM_CART;
 }
 
-export type CartAction = AddToCart | RemoveFromCart;
+export interface AddQuantityToItem {
+  type: actionTypes.ADD_QUANTITY_TO_ITEM
+  payload: ICartItems
+} 
 
-export const addToCart = (item: any) => {
+export type CartAction = AddToCart | RemoveFromCart | AddQuantityToItem;
+
+export const addToCart = (cartItems: any) => {
   return {
       type: actionTypes.ADD_TO_CART,
-      item: item,
-  };
+      payload: cartItems,
+      quantity: cartItems.quantity,
+      price: cartItems.price,
+  }
 }
 
 export const removeFromCart = (removedId: number, totalPriceRemoved: number) => {
@@ -26,4 +33,11 @@ export const removeFromCart = (removedId: number, totalPriceRemoved: number) => 
     removedId,
     totalPriceRemoved,
   };
+}
+
+export const addQuantityToItem = (newCartItems: ICartItems[]) => {
+  return {
+    type: actionTypes.ADD_QUANTITY_TO_ITEM,
+    payload: newCartItems
+  }
 }

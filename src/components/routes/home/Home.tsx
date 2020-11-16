@@ -133,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paragraph: {
     font: "1.4rem Raleway",
-    color: "rgba(74,63,53, 0.85)",
+    color: `${theme.palette.common.dimGray}`,
     letterSpacing: "0.5px",
     maxWidth: "850px",
     margin: "80px auto 0px",
@@ -298,7 +298,6 @@ export default function Home(props: IProps) {
           </Grid>
           <Grid item xs={12}>
             <p className={classes.paragraph}>
-              {" "}
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
               minima maxime temporibus at deleniti eum sapiente vitae iure velit
               maiores aliquid ea quo pariatur quidem reiciendis quas,
