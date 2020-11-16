@@ -13,6 +13,7 @@ import {
   ReactStripeElements,
   CardElement,
 } from "react-stripe-elements"
+import Button from "@material-ui/core/Button/Button"
 
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
@@ -34,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
     border: `0.2px solid ${theme.palette.common.slateTan}`,
     padding: "3% 0.5% 3% 3%",
     borderRadius: "4px",
+  },
+  submitBtn: {
+    textTransform: 'none',
+    color: theme.palette.common.orange,
+    backgroundColor: theme.palette.common.offWhite
   },
 }))
 
@@ -222,6 +228,11 @@ export const CheckoutForm = (props: IFormProps) => {
             >
               <CardElement />
             </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+          <Button variant='outlined' className={classes.submitBtn}>
+            Sumbit Payment
+          </Button>
           </Grid>
         </Grid>
       </form>

@@ -162,6 +162,10 @@ export function Collections(props: IProps) {
     Aos.init({ duration: 900 });
   }, []);
 
+  const roundValue = (num: number, decimals = 2) => {
+    let scaling = 10 ** decimals;
+    return Math.round((num + Number.EPSILON) * scaling) / scaling;
+  }
   const scrollEvent = (event: SyntheticEvent) => {
     const target = event.target as HTMLTextAreaElement;
     console.log("Current Scroll Position: ", target.scrollTop);
@@ -176,6 +180,7 @@ export function Collections(props: IProps) {
       setRevealFilterDrawer(false);
     }
   });
+
 
   function checkProps() {
     console.log("Motion Object: ", props.motions);
@@ -360,7 +365,7 @@ export function Collections(props: IProps) {
                     <BraceletCard
                       data-testid={'bracelet-card'}
                       name={item.name}
-                      price={item.price}
+                      price={item.price.toFixed(2)}
                       src={item.src}
                       category={item.category}
                       setValue={props.setValue}

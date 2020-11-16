@@ -345,7 +345,7 @@ function DisplayItem(props: IProps) {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button className={classes.goToCartBtn} onClick={ () => history.push('/shoppingcart')}>
+                    <Button className={classes.goToCartBtn} onClick={ () => {history.push('/shoppingcart'); props.setValue(3)}}>
                       Go to <Icon>shopping_cart</Icon>
                     </Button>
                   </Grid>

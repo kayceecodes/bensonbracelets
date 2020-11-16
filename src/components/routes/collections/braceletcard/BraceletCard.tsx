@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button/Button";
 
 interface IProps {
   name: IBraceletData["name"];
-  price: IBraceletData["price"];
+  price: IBraceletData["price"] | string;
   src: IBraceletData["src"];
   category: IBraceletData["category"];
   setValue: React.Dispatch<React.SetStateAction<number>>;

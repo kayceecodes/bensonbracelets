@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import Seashells from "../../../../images/bracelets/bracelet1.jpg"
 
@@ -24,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
   cartCardContainer: {
     border: "0.5px solid lightGray",
     borderRadius: "4px",
-    boxShadow: "0px 0px 8px 10px #efefef50",
+    boxShadow: "0px 0px 8px 10px #efefef99",
     height: "130px",
     position: "relative",
     maxWidth: '600px',
-    margin: '0 auto',
+    margin: '10px auto 25px',
+    backgroundColor: 'white',
     [theme.breakpoints.up("md")]: {
       maxWidth: "750px",
     },
@@ -59,12 +60,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cartcard(props: ICartItems) {
   const classes = useStyles()
+  const [mounted, setMounted] = useState(false)
+
   useEffect(() => {
     Aos.init({ duration: 900 });
   }, []);
 
+  setTimeout( () => setMounted(true), 1000)
+
   return (
-    <Grid data-aos='fade-right' container direction="row" className={classes.cartCardContainer}>
+    <Grid data-aos={mounted === false ? 'fade-right' : 'none'} container direction="row" className={classes.cartCardContainer}>
       <Grid item xs={2} md={3}>
         <Grid
           container
@@ -76,7 +81,7 @@ export default function Cartcard(props: ICartItems) {
           <Grid item>
             <img
               className={classes.cartItemImg}
-              src={Seashells}
+              src={props.src}
               alt="Items in card"
             />
           </Grid>
@@ -93,7 +98,7 @@ export default function Cartcard(props: ICartItems) {
           {/* Name of Item
                i.e. props.name from global state (redux) */}
           <Grid item>
-            <Typography style={{fontWeight: 'bold', letterSpacing: '0.5px'}} variant="body2">
+            <Typography style={{fontWeight: 'bold', fontFamily: 'Nunito', letterSpacing: '0.5px'}} variant="body2">
               {props.name} <span style={{ color: "#afafaf", fontSize: '0.68rem', letterSpacing: '0.5px', display: 'inline', }}>{props.size + '"'}</span>
             </Typography>
 

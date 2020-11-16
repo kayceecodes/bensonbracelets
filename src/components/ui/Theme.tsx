@@ -7,10 +7,10 @@ const slateTan = "#b9ac92"; // 1 Background
 const slateBrown = "#4a3f35"; // 2 Seconde BG
 const goldenRodOrange = "#ffa225"; // 3 Highlight
 const antiqueWhite = "#fbe6d4"; // 4 Brighter Highlight
-
+const offWhite = 'rgb(247,249,250)' //Off white Background color
 // const antiquePeach = '#fbddd4';// Brighter Highlight
 const dimegray = "#6e6656";
-const dimGray = 'rgba(94,108,132, 0.95)'
+const dimGray = 'rgba(94,108,120, 0.95)'
 
 const brightMudBrown = 'rgba(46,34,16, 1)'; // Highlight
 // const cadetBlue = rgb(95,158,160)
@@ -63,8 +63,9 @@ declare module "@material-ui/core/styles/createPalette" {
     antiqueWhite: string
     dimegray: string
     brightMudBrown: string
-    kitkatOrange: string,
+    kitkatOrange: string
     dimGray: string
+    offWhite: string
   }
 }
 
@@ -80,6 +81,7 @@ export default createMuiTheme({
       brightMudBrown: `${brightMudBrown}`,
       kitkatOrange: `${kitkatOrange}`,
       dimGray: `${dimGray}`,
+      offWhite: `${offWhite}`
     },
     primary: {
       main: `${slateTan}`,

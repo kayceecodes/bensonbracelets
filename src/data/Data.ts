@@ -18,7 +18,7 @@ export const bracelets = [
     category: "Luxury",
   },
   {
-    name: "Eagles Gem",
+    name: "Eagle Gems",
     price: 13.95,
     id: 1,
     src: Bracelet2,
@@ -88,7 +88,7 @@ export const bracelets = [
     category: "Luxury",
   },
   {
-    name: "Blue Jay Gem",
+    name: "Blue Jay Gems",
     price: 15.80,
     id: 11,
     src: Bracelet2,
@@ -123,7 +123,7 @@ export const bracelets = [
     category: "Fraternity & Sorority",
   },
   {
-    name: "Metalic",
+    name: "Ronnin's Bracelet",
     price: 12.80,
     id: 16,
     src: Bracelet7,
@@ -144,14 +144,14 @@ export const bracelets = [
     category: "Fraternity & Sorority",
   },
   {
-    name: "Yellow Jasper",
+    name: "Jasper",
     price: 19.85,
     id: 19,
     src: Bracelet10,
     category: "Team Colors",
   },
   {
-    name: "Kunai",
+    name: "Deep Black Stones",
     price: 12.95,
     id: 20,
     src: Bracelet1,
@@ -263,14 +263,14 @@ export const bracelets = [
     category: "Fraternity & Sorority",
   },
   {
-    name: "Metalic Black",
+    name: "Simple Minimal",
     price: 19.25,
     id: 36,
     src: Bracelet7,
     category: "Team Colors",
   },
   {
-    name: "Kunai Pebbles ",
+    name: "Soft Pebbles ",
     price: 12.25,
     id: 37,
     src: Bracelet8,
