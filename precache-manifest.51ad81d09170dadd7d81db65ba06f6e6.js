@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "07db3477421f84df823868eddde13932",
+    "revision": "5dd81bea7ebed6e15b46c3f47a883894",
     "url": "/bensonbracelets/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/bensonbracelets/static/css/2.4707e12a.chunk.css"
   },
   {
-    "revision": "2057d8e28412980c6104",
+    "revision": "67ba89124eb68e9dd7ad",
     "url": "/bensonbracelets/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/bensonbracelets/static/js/2.fe0cd7a7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2057d8e28412980c6104",
-    "url": "/bensonbracelets/static/js/main.d8f11801.chunk.js"
+    "revision": "67ba89124eb68e9dd7ad",
+    "url": "/bensonbracelets/static/js/main.a609c3a7.chunk.js"
   },
   {
     "revision": "7b2a7e7f1332a106d7df",
