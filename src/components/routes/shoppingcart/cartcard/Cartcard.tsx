@@ -139,12 +139,3 @@ export default function Cartcard(props: ICartItems) {
     </Grid>
   )
 }
-
-/*
-add and delete buttons
-delet items
-size should be separated
-estimated Delivery Time
-Totals
-
-*/

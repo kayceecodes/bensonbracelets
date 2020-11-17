@@ -16,7 +16,7 @@ export interface IBraceletData {
   price: number
   src: string
   category: string
-  id: number
+  id?: number
 }
 
 export interface ICartItems {

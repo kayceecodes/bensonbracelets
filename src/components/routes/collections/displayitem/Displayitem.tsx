@@ -37,23 +37,32 @@ interface IDisplayItemProps {
   pageStyle: CSSProperties
   pageAnimations: IPageAnimations
   motions: IMotions
-  addToCart: (cartItems: ICartItems) => any
-}
-
-interface IBraceletProps {
-  name: IBraceletData["name"]
-  price: IBraceletData["price"]
-  src: IBraceletData["src"]
-  category: IBraceletData["category"]
+  addToCart?: (cartItems: ICartItems) => any
 }
 
 interface IGlobalState {
   cartItems: ICartItems[]
 }
 
+// interface IProps {
+//   setValue: React.Dispatch<React.SetStateAction<number>>
+//   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>
+//   pageStyle: CSSProperties
+//   pageAnimations: IPageAnimations
+//   motions: IMotions
+//   addToCart?: (cartItems: ICartItems) => any
+
+//   name: IBraceletData["name"]
+//   price: IBraceletData["price"]
+//   src: IBraceletData["src"]
+//   category: IBraceletData["category"]
+
+//   cartItems: ICartItems[]
+// }
+
 //Create an intersection instead of a type that takes only one interface at a time.
 //Intersections truly combines types for a component
-type IProps = IDisplayItemProps & IGlobalState & IBraceletData
+type IProps = IDisplayItemProps & IBraceletData & IGlobalState
 
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
@@ -98,10 +107,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "7px 12px",
   },
   goToCartBtn: {
-    marginTop: '5px',
-    fontSize: '0.6rem',
-    textTransform: 'none',
-    color: theme.palette.common.slateTan
+    marginTop: "5px",
+    fontSize: "0.6rem",
+    textTransform: "none",
+    color: theme.palette.common.slateTan,
   },
   itemDetailsOptions: {
     // height: '320px',
@@ -345,7 +354,13 @@ function DisplayItem(props: IProps) {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button className={classes.goToCartBtn} onClick={ () => {history.push('/shoppingcart'); props.setValue(3)}}>
+                    <Button
+                      className={classes.goToCartBtn}
+                      onClick={() => {
+                        history.push("/shoppingcart")
+                        props.setValue(3)
+                      }}
+                    >
                       Go to <Icon>shopping_cart</Icon>
                     </Button>
                   </Grid>
@@ -399,4 +414,4 @@ const mapStateToProps = (state: any) => ({
   cartItems: state.cart.cartItems,
 })
 
-export default connect<any, any>(mapStateToProps)(DisplayItem)
+export default connect(mapStateToProps)(DisplayItem)
