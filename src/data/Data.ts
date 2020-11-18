@@ -60,7 +60,7 @@ export const bracelets = [
     category: "Team Colors",
   },
   {
-    name: "Micro Pebbles",
+    name: "Soft Micro Pebbles",
     price: 11.95,
     id: 7,
     src: Bracelet8,

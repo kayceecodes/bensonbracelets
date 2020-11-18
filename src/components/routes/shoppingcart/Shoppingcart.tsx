@@ -156,6 +156,7 @@ const Shoppingcart = (props: IProps) => {
                       size={item.size}
                       price={item.price}
                       src={item.src}
+                      id={item.id}
                     />
                   ))
                 ) : (

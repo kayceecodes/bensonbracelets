@@ -125,9 +125,10 @@ export const CheckoutForm = (props: IFormProps) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-
+    
     try {
-      let token = await props.stripe.createToken({ name: name })
+      let token = await (props.stripe !== null 
+        ? props.stripe.createToken({ name: name }) : null)
       console.log(token)
     } catch (e) {
       throw e
@@ -240,7 +241,8 @@ export const CheckoutForm = (props: IFormProps) => {
   )
 }
 
-interface IFormProps extends ReactStripeElements.InjectedStripeProps {}
+interface IFormProps extends ReactStripeElements.InjectedStripeProps {
+}
 //Allow for props to be passed on to CheckoutForm from Stripe API wthout passing them in directly ourselves
 
 export default injectStripe(CheckoutForm)

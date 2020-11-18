@@ -62,6 +62,19 @@ export default function Cartcard(props: ICartItems) {
   const classes = useStyles()
   const [mounted, setMounted] = useState(false)
 
+  const fixedStrLength = (str: [string], numOfChar: number) => {
+    let newString: (string | undefined)[];
+    /* Only proceed if the length is larger than what you want */
+    if(str.length < numOfChar) { /*If number of characters in str are larger than the desired, entered numOFchar */
+      /* than fix that desired number down 3 and replace with strings */  
+      newString = str.map( (value: string, i: number) => {
+          if(i < (numOfChar - 3)) {
+            return value
+          }
+      })
+      return newString.concat('...')
+   } 
+}
   useEffect(() => {
     Aos.init({ duration: 900 });
   }, []);
@@ -99,7 +112,7 @@ export default function Cartcard(props: ICartItems) {
                i.e. props.name from global state (redux) */}
           <Grid item>
             <Typography style={{fontWeight: 'bold', fontFamily: 'Nunito', letterSpacing: '0.5px'}} variant="body2">
-              {props.name} <span style={{ color: "#afafaf", fontSize: '0.68rem', letterSpacing: '0.5px', display: 'inline', }}>{props.size + '"'}</span>
+              {fixedStrLength([props.name], 18)} <span style={{ color: "#afafaf", fontSize: '0.68rem', letterSpacing: '0.5px', display: 'inline', }}>{props.size + '"'}</span>
             </Typography>
 
             <Typography variant="body2">{props.price}</Typography>

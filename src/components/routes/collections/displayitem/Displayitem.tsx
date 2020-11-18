@@ -150,6 +150,7 @@ function DisplayItem(props: IProps) {
     quantity: 0,
     price: props.price,
     src: props.src,
+    id: "",
   })
 
   const history = useHistory() //History obj from react-router
@@ -163,22 +164,18 @@ function DisplayItem(props: IProps) {
   }
 
   const onAddToCart = (newItem: ICartItems) => {
-    let currentCartItems: ICartItems[] = props.cartItems
+    newItem = {
+      ...newItem,
+      id:
+        values.name +
+        values.size /*JS automatically adds as if size is a string */,
+    }
+    /*Pull all current ids in cartItems*/
+    const ids = props.cartItems.map((item) => item.id)
 
-    for (let i = 0; i < currentCartItems.length; i++) {
-      if (
-        /* If one of the items is the same as the new item(s) */
-        currentCartItems[i].size === newItem.size &&
-        currentCartItems[i].name === newItem.name
-      ) {
-        /* ..then add the quanity of the new item(s) to the old cart */
-        currentCartItems[i].quantity =
-          newItem.quantity + currentCartItems[i].quantity
-        dispatch(addQuantityToItem(currentCartItems))
-        return
-      }
-    } //End for loop
-    dispatch(addToCart(newItem))
+    /*Add quantities through dispatch(addQty) only if ids match, 
+    if not then dispatch(addToCart) for a new item with a different size */
+    ids.includes(newItem.id) ? dispatch(addQuantityToItem(newItem)) : dispatch(addToCart(newItem))
   }
 
   const setProgress = () => setTimeout(() => setLoading(false), 1000)
@@ -331,27 +328,33 @@ function DisplayItem(props: IProps) {
                   */}
 
                   <Grid item>
-                    <Button
-                      className={classes.addShoppingcartBtn}
-                      variant="outlined"
-                      color="primary"
-                      disabled={
-                        values.size === 0 || values.quantity === 0
-                          ? true
-                          : false
-                      }
-                      onClick={() => {
-                        onAddToCart(values)
-                        setLoading(true)
-                        setProgress()
-                      }}
-                    >
-                      {loading === true ? (
-                        <CircularProgress />
-                      ) : (
+                    {loading === true ? (
+                      <Button
+                        className={classes.addShoppingcartBtn}
+                        variant="outlined"
+                        color="primary"
+                      >
+                        <CircularProgress size={24} />
+                      </Button>
+                    ) : (
+                      <Button
+                        className={classes.addShoppingcartBtn}
+                        variant="outlined"
+                        color="primary"
+                        disabled={
+                          values.size === 0 || values.quantity === 0
+                            ? true
+                            : false
+                        }
+                        onClick={() => {
+                          onAddToCart(values)
+                          setLoading(true)
+                          setProgress()
+                        }}
+                      >
                         <Icon>add_shopping_cart</Icon>
-                      )}
-                    </Button>
+                      </Button>
+                    )}
                   </Grid>
                   <Grid item>
                     <Button

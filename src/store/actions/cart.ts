@@ -21,7 +21,7 @@ export type CartAction = AddToCart | RemoveFromCart | AddQuantityToItem;
 export const addToCart = (cartItems: any) => {
   return {
       type: actionTypes.ADD_TO_CART,
-      payload: cartItems,
+      cartItems: cartItems,
       quantity: cartItems.quantity,
       price: cartItems.price,
   }
@@ -35,9 +35,16 @@ export const removeFromCart = (removedId: number, totalPriceRemoved: number) => 
   };
 }
 
-export const addQuantityToItem = (newCartItems: ICartItems[]) => {
+// export const addQuantityToItem = (newCartItems: ICartItems[]) => {
+//   return {
+//     type: actionTypes.ADD_QUANTITY_TO_ITEM,
+//     payload: newCartItems
+//   }
+// }
+
+export const addQuantityToItem = (newItem: ICartItems) => {
   return {
     type: actionTypes.ADD_QUANTITY_TO_ITEM,
-    payload: newCartItems
+    newItem,
   }
 }

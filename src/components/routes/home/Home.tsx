@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   featuredHeroBtnWrapper: {
-   padding: '9px',
-   border: `1px solid ${theme.palette.common.orange}35`,
-   borderRadius: '3px',
+   padding: '4.5px',
+   border: `5px solid ${theme.palette.common.orange}27`,
+   borderRadius: '5px',
    position: "fixed",
    left: "50%",
    transform: "translate(-50%, -50%)",
@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "2.8px",
     backgroundColor: "rgb(0, 0, 0, 0.005)",
     color: "white",
-    border: "2.7px solid white",
-    borderRadius: "0.3px",
+    border: "1.5px solid white",
+    borderRadius: "0px",
     textShadow: "0px 0px 8px rgba(0,0,0,0.99)",
     transition: 'opacity 0.4s',
     [theme.breakpoints.up("sm")]: {

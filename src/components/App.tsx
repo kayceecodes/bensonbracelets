@@ -179,9 +179,24 @@ function App() {
           >
             <AnimatePresence>
               <Switch>
-                <Route
+                
+              <Route
                   exact
                   path="/"
+                  component={() => (
+                    <Home
+                      pageStyle={pageStyle}
+                      pageAnimations={pageAnimations}
+                      motions={motions}
+                      setValue={setValue}
+                      setSelectedIndex={setSelectedIndex}
+                      jumpTo={setJump}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/bensonbracelets"
                   component={() => (
                     <Home
                       pageStyle={pageStyle}

@@ -25,10 +25,10 @@ interface IProps {
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
     [theme.breakpoints.up("sm")]: {
-      marginTop: "60px",
+      marginTop: "150px",
     },
     [theme.breakpoints.down("sm")]: {
-      margin: "35px",
+      margin: "90px",
     },
   },
   root: {},
@@ -49,8 +49,7 @@ export default function Contact(props: IProps) {
       <div className={classes.sectionMargin}></div>
       
       <Grid container direction="column" alignContent='center'>
-      <div className={classes.sectionMargin}></div>
-      <div className={classes.sectionMargin}></div>
+
 
         <Grid item xs={10} md={6} xl={10}>
           <Grid container direction="column" alignContent='space-between' spacing={3}>
@@ -73,7 +72,6 @@ export default function Contact(props: IProps) {
                         Email: Email@EmailProvider.com
                       </Typography>
                     </Grid>
-                    
                   </Grid>
                 </Grid>
                 <Grid item >
@@ -100,6 +98,7 @@ export default function Contact(props: IProps) {
           </Grid>
         </Grid>
       </Grid>
+      <div className={classes.sectionMargin}></div>
     </motion.div>
   );
 }
