@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/bensonbracelets/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/bensonbracelets/static/js/main.a609c3a7.chunk.js",
-    "main.js.map": "/bensonbracelets/static/js/main.a609c3a7.chunk.js.map",
+    "main.js": "/bensonbracelets/static/js/main.1cb755e5.chunk.js",
+    "main.js.map": "/bensonbracelets/static/js/main.1cb755e5.chunk.js.map",
     "runtime-main.js": "/bensonbracelets/static/js/runtime-main.17ed17b1.js",
     "runtime-main.js.map": "/bensonbracelets/static/js/runtime-main.17ed17b1.js.map",
     "static/css/2.4707e12a.chunk.css": "/bensonbracelets/static/css/2.4707e12a.chunk.css",
-    "static/js/2.fe0cd7a7.chunk.js": "/bensonbracelets/static/js/2.fe0cd7a7.chunk.js",
-    "static/js/2.fe0cd7a7.chunk.js.map": "/bensonbracelets/static/js/2.fe0cd7a7.chunk.js.map",
+    "static/js/2.63533175.chunk.js": "/bensonbracelets/static/js/2.63533175.chunk.js",
+    "static/js/2.63533175.chunk.js.map": "/bensonbracelets/static/js/2.63533175.chunk.js.map",
     "index.html": "/bensonbracelets/index.html",
-    "precache-manifest.51ad81d09170dadd7d81db65ba06f6e6.js": "/bensonbracelets/precache-manifest.51ad81d09170dadd7d81db65ba06f6e6.js",
+    "precache-manifest.6978ef58c75176797896de9c894337dc.js": "/bensonbracelets/precache-manifest.6978ef58c75176797896de9c894337dc.js",
     "service-worker.js": "/bensonbracelets/service-worker.js",
     "static/css/2.4707e12a.chunk.css.map": "/bensonbracelets/static/css/2.4707e12a.chunk.css.map",
     "static/css/main.5ecd60fb.chunk.css.map": "/bensonbracelets/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.fe0cd7a7.chunk.js.LICENSE.txt": "/bensonbracelets/static/js/2.fe0cd7a7.chunk.js.LICENSE.txt",
+    "static/js/2.63533175.chunk.js.LICENSE.txt": "/bensonbracelets/static/js/2.63533175.chunk.js.LICENSE.txt",
     "static/media/bensonbracelet-hero-parallax.jpg": "/bensonbracelets/static/media/bensonbracelet-hero-parallax.26ec906c.jpg",
     "static/media/bracelet1.jpg": "/bensonbracelets/static/media/bracelet1.73e2d958.jpg",
     "static/media/bracelet10.jpg": "/bensonbracelets/static/media/bracelet10.3160abc7.jpg",
@@ -35,8 +35,8 @@
   "entrypoints": [
     "static/js/runtime-main.17ed17b1.js",
     "static/css/2.4707e12a.chunk.css",
-    "static/js/2.fe0cd7a7.chunk.js",
+    "static/js/2.63533175.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.a609c3a7.chunk.js"
+    "static/js/main.1cb755e5.chunk.js"
   ]
 }
