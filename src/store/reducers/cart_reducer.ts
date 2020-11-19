@@ -1,6 +1,5 @@
 import { ICartItems } from "../../Interfaces"
 import * as actionTypes from "../actions/actionTypes"
-import { CartAction } from "../actions/cart"
 import Bracelet1 from "../../images/bracelets/bracelet1.jpg"
 
 const initialState: { cartTotal: number; cartItems: ICartItems[] } = {
