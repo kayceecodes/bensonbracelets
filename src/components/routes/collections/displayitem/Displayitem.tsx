@@ -162,7 +162,7 @@ function DisplayItem(props: IProps) {
   const handleChange = (prop: keyof ICartItems, event: any) => {
     setValues({ ...values, [prop]: event.target.value })
   }
-
+ 
   const onAddToCart = (newItem: ICartItems) => {
     newItem = {
       ...newItem,
