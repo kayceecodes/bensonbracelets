@@ -11,7 +11,8 @@ const initialState: { cartTotal: number; cartItems: ICartItems[] } = {
     //   size: 2,
     //   quantity: 2,
     //   price: 32.85,
-    // },
+    //   id: '2030' 
+    // }
     // {
     //   name: "Bracelet 1 Blue",
     //   src: Bracelet1,
@@ -97,6 +98,23 @@ const cart_reducer = (state = initialState, action: any) => {
           }
         }),
       }
+      case actionTypes.REMOVE_QUANTITY_FROM_ITEM:
+        return {
+          ...state,
+          cartTotal:
+          state.cartTotal - (action.newItem.quantity * action.newItem.price),
+          cartItems: state.cartItems.map((item, i) => {
+            if (action.newItem.id === item.id) {
+              /*if there's an id that matches, add quantities and return the item object back to cartItems */
+              state.cartItems[i].quantity =
+                item.quantity - action.newItem.quantity
+              return item
+            } else {
+              /* Always return an item back into cartItems */
+              return item
+            }
+          }),
+        }
     default:
       return state
   }

@@ -1,4 +1,6 @@
-
-// export {setUser} from './setUser';
-
-export {addToCart, removeFromCart} from './cart';
+export {
+  addToCart,
+  removeFromCart,
+  addQuantityToItem,
+  removeQuantityFromItem,
+} from "./cart"

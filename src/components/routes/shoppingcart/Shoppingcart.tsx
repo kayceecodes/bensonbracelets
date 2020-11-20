@@ -2,7 +2,6 @@ import React, { Dispatch, useEffect, useState } from "react"
 import { motion, MotionStyle } from "framer-motion"
 import { IPageAnimations, IMotions, ICartItems } from "../../../Interfaces"
 import { connect } from "react-redux"
-import * as actionTypes from "../../../store/actions/index"
 import Cartcard from "./cartcard/Cartcard"
 import CheckoutForm from "./checkout/CheckoutForm"
 import Grid from "@material-ui/core/Grid/Grid"
@@ -89,10 +88,12 @@ const Shoppingcart = (props: IProps) => {
   } // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
 
   const addAllItemsQty = () => {
+    numberOfItems = 0
     for (let obj of props.cartItems) {
       numberOfItems += obj.quantity
     }
     setNumberOfItems(numberOfItems)
+
   }
 
   useEffect(() => {
@@ -151,6 +152,7 @@ const Shoppingcart = (props: IProps) => {
                   props.cartItems.map((item: ICartItems, index) => (
                     <Cartcard
                       key={item.name + item.size + index}
+                      addAllItemsQty={addAllItemsQty}
                       name={item.name}
                       quantity={item.quantity}
                       size={item.size}
@@ -175,7 +177,6 @@ const Shoppingcart = (props: IProps) => {
             container
             direction="column"
             alignContent="center"
-            // className={matches.md ? classes.absolutePos : ""}
           >
             <CheckoutForm />
           </Grid>
@@ -190,9 +191,4 @@ const mapStateToProps = (state: any) => ({
   cartTotal: state.cart.cartTotal,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  addItem: () => dispatch({ type: actionTypes.addToCart }),
-  removeItem: () => dispatch({ type: actionTypes.removeFromCart }),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Shoppingcart)
+export default connect(mapStateToProps)(Shoppingcart)

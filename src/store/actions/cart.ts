@@ -16,6 +16,11 @@ export interface AddQuantityToItem {
   payload: ICartItems
 } 
 
+export interface RemoveQuantityFromItem {
+  type: actionTypes.REMOVE_QUANTITY_FROM_ITEM
+  payload: ICartItems
+} 
+
 export type CartAction = AddToCart | RemoveFromCart | AddQuantityToItem;
 
 export const addToCart = (cartItems: any) => {
@@ -45,6 +50,13 @@ export const removeFromCart = (removedId: number, totalPriceRemoved: number) => 
 export const addQuantityToItem = (newItem: ICartItems) => {
   return {
     type: actionTypes.ADD_QUANTITY_TO_ITEM,
+    newItem,
+  }
+}
+
+export const removeQuantityFromItem = (newItem: ICartItems) => {
+  return {
+    type: actionTypes.REMOVE_QUANTITY_FROM_ITEM,
     newItem,
   }
 }

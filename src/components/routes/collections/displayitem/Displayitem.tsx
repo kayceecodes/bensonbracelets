@@ -21,14 +21,11 @@ import Select from "@material-ui/core/Select"
 
 import { motion } from "framer-motion"
 
-import theme from "../../../ui/Theme"
-import * as actionTypes from "../../../../store/actions/actionTypes"
-import { ChangeEvent } from "../../../App"
 import { connect, useDispatch } from "react-redux"
-
 import { Dispatch } from "redux"
-import { addToCart } from "../../../../store/actions"
-import { addQuantityToItem } from "../../../../store/actions/cart"
+import { addToCart, addQuantityToItem } from "../../../../store/actions"
+
+import theme from "../../../ui/Theme"
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
 
 interface IDisplayItemProps {
@@ -43,22 +40,6 @@ interface IDisplayItemProps {
 interface IGlobalState {
   cartItems: ICartItems[]
 }
-
-// interface IProps {
-//   setValue: React.Dispatch<React.SetStateAction<number>>
-//   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>
-//   pageStyle: CSSProperties
-//   pageAnimations: IPageAnimations
-//   motions: IMotions
-//   addToCart?: (cartItems: ICartItems) => any
-
-//   name: IBraceletData["name"]
-//   price: IBraceletData["price"]
-//   src: IBraceletData["src"]
-//   category: IBraceletData["category"]
-
-//   cartItems: ICartItems[]
-// }
 
 //Create an intersection instead of a type that takes only one interface at a time.
 //Intersections truly combines types for a component

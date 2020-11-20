@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { Dispatch, useEffect, useState } from "react"
 
 import Seashells from "../../../../images/bracelets/bracelet1.jpg"
 
@@ -10,6 +10,18 @@ import Typography from "@material-ui/core/Typography/Typography"
 import Button from "@material-ui/core/Button/Button"
 import Icon from "@material-ui/core/Icon/Icon"
 import Aos from "aos"
+import {
+  addQuantityToItem,
+  removeQuantityFromItem,
+} from "../../../../store/actions"
+import { useDispatch } from "react-redux"
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
+
+interface ICartCardProps {
+  addAllItemsQty: () => void
+}
+
+type IProps = ICartCardProps & ICartItems
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -27,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 0px 8px 10px #efefef99",
     height: "130px",
     position: "relative",
-    maxWidth: '600px',
-    margin: '10px auto 25px',
-    backgroundColor: 'white',
+    maxWidth: "600px",
+    margin: "10px auto 25px",
+    backgroundColor: "white",
     [theme.breakpoints.up("md")]: {
       maxWidth: "750px",
     },
@@ -48,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     // borderRadius: "5px",
     margin: "0px 2px",
     // fontSize: '0.4rem',
-    boxShadow: '0px 0px 8px rgba(0,0,0,0.05)',
+    boxShadow: "0px 0px 8px rgba(0,0,0,0.05)",
     // padding: "2px 0px 2px",
     color: `${theme.palette.common.slateTan}`,
     [theme.breakpoints.up("lg")]: {
@@ -58,31 +70,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Cartcard(props: ICartItems) {
+export default function Cartcard(props: IProps) {
   const classes = useStyles()
   const [mounted, setMounted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const dispatch: Dispatch<any> = useDispatch()
 
   const fixedStrLength = (str: [string], numOfChar: number) => {
-    let newString: (string | undefined)[];
+    let newString: (string | undefined)[]
     /* Only proceed if the length is larger than what you want */
-    if(str.length < numOfChar) { /*If number of characters in str are larger than the desired, entered numOFchar */
-      /* than fix that desired number down 3 and replace with strings */  
-      newString = str.map( (value: string, i: number) => {
-          if(i < (numOfChar - 3)) {
-            return value
-          }
+    if (str.length < numOfChar) {
+      /*If number of characters in str are larger than the desired, entered numOFchar */
+      /* than fix that desired number down 3 and replace with strings */
+      newString = str.map((value: string, i: number) => {
+        if (i < numOfChar - 3) {
+          return value
+        }
       })
-      return newString.concat('...')
-   } 
-}
+      return newString.concat("...")
+    }
+  }
   useEffect(() => {
-    Aos.init({ duration: 900 });
-  }, []);
+    Aos.init({ duration: 900 })
+  }, [])
 
-  setTimeout( () => setMounted(true), 1000)
+  const setProgress = () => setTimeout(() => setLoading(false), 500)
+
+  setTimeout(() => setMounted(true), 1000)
 
   return (
-    <Grid data-aos={mounted === false ? 'fade-right' : 'none'} container direction="row" className={classes.cartCardContainer}>
+    <Grid
+      data-aos={mounted === false ? "fade-right" : "none"}
+      container
+      direction="row"
+      className={classes.cartCardContainer}
+    >
       <Grid item xs={2} md={3}>
         <Grid
           container
@@ -111,8 +133,25 @@ export default function Cartcard(props: ICartItems) {
           {/* Name of Item
                i.e. props.name from global state (redux) */}
           <Grid item>
-            <Typography style={{fontWeight: 'bold', fontFamily: 'Nunito', letterSpacing: '0.5px'}} variant="body2">
-              {fixedStrLength([props.name], 18)} <span style={{ color: "#afafaf", fontSize: '0.68rem', letterSpacing: '0.5px', display: 'inline', }}>{props.size + '"'}</span>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Nunito",
+                letterSpacing: "0.5px",
+              }}
+              variant="body2"
+            >
+              {fixedStrLength([props.name], 18)}{" "}
+              <span
+                style={{
+                  color: "#afafaf",
+                  fontSize: "0.68rem",
+                  letterSpacing: "0.5px",
+                  display: "inline",
+                }}
+              >
+                {props.size + '"'}
+              </span>
             </Typography>
 
             <Typography variant="body2">{props.price}</Typography>
@@ -124,17 +163,51 @@ export default function Cartcard(props: ICartItems) {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <Button variant="outlined" color="primary" className={classes.cartItemBtn}>
+              <Button
+                className={classes.cartItemBtn}
+                variant="outlined"
+                color="primary"
+                disabled={loading ? true : false}
+                onClick={() => {
+                  dispatch(addQuantityToItem({ ...props, quantity: 1 }))
+                  props.addAllItemsQty()
+                  setLoading(true)
+                  setProgress()
+                }}
+              >
+                <Icon>add</Icon>
+              </Button>
+
+              <Button
+                className={classes.cartItemBtn}
+                variant="outlined"
+                color="primary"
+                disabled={loading ? true : false}
+                onClick={() => {
+                  dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
+                  setLoading(true)
+                  setProgress()
+                  props.addAllItemsQty()
+                }}
+              >
+                <Icon>remove</Icon>
+                {/* If loading is true start the circual progress component */}
+              </Button>
+              {/* 
+              <Button variant="outlined" color="primary" className={classes.cartItemBtn}
+                onClick={() => dispatch(addQuantityToItem(props))}
+              >
                 <Icon>add</Icon>
               </Button>
               <Button variant="outlined" color="primary" className={classes.cartItemBtn}>
                 <Icon>remove</Icon>
-              </Button>
+              </Button> */}
             </Grid>
           </Grid>
           <Grid item>
-            <Typography style={{letterSpacing: '0.5px'}} variant="body2">
-              <strong>Qty</strong> <br />{props.quantity}
+            <Typography style={{ letterSpacing: "0.5px" }} variant="body2">
+              <strong>Qty</strong> <br />
+              {loading ? <CircularProgress size={8} /> : props.quantity}
             </Typography>
           </Grid>
         </Grid>
