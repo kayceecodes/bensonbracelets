@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/bensonbracelets/precache-manifest.e9bc0dfef0ec8858c10a82da392cc32d.js"
+  "/bensonbracelets/precache-manifest.da00ab41ff975f2f4ea34fffb11cb42c.js"
 );
 
 self.addEventListener('message', (event) => {
