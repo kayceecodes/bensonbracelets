@@ -1,9 +1,8 @@
 import React, { Dispatch, useEffect, useState } from "react"
 
-import Seashells from "../../../../images/bracelets/bracelet1.jpg"
-
 import { ICartItems } from "../../../../Interfaces"
 
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
 import Grid from "@material-ui/core/Grid/Grid"
 import makeStyles from "@material-ui/core/styles/makeStyles"
 import Typography from "@material-ui/core/Typography/Typography"
@@ -12,13 +11,13 @@ import Icon from "@material-ui/core/Icon/Icon"
 import Aos from "aos"
 import {
   addQuantityToItem,
+  clearIDFromCart,
   removeQuantityFromItem,
 } from "../../../../store/actions"
 import { useDispatch } from "react-redux"
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
 
 interface ICartCardProps {
-  addAllItemsQty: () => void
+  getQtyTotal: () => void
 }
 
 type IProps = ICartCardProps & ICartItems
@@ -56,16 +55,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cartItemBtn: {
-    // border: "0.5px solid lightGray",
-    // borderRadius: "5px",
     margin: "0px 2px",
-    // fontSize: '0.4rem',
     boxShadow: "0px 0px 8px rgba(0,0,0,0.05)",
-    // padding: "2px 0px 2px",
     color: `${theme.palette.common.slateTan}`,
     [theme.breakpoints.up("lg")]: {
       width: "70px",
-      // padding: "1px 2px 1px",
     },
   },
 }))
@@ -76,6 +70,22 @@ export default function Cartcard(props: IProps) {
   const [loading, setLoading] = useState(false)
   const dispatch: Dispatch<any> = useDispatch()
 
+  const editQuantity = (editAction: string) => {
+    switch (editAction) {
+      case "add quantity": {
+        dispatch(addQuantityToItem({ ...props, quantity: 1 }))
+        props.getQtyTotal()
+        return
+      }
+      case "remove quantity": {
+        if (props.quantity == 1) dispatch(clearIDFromCart({ ...props }))
+        else dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
+        props.getQtyTotal() /* Update numberofItems in cart after every editQuantity Call*/
+        return
+      }
+    }
+  }
+
   const fixedStrLength = (str: [string], numOfChar: number) => {
     let newString: (string | undefined)[]
     /* Only proceed if the length is larger than what you want */
@@ -83,13 +93,15 @@ export default function Cartcard(props: IProps) {
       /*If number of characters in str are larger than the desired, entered numOFchar */
       /* than fix that desired number down 3 and replace with strings */
       newString = str.map((value: string, i: number) => {
-        if (i < numOfChar - 3) {
+       if (i < numOfChar - 3) {
           return value
         }
+        return
       })
       return newString.concat("...")
     }
   }
+
   useEffect(() => {
     Aos.init({ duration: 900 })
   }, [])
@@ -141,7 +153,7 @@ export default function Cartcard(props: IProps) {
               }}
               variant="body2"
             >
-              {fixedStrLength([props.name], 18)}{" "}
+              {fixedStrLength([props.name], 18)}
               <span
                 style={{
                   color: "#afafaf",
@@ -169,8 +181,7 @@ export default function Cartcard(props: IProps) {
                 color="primary"
                 disabled={loading ? true : false}
                 onClick={() => {
-                  dispatch(addQuantityToItem({ ...props, quantity: 1 }))
-                  props.addAllItemsQty()
+                  editQuantity("add quantity")
                   setLoading(true)
                   setProgress()
                 }}
@@ -184,24 +195,14 @@ export default function Cartcard(props: IProps) {
                 color="primary"
                 disabled={loading ? true : false}
                 onClick={() => {
-                  dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
+                  editQuantity("remove quantity")
                   setLoading(true)
                   setProgress()
-                  props.addAllItemsQty()
                 }}
               >
                 <Icon>remove</Icon>
                 {/* If loading is true start the circual progress component */}
               </Button>
-              {/* 
-              <Button variant="outlined" color="primary" className={classes.cartItemBtn}
-                onClick={() => dispatch(addQuantityToItem(props))}
-              >
-                <Icon>add</Icon>
-              </Button>
-              <Button variant="outlined" color="primary" className={classes.cartItemBtn}>
-                <Icon>remove</Icon>
-              </Button> */}
             </Grid>
           </Grid>
           <Grid item>

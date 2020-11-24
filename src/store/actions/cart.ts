@@ -1,14 +1,14 @@
-import { ICartItems } from '../../Interfaces';
-import * as actionTypes from './actionTypes';
+import { ICartItems } from '../../Interfaces'
+import * as actionTypes from './actionTypes'
 
 export interface AddToCart {
-    type: actionTypes.ADD_TO_CART;
-    payload: ICartItems;
+    type: actionTypes.ADD_TO_CART
+    payload: ICartItems
 }
-export interface RemoveFromCart {
-    totalPriceRemoved: number;
-    removedId: number;
-    type: actionTypes.REMOVE_FROM_CART;
+export interface ClearIDFromCart {
+    totalPriceRemoved: number
+    id: number
+    type: actionTypes.CLEAR_ID_FROM_CART
 }
 
 export interface AddQuantityToItem {
@@ -21,32 +21,37 @@ export interface RemoveQuantityFromItem {
   payload: ICartItems
 } 
 
-export type CartAction = AddToCart | RemoveFromCart | AddQuantityToItem;
+export type CartAction = AddToCart | ClearIDFromCart | AddQuantityToItem
 
+/**
+ * addToCart - Adds 1 object. CartItems, which is an array of objects. 
+ * @param cartItems 
+ * @returns {cartItems}
+ */
 export const addToCart = (cartItems: any) => {
   return {
       type: actionTypes.ADD_TO_CART,
       cartItems: cartItems,
-      quantity: cartItems.quantity,
-      price: cartItems.price,
   }
 }
 
-export const removeFromCart = (removedId: number, totalPriceRemoved: number) => {
+/**
+ * clearIdFromCart - Removes an item from cartItems, an object from an array. It uses id to identity and remove the whole object element from the array. 
+ * @param removedItem 
+ * @returns {removedItem}
+ */
+export const clearIDFromCart = (removedItem: ICartItems) => {
   return {
-    type: actionTypes.REMOVE_FROM_CART,
-    removedId,
-    totalPriceRemoved,
-  };
+    type: actionTypes.CLEAR_ID_FROM_CART,
+    removedItem,
+  }
 }
 
-// export const addQuantityToItem = (newCartItems: ICartItems[]) => {
-//   return {
-//     type: actionTypes.ADD_QUANTITY_TO_ITEM,
-//     payload: newCartItems
-//   }
-// }
-
+/**
+ * addQuantityToItem - goes through array cartItems and compares ids to find the right item to add quantity from newItem's quantity to cartItems[index] quantity
+ * @param newItem
+ * @returns {newItem}
+*/
 export const addQuantityToItem = (newItem: ICartItems) => {
   return {
     type: actionTypes.ADD_QUANTITY_TO_ITEM,

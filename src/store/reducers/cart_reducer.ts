@@ -9,9 +9,9 @@ const initialState: { cartTotal: number; cartItems: ICartItems[] } = {
     //   name: "Bracelet 1 Gold",
     //   src: Bracelet1,
     //   size: 2,
-    //   quantity: 2,
+    //   quantity: 4,
     //   price: 32.85,
-    //   id: '2030' 
+    //   id: '2030'
     // }
     // {
     //   name: "Bracelet 1 Blue",
@@ -71,6 +71,7 @@ const initialState: { cartTotal: number; cartItems: ICartItems[] } = {
     // },
   ],
 }
+ 
 
 const cart_reducer = (state = initialState, action: any) => {
   switch (action.type) {
@@ -80,6 +81,12 @@ const cart_reducer = (state = initialState, action: any) => {
         cartTotal:
           action.cartItems.quantity * action.cartItems.price + state.cartTotal,
         cartItems: state.cartItems.concat(action.cartItems),
+      }
+    case actionTypes.CLEAR_ID_FROM_CART:
+      return {
+        ...state,
+     
+        cartItems: state.cartItems.filter( (item) => action.removedItem.id !== item.id),
       }
     case actionTypes.ADD_QUANTITY_TO_ITEM:
       return {
@@ -98,23 +105,23 @@ const cart_reducer = (state = initialState, action: any) => {
           }
         }),
       }
-      case actionTypes.REMOVE_QUANTITY_FROM_ITEM:
-        return {
-          ...state,
-          cartTotal:
-          state.cartTotal - (action.newItem.quantity * action.newItem.price),
-          cartItems: state.cartItems.map((item, i) => {
-            if (action.newItem.id === item.id) {
-              /*if there's an id that matches, add quantities and return the item object back to cartItems */
-              state.cartItems[i].quantity =
-                item.quantity - action.newItem.quantity
-              return item
-            } else {
-              /* Always return an item back into cartItems */
-              return item
-            }
-          }),
-        }
+    case actionTypes.REMOVE_QUANTITY_FROM_ITEM:
+      return {
+        ...state,
+        cartTotal:
+          state.cartTotal - action.newItem.quantity * action.newItem.price,
+        cartItems: state.cartItems.map((item, i) => {
+          if (action.newItem.id === item.id) {
+            /*if there's an id that matches, add subtract from total and return the item object back to cartItems */
+            state.cartItems[i].quantity =
+              item.quantity - action.newItem.quantity
+            return item
+          } else {
+            /* Always return an item back into cartItems */
+            return item
+          }
+        }),
+      }
     default:
       return state
   }

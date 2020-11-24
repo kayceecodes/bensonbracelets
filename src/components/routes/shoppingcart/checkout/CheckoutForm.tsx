@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "4px",
   },
   submitBtn: {
+    marginBottom: '90px',
     textTransform: 'none',
     color: theme.palette.common.orange,
     backgroundColor: theme.palette.common.offWhite
@@ -234,9 +235,11 @@ export const CheckoutForm = (props: IFormProps) => {
           <Button variant='outlined' className={classes.submitBtn}>
             Sumbit Payment
           </Button>
+          
           </Grid>
         </Grid>
       </form>
+
     </>
   )
 }

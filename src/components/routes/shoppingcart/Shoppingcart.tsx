@@ -1,7 +1,8 @@
-import React, { Dispatch, useEffect, useState } from "react"
+import React, {useEffect, useState } from "react"
+import { connect } from "react-redux"
+
 import { motion, MotionStyle } from "framer-motion"
 import { IPageAnimations, IMotions, ICartItems } from "../../../Interfaces"
-import { connect } from "react-redux"
 import Cartcard from "./cartcard/Cartcard"
 import CheckoutForm from "./checkout/CheckoutForm"
 import Grid from "@material-ui/core/Grid/Grid"
@@ -15,8 +16,6 @@ interface IProps {
   pageAnimations: IPageAnimations
   motions: IMotions
   cartItems: ICartItems[]
-  addItem: () => any
-  removeItem: () => any
   cartTotal: number
 }
 const useStyles = makeStyles((theme) => ({
@@ -87,17 +86,18 @@ const Shoppingcart = (props: IProps) => {
     xl: useMediaQuery(theme.breakpoints.up("xl")),
   } // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
 
-  const addAllItemsQty = () => {
+  const getQtyTotal = () => {
     numberOfItems = 0
+
     for (let obj of props.cartItems) {
       numberOfItems += obj.quantity
     }
     setNumberOfItems(numberOfItems)
-
+    console.log('getQtyTotal Called')
   }
 
   useEffect(() => {
-    addAllItemsQty()
+    getQtyTotal()
   }, [])
 
   return (
@@ -152,7 +152,7 @@ const Shoppingcart = (props: IProps) => {
                   props.cartItems.map((item: ICartItems, index) => (
                     <Cartcard
                       key={item.name + item.size + index}
-                      addAllItemsQty={addAllItemsQty}
+                      getQtyTotal={getQtyTotal}
                       name={item.name}
                       quantity={item.quantity}
                       size={item.size}
