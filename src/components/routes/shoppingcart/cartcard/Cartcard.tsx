@@ -221,7 +221,7 @@ export default function Cartcard(props: IProps) {
           right: "4px",
         }}
       >
-        <Icon>close</Icon>
+        <Icon onClick={() => dispatch(clearIDFromCart({...props}))}>close</Icon>
       </div>
     </Grid>
   )
