@@ -148,6 +148,7 @@ const Shoppingcart = (props: IProps) => {
             <div className={classes.bottomBorder} />
             <Grid item xs={12} style={{ width: "100%" }}>
               <div className={classes.scrollOverflow}>
+                {/* Cart is either empty or has items */}
                 {props.cartItems.length > 0 ? (
                   props.cartItems.map((item: ICartItems, index) => (
                     <Cartcard

@@ -187,14 +187,17 @@ const useStyles = makeStyles((theme) => ({
   },
   featuredPrices: {
     position: "absolute",
-    top: "50%",
-    left: "43%",
+    top: "40%",
+    left: "37%",
     color: theme.palette.common.dimegray,
     // fontFamily: 'Raleway',
     fontSize: "0.85rem",
     fontWeight: 400,
     textAlign: "center",
     margin: "0px auto",
+    [theme.breakpoints.up("lg")]: {
+      left: "40%",
+    },
     // border: `2px solid ${theme.palette.common.dimegray}`,
   },
 }));
@@ -347,7 +350,7 @@ export default function Home(props: IProps) {
                   paragraph={true}
                   variant="caption"
                 >
-                  $9.99
+                  ${featuredBracelets[0].price}
                 </Typography>
                 <img
                   src={Bracelet1}
@@ -381,7 +384,7 @@ export default function Home(props: IProps) {
                   paragraph={true}
                   variant="caption"
                 >
-                  $9.99
+                  ${featuredBracelets[1].price}
                 </Typography>
                 <img
                   src={Bracelet2}
@@ -415,7 +418,7 @@ export default function Home(props: IProps) {
                   paragraph={true}
                   variant="caption"
                 >
-                  $9.99
+                  ${featuredBracelets[2].price}
                 </Typography>
                 <img
                   src={Bracelet3}

@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
   },
   priceWrapper: {
     padding: '2px 5px',
-    backgroundColor: '#fff9',
+    backgroundColor: '#fff5',
     position: "absolute",
-    top: "35%",
-    left: "29%",
+    top: "45%",
+    left: "32%",
     borderRadius: '5px',
     [theme.breakpoints.up("sm")]: {
       left: '36%',

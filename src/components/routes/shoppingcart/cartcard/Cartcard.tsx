@@ -12,6 +12,7 @@ import Aos from "aos"
 import {
   addQuantityToItem,
   clearIDFromCart,
+  removeAllQuantityFromItem,
   removeQuantityFromItem,
 } from "../../../../store/actions"
 import { useDispatch } from "react-redux"
@@ -62,6 +63,17 @@ const useStyles = makeStyles((theme) => ({
       width: "70px",
     },
   },
+  deleteCard: {
+    position: "absolute",
+    color: "lightGray",
+    top: "3px",
+    right: "4px",
+    transition: "color 0.3s",
+    "&:hover": {
+      cursor: "pointer",
+      color: theme.palette.common.dimegray,
+    },
+  },
 }))
 
 export default function Cartcard(props: IProps) {
@@ -78,8 +90,11 @@ export default function Cartcard(props: IProps) {
         return
       }
       case "remove quantity": {
-        if (props.quantity == 1) dispatch(clearIDFromCart({ ...props }))
-        else dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
+        if (props.quantity === 1) {
+          dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
+          props.getQtyTotal()
+          dispatch(clearIDFromCart({ ...props }))
+        } else dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
         props.getQtyTotal() /* Update numberofItems in cart after every editQuantity Call*/
         return
       }
@@ -93,13 +108,19 @@ export default function Cartcard(props: IProps) {
       /*If number of characters in str are larger than the desired, entered numOFchar */
       /* than fix that desired number down 3 and replace with strings */
       newString = str.map((value: string, i: number) => {
-       if (i < numOfChar - 3) {
+        if (i < numOfChar - 3) {
           return value
         }
         return
       })
       return newString.concat("...")
     }
+  }
+
+  const clearCard = () => {
+    dispatch(removeAllQuantityFromItem({...props}))
+    dispatch(clearIDFromCart({...props}))
+    props.getQtyTotal()
   }
 
   useEffect(() => {
@@ -213,16 +234,14 @@ export default function Cartcard(props: IProps) {
           </Grid>
         </Grid>
       </Grid>
-      <div
-        style={{
-          position: "absolute",
-          color: "lightGray",
-          top: "3px",
-          right: "4px",
+      <Icon
+        className={classes.deleteCard}
+        onClick={() => {
+          clearCard()
         }}
       >
-        <Icon onClick={() => dispatch(clearIDFromCart({...props}))}>close</Icon>
-      </div>
+        close
+      </Icon>
     </Grid>
   )
 }

@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 0px 8px 10px #efefef50",
   },
   itemImg: {
-    width: "120px",
+    width: "160px",
     [theme.breakpoints.up("sm")]: {
       width: "100%",
     },
@@ -143,7 +143,7 @@ function DisplayItem(props: IProps) {
   const handleChange = (prop: keyof ICartItems, event: any) => {
     setValues({ ...values, [prop]: event.target.value })
   }
-  
+
   const onAddToCart = (newItem: ICartItems) => {
     newItem = {
       ...newItem,
@@ -156,8 +156,22 @@ function DisplayItem(props: IProps) {
 
     /*Add quantities through dispatch(addQty) only if ids match, 
     if not then dispatch(addToCart) for a new item with a different size */
-    ids.includes(newItem.id) ? dispatch(addQuantityToItem(newItem)) : dispatch(addToCart(newItem))
+    ids.includes(newItem.id)
+      ? dispatch(addQuantityToItem(newItem))
+      : dispatch(addToCart(newItem))   
+      
+      clearValues();
   }
+
+     /* Clears values in the options */
+  const clearValues = () =>  setValues({
+    name: props.name,
+    size: 0,
+    quantity: 0,
+    price: props.price,
+    src: props.src,
+    id: "",
+  })
 
   const setProgress = () => setTimeout(() => setLoading(false), 1000)
 

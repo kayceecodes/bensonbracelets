@@ -1,23 +1,27 @@
-import React from "react";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import { Link } from "react-router-dom";
-import { IRoute, IMenuOption } from "../Header";
-import { MouseEvent } from "../../../App";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import React from "react"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
+import makeStyles from "@material-ui/core/styles/makeStyles"
+import { Link } from "react-router-dom"
+import { IRoute, IMenuOption } from "../Header"
+import { MouseEvent } from "../../../App"
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
+import Grid from "@material-ui/core/Grid/Grid"
+import { connect } from "react-redux"
+import { ICartItems } from "../../../../Interfaces"
 
 interface IProps {
-  value: number;
-  setValue: (value: number) => number;
-  selectedIndex: number;
-  routes: IRoute[];
-  anchorEl?: HTMLElement;
-  openMenu: boolean;
-  menuOptions: IMenuOption[];
-  handleClose: () => void;
-  handleMenuItemClick: (e: MouseEvent, i: number) => void;
-  handleChange: () => any;
+  value: number
+  setValue: (value: number) => number
+  selectedIndex: number
+  routes: IRoute[]
+  anchorEl?: HTMLElement
+  openMenu: boolean
+  menuOptions: IMenuOption[]
+  handleClose: () => void
+  handleMenuItemClick: (e: MouseEvent, i: number) => void
+  handleChange: () => any,
+  cartItems: ICartItems[]
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     height: "3.7px",
   },
   shoppingcart: {
-    left: '0',
+    left: "0",
     color: theme.palette.common.antiqueWhite,
     marginTop: "auto",
     marginBottom: "auto",
@@ -84,16 +88,19 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
-}));
+}))
 
-export default function Headertabs(props: IProps) {
-  const classes = useStyles(); //useStyles is a funct that will build the classes object
+function Headertabs(props: IProps) {
+  const classes = useStyles() //useStyles is a funct that will build the classes object
 
-  const handleChange = (e: any, value: number) => props.setValue(value);
+  const handleChange = (e: any, value: number) => props.setValue(value)
 
-  const shoppingcartIcon = ( 
-      <ShoppingCartIcon className={classes.shoppingcart} />
-  );
+  const shoppingcartIcon = (
+    <Grid container justify='center' alignContent='flex-start'>
+        <ShoppingCartIcon className={classes.shoppingcart} /><div style={{marginLeft: '-12px', color: '#fff'}}>{props.cartItems.length}</div>
+    </Grid>
+  )
+
   return (
     <>
       <Tabs
@@ -117,5 +124,10 @@ export default function Headertabs(props: IProps) {
         ))}
       </Tabs>
     </>
-  );
+  )
 }
+const mapStateToProps = (state: any) => ({
+  cartItems: state.cart.cartItems,
+})
+
+export default connect(mapStateToProps)(Headertabs)

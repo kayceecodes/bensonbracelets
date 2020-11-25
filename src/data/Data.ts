@@ -12,7 +12,7 @@ import Bracelet10 from "../images/bracelets/bracelet10.jpg";
 export const bracelets = [
   {
     name: "Black Stones",
-    price: 14.95,
+    price: 15.95,
     id: 0,
     src: Bracelet1,
     category: "Luxury",

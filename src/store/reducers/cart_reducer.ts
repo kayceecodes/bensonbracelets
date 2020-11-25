@@ -85,8 +85,23 @@ const cart_reducer = (state = initialState, action: any) => {
     case actionTypes.CLEAR_ID_FROM_CART:
       return {
         ...state,
-     
         cartItems: state.cartItems.filter( (item) => action.removedItem.id !== item.id),
+      }
+    case actionTypes.REMOVE_ALL_QUANTITY_FROM_ITEM:
+      return {
+        ...state,
+        cartTotal:
+        Math.abs(state.cartTotal - (action.newItem.quantity * action.newItem.price)),
+        cartItems: state.cartItems.map((item, i) => {
+          if (action.newItem.id === item.id) {
+            /*if there's an id that matches, add quantities and return the item object back to cartItems */
+            state.cartItems[i].quantity = 0
+            return item
+          } else {
+            /* Always return an item back into cartItems */
+            return item
+          }
+        }),
       }
     case actionTypes.ADD_QUANTITY_TO_ITEM:
       return {
@@ -109,7 +124,7 @@ const cart_reducer = (state = initialState, action: any) => {
       return {
         ...state,
         cartTotal:
-          state.cartTotal - action.newItem.quantity * action.newItem.price,
+          Math.abs(state.cartTotal - (action.newItem.quantity * action.newItem.price)),
         cartItems: state.cartItems.map((item, i) => {
           if (action.newItem.id === item.id) {
             /*if there's an id that matches, add subtract from total and return the item object back to cartItems */

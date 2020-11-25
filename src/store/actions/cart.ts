@@ -11,6 +11,11 @@ export interface ClearIDFromCart {
     type: actionTypes.CLEAR_ID_FROM_CART
 }
 
+export interface RemoveAllQuantityFromItem {
+  type: actionTypes.REMOVE_QUANTITY_FROM_ITEM
+  payload: ICartItems
+} 
+
 export interface AddQuantityToItem {
   type: actionTypes.ADD_QUANTITY_TO_ITEM
   payload: ICartItems
@@ -46,7 +51,12 @@ export const clearIDFromCart = (removedItem: ICartItems) => {
     removedItem,
   }
 }
-
+export const removeAllQuantityFromItem = (newItem: ICartItems) => {
+  return {
+    type: actionTypes.REMOVE_ALL_QUANTITY_FROM_ITEM,
+    newItem,
+  }
+}
 /**
  * addQuantityToItem - goes through array cartItems and compares ids to find the right item to add quantity from newItem's quantity to cartItems[index] quantity
  * @param newItem
