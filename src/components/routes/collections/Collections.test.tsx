@@ -1,22 +1,16 @@
 import React from "react"
-
-import { fireEvent, render } from '../../../../test/test-utils'
-import Collections, { IProps } from "./Collections"
-
-import { bracelets } from '../../../data/Data' 
-
-import { queryHelpers } from '@testing-library/react'
-import { screen } from '@testing-library/dom'
+import { render } from '../../../../test/test-utils'
+import Collections from "./Collections"
 import userEvent from '@testing-library/user-event'
+import mediaQuery from 'css-mediaquery'
 
-import {IMotions} from '../../../Interfaces'
-
-export const queryAllByTestId = queryHelpers.queryAllByAttribute.bind(
-  'bracelet-card', //the id I'm looking for
-  'data-test-id' // the custom attribute
-)
-
-console.log(queryAllByTestId.length);
+function createMatchMedia(width: any) {
+  return (query: string): any => ({
+    matches: mediaQuery.match(query, { width }),
+    addListener: () => {},
+    removeListener: () => {},
+  });
+}
 
 type CollectionsProps = React.ComponentProps<typeof Collections>
 
@@ -33,11 +27,14 @@ const renderUI = (props: Partial<CollectionsProps>) =>
      render(<Collections {...baseProps} {...props} />, {}) 
 
 describe('When a filter is clicked', () => {
-  let {getByTestId, getByText, queryAllByText, debug} = renderUI({})
-  //screen.debug
-  //debug()
 
-    // test('items shown are only related to the picked Category', () => {
-    //   userEvent.click(getByText('Team Colors'))
-    // })  
+  beforeAll( () => {
+    window.matchMedia = createMatchMedia(window.innerWidth)
+  })
+
+  let { getByText } = renderUI({})
+
+    test('items shown are only related to the picked Category', () => {
+      userEvent.click(getByText(/Team Colors/))
+    })  
 }) 
