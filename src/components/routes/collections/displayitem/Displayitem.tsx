@@ -264,15 +264,16 @@ function DisplayItem(props: IProps) {
                         Size
                       </InputLabel>
                       <Select
+                      data-testid='select'
                         labelId="size-label-id"
                         id="size"
                         value={values.size}
                         onChange={(event: any) => handleChange("size", event)}
                         label="Size"
                         className={classes.outlined + " " + classes.boxShadows}
-                      >
+                      > 
                         <MenuItem value={0}>Select</MenuItem>
-                        <MenuItem value={4.5}>4.5"</MenuItem>
+                        <MenuItem data-testid='menuItem' value={4.5}>4.5"</MenuItem>
                         <MenuItem value={5}>5"</MenuItem>
                         <MenuItem value={5.5}>5.5"</MenuItem>
                         <MenuItem value={6}>6"</MenuItem>

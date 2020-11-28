@@ -3,29 +3,30 @@ import React, {
   SyntheticEvent,
   useEffect,
   useState,
-} from "react";
+} from "react"
 
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
-import Typography from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography"
 
-import { IPageAnimations, IMotions } from "../../../Interfaces";
-import { bracelets } from "../../../data/Data";
-import { makeStyles, Grid, Button } from "@material-ui/core";
+import { IPageAnimations, IMotions } from "../../../Interfaces"
+import { bracelets } from "../../../data/Data"
+import Button from "@material-ui/core/Button/Button"
+import Grid from "@material-ui/core/Grid/Grid"
+import luxury from "../../../images/bracelets/collections/luxury88by1ratio.jpg"
+import fraternity from "../../../images/bracelets/collections/fraternity88by1ratio753x856px.jpg"
+import teamcolors from "../../../images/bracelets/collections/teamcolors88by1ratio440x500px.jpg"
 
-import luxury from "../../../images/bracelets/collections/luxury88by1ratio.jpg";
-import fraternity from "../../../images/bracelets/collections/fraternity88by1ratio753x856px.jpg";
-import teamcolors from "../../../images/bracelets/collections/teamcolors88by1ratio440x500px.jpg";
+import Aos from "aos"
+import BraceletCard from "./braceletcard/BraceletCard"
+import Hidden from "@material-ui/core/Hidden/Hidden"
 
-import Aos from "aos";
-import BraceletCard from "./braceletcard/BraceletCard";
-import Hidden from "@material-ui/core/Hidden/Hidden";
+import Icon from "@material-ui/core/Icon/Icon"
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery"
+import useTheme from "@material-ui/core/styles/useTheme"
 
-import Icon from "@material-ui/core/Icon/Icon";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
-import useTheme from "@material-ui/core/styles/useTheme";
-
-import { useScrollPosition } from "@n8tb1t/use-scroll-position";
+import { useScrollPosition } from "@n8tb1t/use-scroll-position"
+import makeStyles from "@material-ui/core/styles/makeStyles"
 
 export interface IProps {
   setValue: React.Dispatch<React.SetStateAction<number>>
@@ -36,8 +37,7 @@ export interface IProps {
   jumpTo: (jumpingTarget: string | number | Element) => void
 }
 
-
-  /* Collections will show the gallery of the products and the other routes with the 
+/* Collections will show the gallery of the products and the other routes with the 
 bracelets will simply be a filtered page the whole colleciton/gallery */
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.85rem",
     color: theme.palette.common.kitkatOrange,
   },
-}));
+}))
 
 export let CATEGORIES: any = {
   Luxury: { name: "Luxury", filterArrowPos: 1 },
@@ -137,53 +137,62 @@ export let CATEGORIES: any = {
     filterArrowPos: 49,
   },
   "Team Colors": { name: "Team Colors", filterArrowPos: 97 },
-};
+}
 
 export function Collections(props: IProps) {
-  const classes = useStyles();
-  const [revealCaption, setRevealCaption] = useState(false); // Caption 'Filter By:' above Luxury, Team Colors, Frat&Sor
-  const [filterCategory, setFilterCategory] = useState<string>("");
-  const [revealFilterDrawer, setRevealFilterDrawer] = useState(false);
-  const theme = useTheme();
+  const classes = useStyles()
+  const [mobileMode, setMobileMode] = useState(false)
+  const [revealCaption, setRevealCaption] = useState(false) // Caption 'Filter By:' above Luxury, Team Colors, Frat&Sor
+  const [filterCategory, setFilterCategory] = useState<string>("")
+  const [revealFilterDrawer, setRevealFilterDrawer] = useState(false)
+  const theme = useTheme()
   const matches = {
     sm: useMediaQuery(theme.breakpoints.up("sm")),
     md: useMediaQuery(theme.breakpoints.up("md")),
     lg: useMediaQuery(theme.breakpoints.up("lg")),
     xl: useMediaQuery(theme.breakpoints.up("xl")),
-  }; // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
+  } // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
 
   const filteredBracelets =
     filterCategory === ""
       ? bracelets
-      : bracelets.filter((item) => item.category === filterCategory);
+      : bracelets.filter((item) => item.category === filterCategory)
 
   useEffect(() => {
-      /* data-aos='fade-up or down'. This is a css effect when element appears */
-    Aos.init({ duration: 900 });
-  }, []);
+    /* data-aos='fade-up or down'. This is a css effect when element appears */
+    Aos.init({ duration: 900 })
+  }, [])
 
   const roundValue = (num: number, decimals = 2) => {
-    let scaling = 10 ** decimals;
-    return Math.round((num + Number.EPSILON) * scaling) / scaling;
+    let scaling = 10 ** decimals
+    return Math.round((num + Number.EPSILON) * scaling) / scaling
   }
   const scrollEvent = (event: SyntheticEvent) => {
-    const target = event.target as HTMLTextAreaElement;
-    console.log("Current Scroll Position: ", target.scrollTop);
-  };
+    const target = event.target as HTMLTextAreaElement
+    console.log("Current Scroll Position: ", target.scrollTop)
+  }
 
   useScrollPosition(({ prevPos, currPos }) => {
-    let revealedPosition = 0;
-    revealedPosition = matches.md ? 750 : 0;
+    let revealedPosition = 0
+    revealedPosition = matches.md ? 750 : 0
     if (-currPos.y >= revealedPosition) {
-      setRevealFilterDrawer(true);
+      setRevealFilterDrawer(true)
     } else {
-      setRevealFilterDrawer(false);
+      setRevealFilterDrawer(false)
     }
-  });
+  })
 
+  const resizeListener = () => {
+    if (window.innerWidth < 960) {
+      setMobileMode(true)
+    } else {
+      setMobileMode(false)
+    }
+  }
+  window.addEventListener("resize", resizeListener)
 
   function checkProps() {
-    console.log("Motion Object: ", props.motions);
+    console.log("Motion Object: ", props.motions)
   }
   return (
     <>
@@ -233,12 +242,16 @@ export function Collections(props: IProps) {
                   {/*Container of the categories - card*/}
                   <Grid item data-aos="fade-up">
                     <Button
-                        className={ classes.categoryCardBtn + ' ' +
-                        (filterCategory === CATEGORIES['Luxury'].name ? classes.categoryCardBtnActive : '')
-                        }
+                      className={
+                        classes.categoryCardBtn +
+                        " " +
+                        (filterCategory === CATEGORIES["Luxury"].name
+                          ? classes.categoryCardBtnActive
+                          : "")
+                      }
                       onClick={() => {
-                        setFilterCategory(CATEGORIES["Luxury"].name);
-                        props.jumpTo("#gallery");
+                        setFilterCategory(CATEGORIES["Luxury"].name)
+                        props.jumpTo("#gallery")
                       }}
                     >
                       <div className={classes.categoryCard}>
@@ -267,14 +280,19 @@ export function Collections(props: IProps) {
                   </Grid>
                   <Grid item data-aos="fade-up">
                     <Button
-                      className={ classes.categoryCardBtn + ' ' +
-                      (filterCategory === CATEGORIES['Fraternity & Sorority'].name ? classes.categoryCardBtnActive : '')
+                      className={
+                        classes.categoryCardBtn +
+                        " " +
+                        (filterCategory ===
+                        CATEGORIES["Fraternity & Sorority"].name
+                          ? classes.categoryCardBtnActive
+                          : "")
                       }
                       onClick={() => {
                         setFilterCategory(
                           CATEGORIES["Fraternity & Sorority"].name
-                        );
-                        props.jumpTo("#gallery");
+                        )
+                        props.jumpTo("#gallery")
                       }}
                     >
                       <div className={classes.categoryCard}>
@@ -303,12 +321,16 @@ export function Collections(props: IProps) {
                   </Grid>
                   <Grid item data-aos="fade-up">
                     <Button
-                      className={ classes.categoryCardBtn + ' ' +
-                      (filterCategory === CATEGORIES['Team Colors'].name ? classes.categoryCardBtnActive : '')
+                      className={
+                        classes.categoryCardBtn +
+                        " " +
+                        (filterCategory === CATEGORIES["Team Colors"].name
+                          ? classes.categoryCardBtnActive
+                          : "")
                       }
                       onClick={() => {
-                        setFilterCategory(CATEGORIES["Team Colors"].name);
-                        props.jumpTo("#gallery");
+                        setFilterCategory(CATEGORIES["Team Colors"].name)
+                        props.jumpTo("#gallery")
                       }}
                     >
                       <div className={classes.categoryCard}>
@@ -323,7 +345,7 @@ export function Collections(props: IProps) {
                           justify="center"
                           alignContent="center"
                         >
-                          <Grid item  id="gallery">
+                          <Grid item id="gallery">
                             <Typography
                               className={classes.caption}
                               variant="caption"
@@ -363,7 +385,6 @@ export function Collections(props: IProps) {
                     key={item.name + item.src}
                   >
                     <BraceletCard
-                      data-testid={'bracelet-card'}
                       name={item.name}
                       price={item.price.toFixed(2)}
                       src={item.src}
@@ -461,7 +482,7 @@ export function Collections(props: IProps) {
         ) : null}
       </div>
     </>
-  );
+  )
 }
 
-export default Collections;
+export default Collections
