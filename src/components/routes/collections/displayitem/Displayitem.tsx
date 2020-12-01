@@ -259,12 +259,12 @@ function DisplayItem(props: IProps) {
                       variant="outlined"
                       className={classes.formControl}
                       onSubmit={(e) => e.preventDefault()}
-                    >
+                    > 
                       <InputLabel id="demo-simple-select-outlined-label">
                         Size
                       </InputLabel>
                       <Select
-                      data-testid='select'
+                      data-testid='size'
                         labelId="size-label-id"
                         id="size"
                         value={values.size}
@@ -272,7 +272,7 @@ function DisplayItem(props: IProps) {
                         label="Size"
                         className={classes.outlined + " " + classes.boxShadows}
                       > 
-                        <MenuItem value={0}>Select</MenuItem>
+                        <MenuItem value={0}>Inches</MenuItem>
                         <MenuItem data-testid='menuItem' value={4.5}>4.5"</MenuItem>
                         <MenuItem value={5}>5"</MenuItem>
                         <MenuItem value={5.5}>5.5"</MenuItem>
@@ -296,8 +296,8 @@ function DisplayItem(props: IProps) {
                         Qty
                       </InputLabel>
                       <Select
+                      data-testid='quantity'
                         labelId="quantity-label-id"
-                        id="quantity"
                         value={values.quantity}
                         onChange={(
                           event: React.ChangeEvent<{ value: unknown }>
@@ -305,7 +305,7 @@ function DisplayItem(props: IProps) {
                         label="Qty"
                         className={classes.outlined + " " + classes.boxShadows}
                       >
-                        <MenuItem value={0}>Select</MenuItem>
+                        <MenuItem value={0}>0 - 10</MenuItem>
                         <MenuItem value={1}>1</MenuItem>
                         <MenuItem value={2}>2</MenuItem>
                         <MenuItem value={3}>3</MenuItem>

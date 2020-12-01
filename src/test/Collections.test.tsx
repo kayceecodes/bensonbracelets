@@ -3,10 +3,10 @@ jest.mock("@material-ui/core/Hidden/Hidden", () => ({ children }: any) => (
 ))
 import React from "react"
 
-import { render } from "../../../../test/test-utils"
-import Collections from "./Collections"
+import { render } from "./test-utils"
+import Collections from "../components/routes/collections/Collections"
 
-import { bracelets } from "../../../data/Data"
+import { bracelets } from "../data/Data"
 
 import { screen } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"

@@ -23,6 +23,6 @@
     "jsx": "react"
   },
   "include": [
-    "src"
+    "src", "test/DisplayItem.test.tsx", "test/Collections.test.tsx", "test/Shoppingcart.test.tsx", "test/CheckoutForm.test.tsx"
   ]
 }

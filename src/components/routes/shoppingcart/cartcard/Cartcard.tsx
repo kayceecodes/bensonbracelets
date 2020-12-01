@@ -201,6 +201,7 @@ export default function Cartcard(props: IProps) {
                 variant="outlined"
                 color="primary"
                 disabled={loading ? true : false}
+                data-testid='add-qty-btn'
                 onClick={() => {
                   editQuantity("add quantity")
                   setLoading(true)
@@ -215,6 +216,7 @@ export default function Cartcard(props: IProps) {
                 variant="outlined"
                 color="primary"
                 disabled={loading ? true : false}
+                data-testid='remove-qty-btn'
                 onClick={() => {
                   editQuantity("remove quantity")
                   setLoading(true)

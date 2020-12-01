@@ -105,11 +105,8 @@ const stateLocations = [
 ]
 
 export const CheckoutForm = (props: IFormProps) => {
-  const [name, setName] = useState<string>("")
+  const [name, setName] = useState<string>()
   const [stateLocation, setStateLocation] = useState<string>("")
-  const [streetAddress, setStreetAddress] = useState<string>("")
-  const [zipcode, setZipcode] = useState<number | string>("")
-  const [amount, setAmount] = useState<number>()
 
   const [values, setValues] = React.useState<State>({
     name: "",
@@ -140,7 +137,7 @@ export const CheckoutForm = (props: IFormProps) => {
 
   return (
     <>
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <form onSubmit={(e: FormEvent) => handleSubmit(e)} data-testid='form' >
         <Grid
           container
           direction="column"
@@ -232,7 +229,7 @@ export const CheckoutForm = (props: IFormProps) => {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-          <Button variant='outlined' className={classes.submitBtn}>
+          <Button data-testid='submit' variant='outlined' className={classes.submitBtn}>
             Sumbit Payment
           </Button>
           

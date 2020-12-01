@@ -98,7 +98,7 @@ const Shoppingcart = (props: IProps) => {
 
   useEffect(() => {
     getQtyTotal()
-  }, [])
+  })
 
   return (
     <motion.div
@@ -142,7 +142,7 @@ const Shoppingcart = (props: IProps) => {
               className={classes.totalItems}
               style={{ textAlign: "left" }}
             >
-              {"Cart Total: $" + props.cartTotal.toFixed(2)} <br />
+              <span data-testid='cart-total'>{"Cart Total: $" + props.cartTotal.toFixed(2)}</span> <br />
               {"Total Items in Cart: " + numberOfItems + ' items'}
             </Grid>
             <div className={classes.bottomBorder} />
