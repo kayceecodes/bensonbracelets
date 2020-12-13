@@ -4,8 +4,10 @@
  * @param numOfChar: number
  * @return str : shortenedStr
  */
-export const fixedStrLength = (str: string[], numOfChar: number) => {
-  let shortenedStr: string[] = str.filter((val, index) => index < numOfChar - 4)
+export const fixedStrLength = (str: string, numOfChar: number) => {
+  let shortenedStr = str.split('').filter((val, index) => index < (numOfChar - 4))
 
   return str.length > numOfChar ? shortenedStr.concat("...") : str
 }
+
+console.log(fixedStrLength('Night Stones of Blue', 15))

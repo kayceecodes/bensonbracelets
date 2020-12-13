@@ -168,7 +168,7 @@ export default function Cartcard(props: IProps) {
               }}
               variant="body2"
             >
-              {fixedStrLength([props.name], 18)}
+              {fixedStrLength(props.name, 15)}
               <span
                 style={{
                   color: "#afafaf",

@@ -176,7 +176,7 @@ const CartSummaryModal = (props: IProps) => {
           </Grid>
 
           {/* Summary Buttons */}
-          <Grid item className={classes.summaryButtons}>
+          <Grid item>
             <Grid container data-aos="fade-up">
               <Grid item xs={12} sm={6}>
                 <Button
