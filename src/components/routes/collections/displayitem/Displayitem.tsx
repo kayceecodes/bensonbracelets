@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect } from "react"
+import React, { CSSProperties, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 
 import {
@@ -18,6 +18,7 @@ import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
 
 import { motion } from "framer-motion"
 
@@ -26,7 +27,9 @@ import { Dispatch } from "redux"
 import { addToCart, addQuantityToItem } from "../../../../store/actions"
 
 import theme from "../../../ui/Theme"
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
+
+import CartSummaryModal from "../cartSummaryModal/CartSummaryModal"
+import { parsePrice } from "../../../App"
 
 interface IDisplayItemProps {
   setValue: React.Dispatch<React.SetStateAction<number>>
@@ -59,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
   },
   boxShadows: {
     boxShadow: "0px 0px 8px 10px #efefef50",
+  },
+  popoverCartSummary: {
+    width: "600px",
+    height: "450px",
   },
   itemImg: {
     width: "160px",
@@ -118,6 +125,7 @@ const useStyles = makeStyles((theme) => ({
 function DisplayItem(props: IProps) {
   const classes = useStyles()
   const dispatch: Dispatch<any> = useDispatch()
+  const [open, setOpen] = useState(false)
   const matches = {
     sm: useMediaQuery(theme.breakpoints.up("sm")),
     md: useMediaQuery(theme.breakpoints.up("md")),
@@ -128,7 +136,7 @@ function DisplayItem(props: IProps) {
   const [values, setValues] = React.useState<ICartItems>({
     name: props.name,
     size: 0,
-    quantity: 0,
+    quantity: 1,
     price: props.price,
     src: props.src,
     id: "",
@@ -158,22 +166,26 @@ function DisplayItem(props: IProps) {
     if not then dispatch(addToCart) for a new item with a different size */
     ids.includes(newItem.id)
       ? dispatch(addQuantityToItem(newItem))
-      : dispatch(addToCart(newItem))   
-      
-      clearValues();
+      : dispatch(addToCart(newItem))
+
+    clearValues()
   }
 
-     /* Clears values in the options */
-  const clearValues = () =>  setValues({
-    name: props.name,
-    size: 0,
-    quantity: 0,
-    price: props.price,
-    src: props.src,
-    id: "",
-  })
+  /* Clears values in the options */
+  const clearValues = () =>
+    setValues({
+      name: props.name,
+      size: 0,
+      quantity: 1,
+      price: props.price,
+      src: props.src,
+      id: "",
+    })
 
-  const setProgress = () => setTimeout(() => setLoading(false), 1000)
+  const setProgress = () => {
+    setTimeout(() => setLoading(false), 500)
+    setTimeout(() => setOpen(true), 500)
+  }
 
   useEffect(() => {
     props.setValue(1)
@@ -181,190 +193,211 @@ function DisplayItem(props: IProps) {
 
   return (
     <>
-      <motion.div
-        style={props.pageStyle} // Style of the page as a container
-        initial={props.motions.initial}
-        animate={props.motions.animate}
-        exit={props.motions.exit}
-        variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
-        transition={props.pageAnimations.transition}
-      >
-        <Grid container alignItems="center" direction="column">
-          <div className={classes.sectionMargin} />
-          <Grid item style={{ flexGrow: 1 }} xs={12}>
-            <Grid
-              container
-              direction="row"
-              spacing={matches.sm ? 8 : 3}
-              justify="space-between"
-            >
-              <Grid item xs={1} sm={1}>
-                {/*Left Side of container - the Back Arrow */}
-                <Typography variant="caption">
-                  <Button onClick={() => goBackHandle()}>
-                    <Icon className={classes.arrow}>arrow_back_ios</Icon>
-                  </Button>
-                </Typography>
-              </Grid>
+      <div style={{ position: "relative" }}>
+        <motion.div
+          style={{
+            position: "absolute",
+            width: "100%",
+            textAlign: "center",
+            overflow: "hidden",
+          }} // Style of the page as a container
+          initial={props.motions.initial}
+          animate={props.motions.animate}
+          exit={props.motions.exit}
+          variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
+          transition={props.pageAnimations.transition}
+        >
+          <CartSummaryModal
+            setValue={props.setValue}
+            item={values}
+            open={open}
+            setOpen={setOpen}
+          />
+
+          <Grid container alignItems="center" direction="column">
+            <div className={classes.sectionMargin} />
+            <Grid item style={{ flexGrow: 1 }} xs={12}>
               <Grid
-                item
-                xs={10}
-                sm={9}
-                style={{
-                  borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
-                }}
+                container
+                direction="row"
+                spacing={matches.sm ? 8 : 3}
+                justify="space-between"
               >
-                {/* Right Side of Cantainer - The Item's Name */}
-                <Typography variant="h3" className={classes.itemName}>
-                  {props.name}
-                </Typography>
+                <Grid item xs={1} sm={1}>
+                  {/*Left Side of container - the Back Arrow */}
+                  <Typography variant="caption">
+                    <Button onClick={() => goBackHandle()}>
+                      <Icon className={classes.arrow}>arrow_back_ios</Icon>
+                    </Button>
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={10}
+                  sm={9}
+                  style={{
+                    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
+                  }}
+                >
+                  {/* Right Side of Cantainer - The Item's Name */}
+                  <Typography variant="h3" className={classes.itemName}>
+                    {props.name}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <div className={classes.sectionMargin} />{" "}
-          {/*Separate Name from item's img and details*/}
-          <Grid item>
-            {/* Second Item in the main container of Displayitem component - img left & details/options right */}
-            <Grid container direction="row" alignItems="center">
-              <Grid item sm={6}>
-                {/* LEFT SIDE OF ITEM - Img Of Bracelet */}
-                <img
-                  src={props.src}
-                  className={classes.itemImg}
-                  alt="bracelet displayed"
-                />{" "}
-                {/* Img Of Item - Bracelet */}
-              </Grid>
-              <Grid item sm={4}>
-                {/* RIGHT SIDE OF ITEM - Details/Options */}
-                <Grid
-                  container
-                  alignItems="flex-end"
-                  justify="space-around"
-                  direction="column"
-                  className={classes.itemDetailsOptions}
-                >
-                  <Grid item>
-                    <div className={classes.sectionMargin} />
-                  </Grid>
-                  {/* PRICE - CALCULATED */}
-                  <Grid item>
-                    <Typography variant="body1">
-                      Price: {props.price}
-                    </Typography>
-                  </Grid>
-                  {/* SIZE - CHOOSE SIZE*/}
-                  <Grid item>
-                    <FormControl
-                      variant="outlined"
-                      className={classes.formControl}
-                      onSubmit={(e) => e.preventDefault()}
-                    > 
-                      <InputLabel id="demo-simple-select-outlined-label">
-                        Size
-                      </InputLabel>
-                      <Select
-                      data-testid='size'
-                        labelId="size-label-id"
-                        id="size"
-                        value={values.size}
-                        onChange={(event: any) => handleChange("size", event)}
-                        label="Size"
-                        className={classes.outlined + " " + classes.boxShadows}
-                      > 
-                        <MenuItem value={0}>Inches</MenuItem>
-                        <MenuItem data-testid='menuItem' value={4.5}>4.5"</MenuItem>
-                        <MenuItem value={5}>5"</MenuItem>
-                        <MenuItem value={5.5}>5.5"</MenuItem>
-                        <MenuItem value={6}>6"</MenuItem>
-                        <MenuItem value={6.5}>6.5"</MenuItem>
-                        <MenuItem value={7}>7"</MenuItem>
-                        <MenuItem value={7.5}>7.5"</MenuItem>
-                        <MenuItem value={8}>8"</MenuItem>
-                        <MenuItem value={8.5}>8.5"</MenuItem>
-                        <MenuItem value={9}>9"</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item>
-                    {/* QUANTITY - INPUT */}
-                    <FormControl
-                      variant="outlined"
-                      className={classes.formControl}
-                    >
-                      <InputLabel id="demo-simple-select-outlined-label">
-                        Qty
-                      </InputLabel>
-                      <Select
-                      data-testid='quantity'
-                        labelId="quantity-label-id"
-                        value={values.quantity}
-                        onChange={(
-                          event: React.ChangeEvent<{ value: unknown }>
-                        ) => handleChange("quantity", event)}
-                        label="Qty"
-                        className={classes.outlined + " " + classes.boxShadows}
+            <div className={classes.sectionMargin} />{" "}
+            {/*Separate Name from item's img and details*/}
+            <Grid item>
+              {/* Second Item in the main container of Displayitem component - img left & details/options right */}
+              <Grid container direction="row" alignItems="center">
+                <Grid item sm={6}>
+                  {/* LEFT SIDE OF ITEM - Img Of Bracelet */}
+                  <img
+                    src={props.src}
+                    className={classes.itemImg}
+                    alt="bracelet displayed"
+                  />{" "}
+                  {/* Img Of Item - Bracelet */}
+                </Grid>
+                <Grid item sm={4}>
+                  {/* RIGHT SIDE OF ITEM - Details/Options */}
+                  <Grid
+                    container
+                    alignItems="flex-end"
+                    justify="space-around"
+                    direction="column"
+                    className={classes.itemDetailsOptions}
+                  >
+                    <Grid item>
+                      <div className={classes.sectionMargin} />
+                    </Grid>
+
+                    {/* SIZE - CHOOSE SIZE*/}
+                    <Grid item>
+                      <FormControl
+                        variant="outlined"
+                        className={classes.formControl}
+                        onSubmit={(e) => e.preventDefault()}
                       >
-                        <MenuItem value={0}>0 - 10</MenuItem>
-                        <MenuItem value={1}>1</MenuItem>
-                        <MenuItem value={2}>2</MenuItem>
-                        <MenuItem value={3}>3</MenuItem>
-                        <MenuItem value={4}>4</MenuItem>
-                        <MenuItem value={5}>5</MenuItem>
-                        <MenuItem value={6}>6</MenuItem>
-                        <MenuItem value={7}>7</MenuItem>
-                        <MenuItem value={8}>8</MenuItem>
-                        <MenuItem value={9}>9</MenuItem>
-                        <MenuItem value={10}>10</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  {/* SHOPPING CART - BTN - ADD TO CART FUNCTION
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Size
+                        </InputLabel>
+                        <Select
+                          data-testid="size"
+                          labelId="size-label-id"
+                          id="size"
+                          value={values.size}
+                          onChange={(event: any) => handleChange("size", event)}
+                          label="Size"
+                          className={
+                            classes.outlined + " " + classes.boxShadows
+                          }
+                        >
+                          <MenuItem value={0}>Inches</MenuItem>
+                          <MenuItem data-testid="menuItem" value={4.5}>
+                            4.5"
+                          </MenuItem>
+                          <MenuItem value={5}>5"</MenuItem>
+                          <MenuItem value={5.5}>5.5"</MenuItem>
+                          <MenuItem value={6}>6"</MenuItem>
+                          <MenuItem value={6.5}>6.5"</MenuItem>
+                          <MenuItem value={7}>7"</MenuItem>
+                          <MenuItem value={7.5}>7.5"</MenuItem>
+                          <MenuItem value={8}>8"</MenuItem>
+                          <MenuItem value={8.5}>8.5"</MenuItem>
+                          <MenuItem value={9}>9"</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item>
+                      {/* QUANTITY - INPUT */}
+                      <FormControl
+                        variant="outlined"
+                        className={classes.formControl}
+                      >
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Qty
+                        </InputLabel>
+                        <Select
+                          data-testid="quantity"
+                          labelId="quantity-label-id"
+                          value={values.quantity}
+                          onChange={(
+                            event: React.ChangeEvent<{ value: unknown }>
+                          ) => handleChange("quantity", event)}
+                          label="Qty"
+                          className={
+                            classes.outlined + " " + classes.boxShadows
+                          }
+                        >
+                          <MenuItem value={0}>0 - 10</MenuItem>
+                          <MenuItem value={1}>1</MenuItem>
+                          <MenuItem value={2}>2</MenuItem>
+                          <MenuItem value={3}>3</MenuItem>
+                          <MenuItem value={4}>4</MenuItem>
+                          <MenuItem value={5}>5</MenuItem>
+                          <MenuItem value={6}>6</MenuItem>
+                          <MenuItem value={7}>7</MenuItem>
+                          <MenuItem value={8}>8</MenuItem>
+                          <MenuItem value={9}>9</MenuItem>
+                          <MenuItem value={10}>10</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    {/* SHOPPING CART - BTN - ADD TO CART FUNCTION
                       ADDS CART ITEMS TO REDUCER
                   */}
 
-                  <Grid item>
-                    {loading === true ? (
+                    <Grid item>
+                      {loading === true ? (
+                        <Button
+                          className={classes.addShoppingcartBtn}
+                          variant="outlined"
+                          color="primary"
+                        >
+                          <CircularProgress size={24} />
+                        </Button>
+                      ) : (
+                        <Button
+                          className={classes.addShoppingcartBtn}
+                          variant="outlined"
+                          color="primary"
+                          disabled={
+                            values.size === 0 || values.quantity === 0
+                              ? true
+                              : false
+                          }
+                          onClick={() => {
+                            onAddToCart(values)
+                            setLoading(true)
+                            setProgress()
+                            // setOpen(true)
+                          }}
+                        >
+                          <Icon>add_shopping_cart</Icon>
+                        </Button>
+                      )}
+                    </Grid>
+                    <Grid item>
                       <Button
-                        className={classes.addShoppingcartBtn}
-                        variant="outlined"
-                        color="primary"
-                      >
-                        <CircularProgress size={24} />
-                      </Button>
-                    ) : (
-                      <Button
-                        className={classes.addShoppingcartBtn}
-                        variant="outlined"
-                        color="primary"
-                        disabled={
-                          values.size === 0 || values.quantity === 0
-                            ? true
-                            : false
-                        }
+                        className={classes.goToCartBtn}
                         onClick={() => {
-                          onAddToCart(values)
-                          setLoading(true)
-                          setProgress()
+                          history.push("/shoppingcart")
+                          props.setValue(3)
                         }}
                       >
-                        <Icon>add_shopping_cart</Icon>
+                        Go to <Icon>shopping_cart</Icon>
                       </Button>
-                    )}
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      className={classes.goToCartBtn}
-                      onClick={() => {
-                        history.push("/shoppingcart")
-                        props.setValue(3)
-                      }}
-                    >
-                      Go to <Icon>shopping_cart</Icon>
-                    </Button>
-                  </Grid>
-                  {/* QUANTITY CONTROLS */}
-                  {/* <Grid item className={classes.quantityControl}>
+                    </Grid>
+                    {/* PRICE - CALCULATED */}
+                    <Grid item style={{ paddingTop: "10px" }}>
+                      <Typography variant="body1">
+                        Price: ${(props.price * values.quantity).toFixed(2)}
+                      </Typography>
+                    </Grid>
+                    {/* QUANTITY CONTROLS */}
+                    {/* <Grid item className={classes.quantityControl}>
                     <Typography variant="body1">
                       <Grid container>
                         <Grid item onClick={() => addOneToQty()}>
@@ -377,34 +410,33 @@ function DisplayItem(props: IProps) {
                       </Grid>
                     </Typography>
                   </Grid> */}
-                  <div className={classes.sectionMargin} />
-                  <Grid item>
-                    <Typography variant="body1">
-                      <strong>{props.category}</strong>
-                    </Typography>
-                  </Grid>
-                  <Grid container justify="flex-end">
-                    <Grid item xs={12}>
-                      <Typography
-                        className={classes.itemDescription}
-                        variant="body1"
-                      >
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Voluptatibus ullam, ipsum deleniti asperiores
-                        dignissimos harum? Totam, provident sed.
-                      </Typography>
+                    <div className={classes.sectionMargin} />
+                    <Grid item>
+                      <Typography variant="h5">{props.category}</Typography>
+                    </Grid>
+                    <Grid container justify="flex-end">
+                      <Grid item xs={12}>
+                        <Typography
+                          className={classes.itemDescription}
+                          variant="body1"
+                        >
+                          Lorem ipsum dolor sit amet consectetur, adipisicing
+                          elit. Voluptatibus ullam, ipsum deleniti asperiores
+                          dignissimos harum? Totam, provident sed.
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
+            <div className={classes.sectionMargin} />
+            <div className={classes.sectionMargin} />
+            <div className={classes.sectionMargin} />
+            <div className={classes.sectionMargin} />
           </Grid>
-          <div className={classes.sectionMargin} />
-          <div className={classes.sectionMargin} />
-          <div className={classes.sectionMargin} />
-          <div className={classes.sectionMargin} />
-        </Grid>
-      </motion.div>
+        </motion.div>
+      </div>
     </>
   )
 }

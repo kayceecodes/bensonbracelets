@@ -91,13 +91,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Headertabs(props: IProps) {
-  const classes = useStyles() //useStyles is a funct that will build the classes object
-
+  const classes = useStyles()
   const handleChange = (e: any, value: number) => props.setValue(value)
 
   const shoppingcartIcon = (
     <Grid container justify='center' alignContent='flex-start'>
-        <ShoppingCartIcon className={classes.shoppingcart} /><div style={{marginLeft: '-12px', color: '#fff'}}>{props.cartItems.length}</div>
+        <ShoppingCartIcon className={classes.shoppingcart} />
+        <div style={{marginLeft: '-12px', color: '#fff'}}>
+          {props.cartItems.length}
+        </div>
     </Grid>
   )
 

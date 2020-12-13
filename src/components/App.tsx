@@ -77,6 +77,10 @@ function convertToRoute(itemName: string) {
   return namedRoute.replace(uppercase, (x: string) => x.toLowerCase())
 }
 
+export const parsePrice = (price: number) => {
+  return parseFloat(price.toFixed(2))
+}
+
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [value, setValue] = useState(0)

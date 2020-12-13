@@ -105,7 +105,6 @@ const stateLocations = [
 ]
 
 export const CheckoutForm = (props: IFormProps) => {
-  const [name, setName] = useState<string>()
   const [stateLocation, setStateLocation] = useState<string>("")
 
   const [values, setValues] = React.useState<State>({
@@ -126,7 +125,7 @@ export const CheckoutForm = (props: IFormProps) => {
     
     try {
       let token = await (props.stripe !== null 
-        ? props.stripe.createToken({ name: name }) : null)
+        ? props.stripe.createToken({ name: values.name }) : null)
       console.log(token)
     } catch (e) {
       throw e

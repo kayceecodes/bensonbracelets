@@ -6,9 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
-    "noImplicitAny": true,// Material UI
-    "noImplicitThis": true,// Material UI
-    "strictNullChecks": true,// Material UI
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

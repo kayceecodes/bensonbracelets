@@ -1,11 +1,6 @@
 import React from "react"
 
-import {
-  fireEvent,
-  render,
-  testMaterial,
-  within,
-} from "./test-utils"
+import { fireEvent, render, testMaterial, within } from "./test-utils"
 import DisplayItem from "../components/routes/collections/displayitem/Displayitem"
 
 import { bracelets } from "../data/Data"
@@ -31,17 +26,17 @@ const baseProps: DisplayItemProps = {
   category: "",
 }
 
-const renderUI = (props: Partial<DisplayItemProps>) => render(<DisplayItem {...baseProps} {...props} />, {})
+const renderUI = (props: Partial<DisplayItemProps>) =>
+  render(<DisplayItem {...baseProps} {...props} />, {})
 
-  describe("When a Selection - Option is clicked", () => {
-
-    beforeEach( () => {
-     renderUI({})
-    })
+describe("When a Selection - Option is clicked", () => {
+  beforeEach(() => {
+    renderUI({})
+  })
   test("select value updates text for sizes", () => {
-      testMaterial.selectOption(screen.getByTestId(/quantity/), /4/)
-      expect(screen.getByTestId(/quantity/)).toHaveTextContent(/4/)
-    })
+    testMaterial.selectOption(screen.getByTestId(/quantity/), /4/)
+    expect(screen.getByTestId(/quantity/)).toHaveTextContent(/4/)
+  })
 
   test("select value updates text for sizes", () => {
     testMaterial.selectOption(screen.getByTestId(/size/), /4.5"/)

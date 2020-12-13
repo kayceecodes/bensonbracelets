@@ -12,7 +12,9 @@ const offWhite = 'rgb(247,249,250)' //Off white Background color
 const dimegray = "#6e6656";
 const dimGray = 'rgba(94,108,120, 0.95)'
 
-const brightMudBrown = 'rgba(46,34,16, 1)'; // Highlight
+const brightMudBrown = '#2e2210'; // Highlight
+// const saddleBrown = '#643c0f'
+// const darkSaddleBrown = '#3a2000';
 // const cadetBlue = rgb(95,158,160)
 const kitkatOrange = 'rgba(205,100,45, 1)'
 const breakpoints = createBreakpoints({});
@@ -124,6 +126,16 @@ export default createMuiTheme({
         fontSize: '1.05rem'
       },
     },
+    h5: {
+      fontFamily: 'Roboto',
+      fontWeight: 450,
+      color: dimegray,
+      fontSize: '0.85rem',
+      letterSpacing: '0.2px',
+      [breakpoints.up("sm")]: {
+        fontSize: '1.05rem'
+      },
+    },
     tab: {
       fontFamily: "Lora",
       textTransform: "none",
@@ -174,5 +186,14 @@ export default createMuiTheme({
         fontSize: '0.85rem'
       },
     },
+    subtitle1: {
+      color: dimegray,
+      fontSize: '0.75rem',
+      fontFamily: 'Raleway',
+      lineHeight: 1.6,
+      [breakpoints.up("sm")]: {
+        fontSize: '0.85rem'
+      },
+    }
   },
 })

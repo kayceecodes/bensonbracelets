@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   footerContainer: {
-    backgroundColor: "rgb(46,34,16)",
+    backgroundColor: theme.palette.common.brightMudBrown,
     padding: "120px 0px 90px",
     position: 'relative',
     // marginTop: "100px",

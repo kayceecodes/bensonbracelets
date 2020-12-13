@@ -79,7 +79,7 @@ const cart_reducer = (state = initialState, action: any) => {
       return {
         ...state,
         cartTotal:
-          action.cartItems.quantity * action.cartItems.price + state.cartTotal,
+          parseFloat((action.cartItems.quantity * action.cartItems.price + state.cartTotal).toFixed(2)),
         cartItems: state.cartItems.concat(action.cartItems),
       }
     case actionTypes.CLEAR_ID_FROM_CART:
@@ -94,7 +94,7 @@ const cart_reducer = (state = initialState, action: any) => {
         Math.abs(state.cartTotal - (action.newItem.quantity * action.newItem.price)),
         cartItems: state.cartItems.map((item, i) => {
           if (action.newItem.id === item.id) {
-            /*if there's an id that matches, add quantities and return the item object back to cartItems */
+            /*if there's an id that matches, remove quantities and return the item object back to cartItems */
             state.cartItems[i].quantity = 0
             return item
           } else {

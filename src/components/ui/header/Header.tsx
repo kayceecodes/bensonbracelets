@@ -1,58 +1,58 @@
-import * as React from "react";
-import { useState, useEffect, ChangeEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import * as React from "react"
+import { useState, useEffect, ChangeEvent } from "react"
+import { Link, useHistory } from "react-router-dom"
 
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Slide from "@material-ui/core/Slide";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Hidden from "@material-ui/core/Hidden/Hidden";
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import useScrollTrigger from "@material-ui/core/useScrollTrigger"
+import Slide from "@material-ui/core/Slide"
+import { makeStyles } from "@material-ui/core/styles"
+import { useTheme } from "@material-ui/core/styles"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
+import Grid from "@material-ui/core/Grid"
+import TextField from "@material-ui/core/TextField"
+import Autocomplete from "@material-ui/lab/Autocomplete"
+import Hidden from "@material-ui/core/Hidden/Hidden"
 
-import Headertabs from "./headertabs/Headertabs";
-import Sidedrawer from "./sidedrawer/Sidedrawer";
+import Headertabs from "./headertabs/Headertabs"
+import Sidedrawer from "./sidedrawer/Sidedrawer"
 
-import { MouseEvent } from "../../App"; // TYPE - Events
+import { MouseEvent } from "../../App" // TYPE - Events
 
-import { bracelets } from "../../../data/Data";
+import { bracelets } from "../../../data/Data"
+import Typography from "@material-ui/core/Typography/Typography"
 
 interface IHideOnScrollProps {
-  children?: any;
+  children?: any
 }
 
 export interface IRoute {
-  name: string;
-  link: any;
-  activeIndex: number;
-  selectIndex?: number;
-  ariaOwns?: string;
-  ariaHasPopup?: string;
-  mouseOver?: any;
+  name: string
+  link: any
+  activeIndex: number
+  selectIndex?: number
+  ariaOwns?: string
+  ariaHasPopup?: string
+  mouseOver?: any
 }
 
 export interface IMenuOption {
-  name: string;
-  link: string;
-  activeIndex: number;
-  selectedIndex: number;
+  name: string
+  link: string
+  activeIndex: number
+  selectedIndex: number
 }
 
 function HideOnScroll(props: IHideOnScrollProps) {
-  const { children } = props;
+  const { children } = props
 
-  const trigger = useScrollTrigger();
+  const trigger = useScrollTrigger()
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>
       {children}
     </Slide>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -69,6 +69,24 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1,
     boxShadow: "none",
   },
+  homeBtn : {
+    '&:hover': {
+      // backgroundColor: 'transparent',
+    },
+  },
+  logo: {
+    // LOGO FOR NOW - TEMPORARY
+    color: theme.palette.common.white,
+    padding: "1px 4px",
+    border: `3px solid ${theme.palette.common.dimegray}`,
+    textDecoration: 'none',
+  },
+  logoOuterBorder: {
+    marginLeft: '30px',
+    padding: '5px 2px',
+    borderRadius: '4px',
+    border: `0.8px solid #ffffff90`,
+  },
   secondToolbar: {
     height: "20px",
     marginLeft: "auto",
@@ -77,12 +95,13 @@ const useStyles = makeStyles((theme) => ({
   popperZIndex: {
     zIndex: 1303,
   },
-  optionsText: { // AUTO COMPLETE SELECT - OPTIONS
-    color: 'rgb(85,77,64)',
-    letterSpacing: '0.5px',
-    fontSize: '0.85rem',
+  optionsText: {
+    // AUTO COMPLETE SELECT - OPTIONS
+    color: "rgb(85,77,64)",
+    letterSpacing: "0.5px",
+    fontSize: "0.85rem",
     backgroundColor: "rgba(231,212,195, 0.01)",
-    fontFamily: 'Raleway',
+    fontFamily: "Raleway",
     "&:hover": {
       color: theme.palette.common.orange,
       backgroundColor: "rgba(231,212,195, 0.15)",
@@ -104,26 +123,26 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginLeft: "auto",
   },
-}));
+}))
 
 export default function Header(props: any) {
-  const classes = useStyles(); //useStyles is a funct that will build the classes object
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const [anchorEl, setAnchorEl] = useState<HTMLElement>();
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const history = useHistory();
-  
+  const classes = useStyles() //useStyles is a funct that will build the classes object
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down("sm"))
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>()
+  const [openMenu, setOpenMenu] = useState<boolean>(false)
+  const history = useHistory()
+
   const handleClick = (e: MouseEvent) => {
-    setAnchorEl(e.currentTarget);
-    setOpenMenu(true);
-  };
+    setAnchorEl(e.currentTarget)
+    setOpenMenu(true)
+  }
   const handleMenuItemClick = (e: MouseEvent, i: number) => {
     //   setAnchorEl(null);
-    setOpenMenu(false);
-    props.setSelectedIndex(i);
-  };
-  const handleClose = () => setOpenMenu(false);
+    setOpenMenu(false)
+    props.setSelectedIndex(i)
+  }
+  const handleClose = () => setOpenMenu(false)
 
   const menuOptions = [
     {
@@ -150,7 +169,7 @@ export default function Header(props: any) {
       activeIndex: 1,
       selectedIndex: 3,
     },
-  ];
+  ]
 
   const routes: IRoute[] = [
     { name: "Home", link: "/", activeIndex: 0 },
@@ -164,27 +183,27 @@ export default function Header(props: any) {
     },
     { name: "Contact Us", link: "/contact", activeIndex: 2 },
     { name: "Cart", link: "/shoppingcart", activeIndex: 3 },
-  ];
+  ]
 
   useEffect(() => {
-    [...menuOptions, ...routes].forEach((route: any) => {
+    ;[...menuOptions, ...routes].forEach((route: any) => {
       switch (window.location.pathname) {
         case `${route.link}`:
           if (props.value !== route.activeIndex) {
-            props.setValue(route.activeIndex);
+            props.setValue(route.activeIndex)
             if (
               route.selectedIndex &&
               route.selectedIndex !== props.selectedIndex
             ) {
-              props.setSelectedIndex(route.selectedIndex);
+              props.setSelectedIndex(route.selectedIndex)
             }
           }
-          break;
+          break
         default:
-          break;
+          break
       }
-    });
-  }, [props, props.value, menuOptions, props.selectedIndex, routes]);
+    })
+  }, [props, props.value, menuOptions, props.selectedIndex, routes])
 
   const tabs = (
     <Headertabs
@@ -199,26 +218,26 @@ export default function Header(props: any) {
       handleChange={props.handleChange}
       handleMenuItemClick={handleMenuItemClick}
     />
-  );
+  )
 
   const sidedrawer = (
     <Sidedrawer routes={routes} value={props.value} setValue={props.setValue} />
-  );
+  )
 
   function convertToRoute(nestedRoute: string, itemName: string) {
     // www.website.com/nestedRoute/itemName
-    itemName = nestedRoute + itemName;
+    itemName = nestedRoute + itemName
 
-    let spaces = new RegExp("[ ]+", "g");
-    let namedRoute = itemName.replace(spaces, "");
-    let uppercase = new RegExp("[A-Z]", "g");
+    let spaces = new RegExp("[ ]+", "g")
+    let namedRoute = itemName.replace(spaces, "")
+    let uppercase = new RegExp("[A-Z]", "g")
 
-    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase());
+    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase())
   }
 
   const handleAutoComplete = (name: string) => {
-    history.push(convertToRoute('/collections/', name))
-    console.log('Name inside of handleAutoCOmplete :', name );
+    history.push(convertToRoute("/collections/", name))
+    console.log("Name inside of handleAutoCOmplete :", name)
   }
 
   return (
@@ -226,12 +245,17 @@ export default function Header(props: any) {
       <HideOnScroll>
         <AppBar className={classes.appbar} position="fixed">
           <Toolbar disableGutters>
-            <Button
+            <Link style={{textDecoration: 'none'}}
+              className={classes.homeBtn}
               onClick={() => props.setValue(0)}
-              component={Link}
               to="/"
-              disableRipple
-            ></Button>
+            >
+              <Typography variant="h4">
+                <span className={classes.logoOuterBorder}>
+                  <span className={classes.logo}>BB</span>
+                </span>
+              </Typography>
+            </Link>
             {matches ? sidedrawer : tabs}
           </Toolbar>
           <Hidden smDown>
@@ -245,7 +269,7 @@ export default function Header(props: any) {
                       listbox: classes.optionsText,
                     }}
                     onChange={(event: ChangeEvent<{}>, value: any) => {
-                      handleAutoComplete(value);
+                      handleAutoComplete(value)
                     }}
                     id="free-solo-demo"
                     freeSolo
@@ -270,6 +294,5 @@ export default function Header(props: any) {
       </HideOnScroll>
       <div className={classes.toolbarMargin} />
     </>
-  );
+  )
 }
- 

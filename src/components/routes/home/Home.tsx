@@ -150,6 +150,11 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: 1.8,
       width: "85%",
     },
+    [theme.breakpoints.up("lg")]: {
+      margin: "140px auto 90px",
+      fontSize: "1.10rem",
+      lineHeight: "3",
+    },
   },
   braceletsContainer: {
     margin: "5px auto",
@@ -296,7 +301,7 @@ export default function Home(props: IProps) {
           <Grid item xs={12}>
             {/* Header - About.. */}
             <Typography variant="h2" component="h2">
-              About Benson Bracelets
+              About Our Bracelets
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -305,7 +310,11 @@ export default function Home(props: IProps) {
               minima maxime temporibus at deleniti eum sapiente vitae iure velit
               maiores aliquid ea quo pariatur quidem reiciendis quas,
               consequatur corrupti officiis earum corporis recusandae quasi
-              consequuntur nisi dolorem. Odit, nisi. Id.
+              consequuntur nisi dolorem. Odit, nisi. Id. Tenetur
+              minima maxime temporibus at deleniti eum sapiente vitae iure velit
+              maiores aliquid ea quo pariatur quidem reiciendis quas,
+              consequatur corrupti officiis earum corporis recusandae quasi
+              consequuntur nisi dolorem.
             </p>
           </Grid>
           {/* Header - Featured Bracelets */}

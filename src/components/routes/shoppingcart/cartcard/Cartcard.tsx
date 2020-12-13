@@ -16,7 +16,12 @@ import {
   removeQuantityFromItem,
 } from "../../../../store/actions"
 import { useDispatch } from "react-redux"
+import { fixedStrLength } from "../../../../utils/Parse"
 
+/**
+ * @typedef {Object} ICartCardProps
+ * @property {function} getQtyTotal - Update quantity total with each
+ */
 interface ICartCardProps {
   getQtyTotal: () => void
 }
@@ -82,7 +87,12 @@ export default function Cartcard(props: IProps) {
   const [loading, setLoading] = useState(false)
   const dispatch: Dispatch<any> = useDispatch()
 
-  const editQuantity = (editAction: string) => {
+  /**
+   * Takes an action to add or remove. It dertermines if it should dispatch add one, remove one, or clear item completely.
+   *  Inside of case "remove quantity" it determines if it should remove an item by 1 or clear the item from the cart list
+   * @param editAction 
+   */
+  const editQuantity = (editAction: string): void => {
     switch (editAction) {
       case "add quantity": {
         dispatch(addQuantityToItem({ ...props, quantity: 1 }))
@@ -98,22 +108,6 @@ export default function Cartcard(props: IProps) {
         props.getQtyTotal() /* Update numberofItems in cart after every editQuantity Call*/
         return
       }
-    }
-  }
-
-  const fixedStrLength = (str: [string], numOfChar: number) => {
-    let newString: (string | undefined)[]
-    /* Only proceed if the length is larger than what you want */
-    if (str.length < numOfChar) {
-      /*If number of characters in str are larger than the desired, entered numOFchar */
-      /* than fix that desired number down 3 and replace with strings */
-      newString = str.map((value: string, i: number) => {
-        if (i < numOfChar - 3) {
-          return value
-        }
-        return
-      })
-      return newString.concat("...")
     }
   }
 
