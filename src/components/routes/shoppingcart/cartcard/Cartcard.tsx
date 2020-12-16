@@ -1,6 +1,7 @@
 import React, { Dispatch, useEffect, useState } from "react"
 
 import { ICartItems } from "../../../../Interfaces"
+import { useDispatch } from "react-redux"
 
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
 import Grid from "@material-ui/core/Grid/Grid"
@@ -9,14 +10,15 @@ import Typography from "@material-ui/core/Typography/Typography"
 import Button from "@material-ui/core/Button/Button"
 import Icon from "@material-ui/core/Icon/Icon"
 import Aos from "aos"
+
 import {
   addQuantityToItem,
   clearIDFromCart,
   removeAllQuantityFromItem,
   removeQuantityFromItem,
 } from "../../../../store/actions"
-import { useDispatch } from "react-redux"
-import { fixedStrLength } from "../../../../utils/Parse"
+
+import { fixedTitleLength } from "../../../../utils/Parse"
 
 /**
  * @typedef {Object} ICartCardProps
@@ -168,7 +170,7 @@ export default function Cartcard(props: IProps) {
               }}
               variant="body2"
             >
-              {fixedStrLength(props.name, 15)}
+              {fixedTitleLength(props.name, 15)}
               <span
                 style={{
                   color: "#afafaf",
