@@ -1,39 +1,48 @@
-import React, { CSSProperties, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { CSSProperties, useEffect } from "react"
+import { Link, useHistory } from "react-router-dom"
 
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
-import { IPageAnimations, IMotions } from "../../../Interfaces";
+import { IPageAnimations, IMotions } from "../../../Interfaces"
 
-import { Parallax } from "react-parallax";
+import { Parallax } from "react-parallax"
 
-import HeroMobileImg5 from "../../../images/bracelets/heroImgMobile5.jpg";
-import HeroParallax from "../../../images/bracelets/bensonbracelet-hero-parallax.jpg";
-import Bracelet1 from "../../../images/bracelets/bracelet1.jpg";
-import Bracelet2 from "../../../images/bracelets/bracelet2.jpg";
-import Bracelet3 from "../../../images/bracelets/bracelet3.jpg";
+import HeroMobileImg5 from "../../../images/bracelets/heroImgMobile5.jpg"
+import HeroParallax from "../../../images/bracelets/bensonbracelet-hero-parallax.jpg"
+import Bracelet1 from "../../../images/bracelets/bracelet1.jpg"
+import Bracelet2 from "../../../images/bracelets/bracelet2.jpg"
+import Bracelet3 from "../../../images/bracelets/bracelet3.jpg"
 
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Button from "@material-ui/core/Button/Button";
-import Grid from "@material-ui/core/Grid/Grid";
-import Typography from "@material-ui/core/Typography";
+import useMediaQuery from "@material-ui/core/useMediaQuery"
+import { useTheme } from "@material-ui/core/styles"
+import makeStyles from "@material-ui/core/styles/makeStyles"
+import Button from "@material-ui/core/Button/Button"
+import Grid from "@material-ui/core/Grid/Grid"
+import Typography from "@material-ui/core/Typography"
 
-import Aos from "aos";
-import "aos/dist/aos.css";
+import Aos from "aos"
+import "aos/dist/aos.css"
 
-import Footer from "../../ui/footer/Footer";
+import Footer from "../../ui/footer/Footer"
 
-import { bracelets } from "../../../data/Data";
+import { bracelets } from "../../../data/Data"
+import Tab from "@material-ui/core/Tab/Tab"
+import Tabs from "@material-ui/core/Tabs/Tabs"
 
 interface IProps {
-  setValue: (value: number) => void;
-  setSelectedIndex: (value: number) => void;
-  pageStyle: CSSProperties;
-  pageAnimations: IPageAnimations;
-  motions: IMotions;
-  jumpTo: (jumpingTarget: string | number | Element) => void;
+  value: number
+  setValue: (value: number) => void
+  setSelectedIndex: (value: number) => void
+  pageStyle: CSSProperties
+  pageAnimations: IPageAnimations
+  motions: IMotions
+  jumpTo: (jumpingTarget: string | number | Element) => void
+}
+
+interface ITabLinks {
+  show: boolean
+  tabProps: {name: string, route: string}[]
+  routeIndex: number
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -46,21 +55,34 @@ const useStyles = makeStyles((theme) => ({
       margin: "35px",
     },
   },
+  tabLinks: {
+    position: 'absolute',
+    zIndex: 1,
+    left: 'calc(50% - 75px)',
+    top: '8px',
+    color: '#ffffffcf'
+  },
+  tabLinksBtn: {
+    minWidth: '75px',
+  },
+  tabsIndicator: {
+    height: '2.5px'
+  },
   featuredHeroBtnWrapper: {
-   padding: '4.5px',
-   border: `5px solid ${theme.palette.common.orange}27`,
-   borderRadius: '5px',
-   position: "fixed",
-   left: "50%",
-   transform: "translate(-50%, -50%)",
-   zIndex: 3,
+    padding: "4.5px",
+    border: `5px solid ${theme.palette.common.orange}27`,
+    borderRadius: "5px",
+    position: "fixed",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: 3,
 
-   [theme.breakpoints.up("sm")]: {
-    top: "320px",
-  },
-  [theme.breakpoints.down("sm")]: {
-    top: "170px",
-  },
+    [theme.breakpoints.up("sm")]: {
+      top: "320px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      top: "170px",
+    },
   },
   featuredHeroButton: {
     textTransform: "none",
@@ -70,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1.5px solid white",
     borderRadius: "0px",
     textShadow: "0px 0px 8px rgba(0,0,0,0.99)",
-    transition: 'opacity 0.4s',
+    transition: "opacity 0.4s",
     [theme.breakpoints.up("sm")]: {
       font: "1.25rem Raleway",
       padding: "0 70px",
@@ -79,12 +101,12 @@ const useStyles = makeStyles((theme) => ({
       font: "0.8rem Raleway",
       padding: "0 45px",
     },
-    '&:hover': {
-      opacity: '0.6', 
+    "&:hover": {
+      opacity: "0.6",
     },
     // boxShadow: '0px 0px 17px rgba(0, 0, 0, 1)',
   },
-    overlayWrapper: {
+  overlayWrapper: {
     top: 0,
     width: "100%",
     position: "relative",
@@ -205,32 +227,48 @@ const useStyles = makeStyles((theme) => ({
     },
     // border: `2px solid ${theme.palette.common.dimegray}`,
   },
-}));
+}))
 
-// const Parallaxpic: FunctionComponent<IParallaxMediaQuery> = (props) => {
-//   return (
-//   <div>
-//     <Parallax bgImage={props.src} >
-//     {props.children}
-//     </Parallax>
-//   </div>)
-// };
 
 export default function Home(props: IProps) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const collectionsPath = "/collections/";
+  const classes = useStyles()
+  const theme = useTheme()
+  const history = useHistory() //History obj from react-router
+  const collectionsPath = "/collections/"
   const matches = {
     sm: useMediaQuery(theme.breakpoints.down("sm")),
     md: useMediaQuery(theme.breakpoints.down("md")),
     lg: useMediaQuery(theme.breakpoints.down("lg")),
     xl: useMediaQuery(theme.breakpoints.down("xl")),
-  }; // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
-  const featuredBracelets = [bracelets[0], bracelets[1], bracelets[2]];
+  } // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
+  const featuredBracelets = [bracelets[0], bracelets[1], bracelets[2]]
 
+  /** Return tabs to be highlighted when route is chosen and clicked
+   * @param {show, routeIndex, tabProps} 
+   */
+  function TabLinks({
+    show,
+    routeIndex,
+    tabProps, 
+  }: ITabLinks) {
+    return (
+        <Tabs
+          className={classes.tabLinks}
+          classes={{root: classes.tabLinksBtn, indicator: classes.tabsIndicator}}
+          style={{display: show ? 'block' : 'none'}}
+          value={routeIndex}
+          aria-label="Mobile View Navigation - Width less than md: 960px"
+        >
+          {tabProps.map((tabProp: {name: string, route: string}) => (
+            <Tab label={tabProp.name} component={Link} to={tabProp.route} classes={{textColorInherit: classes.tabLinksBtn }} />
+          ))}
+        </Tabs>
+    )
+  }
+ /* Aos adds on screen effects, changes opacity, scaleX & scaleY*/
   useEffect(() => {
-    Aos.init({ duration: 900 });
-  }, []);
+    Aos.init({ duration: 900 })
+  }, [])
 
   const dimegrayOverlay: CSSProperties = {
     position: "absolute",
@@ -240,17 +278,17 @@ export default function Home(props: IProps) {
     backgroundColor: theme.palette.common.brightMudBrown,
     opacity: 0.8,
     zIndex: 3,
-  };
+  }
 
   function convertToRoute(nestedRoute: string, itemName: string) {
-    // www.website.com/nestedRoute/itemName
-    itemName = nestedRoute + itemName;
-    let spaces = new RegExp("[ ]+", "g");
-    let namedRoute = itemName.replace(spaces, "");
+    // Example www.website.com/nestedRoute/itemName
+    itemName = nestedRoute + itemName
+    let spaces = new RegExp("[ ]+", "g")
+    let namedRoute = itemName.replace(spaces, "")
     // return namedRoute;
-    let uppercase = new RegExp("[A-Z]", "g");
+    let uppercase = new RegExp("[A-Z]", "g")
 
-    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase());
+    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase())
   }
 
   return (
@@ -263,6 +301,15 @@ export default function Home(props: IProps) {
         variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
         transition={props.pageAnimations.transition}
       >
+        { matches.sm ? <TabLinks
+          
+          show={matches.sm}
+          routeIndex={props.value}
+          tabProps={[
+            { name: "Home", route: "/" },
+            { name: "Cart", route: "/shoppingcart" },
+          ]}
+        /> : null}
         <div
           className={classes.overlayWrapper}
           style={{
@@ -283,14 +330,27 @@ export default function Home(props: IProps) {
             }}
             bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
           >
-            <div className={classes.featuredHeroBtnWrapper}>
-            <Button
-              className={classes.featuredHeroButton}
-              onClick={() => props.jumpTo("#featuredBracelets")}
-            >
-              <p>Featured</p>
-            </Button>
+           {matches.sm === false ? <div className={classes.featuredHeroBtnWrapper}>
+              <Button
+                className={classes.featuredHeroButton}
+                onClick={() => props.jumpTo("#featuredBracelets")}
+              >
+                <p>Featured</p>
+              </Button>
             </div>
+            :
+            <div className={classes.featuredHeroBtnWrapper}>
+              <Button
+                className={classes.featuredHeroButton}
+                onClick={() => { 
+                  history.push("/collections")
+                  props.setValue(3)
+                }}
+              >
+                <p>Collections</p>
+              </Button>
+            </div>
+             }
             <p className={classes.heroCompanyName}>Benson Bracelets</p>
           </Parallax>
         </div>
@@ -310,11 +370,11 @@ export default function Home(props: IProps) {
               minima maxime temporibus at deleniti eum sapiente vitae iure velit
               maiores aliquid ea quo pariatur quidem reiciendis quas,
               consequatur corrupti officiis earum corporis recusandae quasi
-              consequuntur nisi dolorem. Odit, nisi. Id. Tenetur
-              minima maxime temporibus at deleniti eum sapiente vitae iure velit
-              maiores aliquid ea quo pariatur quidem reiciendis quas,
-              consequatur corrupti officiis earum corporis recusandae quasi
-              consequuntur nisi dolorem.
+              consequuntur nisi dolorem. Odit, nisi. Id. Tenetur minima maxime
+              temporibus at deleniti eum sapiente vitae iure velit maiores
+              aliquid ea quo pariatur quidem reiciendis quas, consequatur
+              corrupti officiis earum corporis recusandae quasi consequuntur
+              nisi dolorem.
             </p>
           </Grid>
           {/* Header - Featured Bracelets */}
@@ -444,5 +504,5 @@ export default function Home(props: IProps) {
         />
       </motion.div>
     </div>
-  );
+  )
 }

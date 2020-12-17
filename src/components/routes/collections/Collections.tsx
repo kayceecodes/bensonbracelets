@@ -7,6 +7,8 @@ import React, {
 
 import { motion } from "framer-motion"
 
+import HexagonOutline from "../../../images/icons/hexagon-outline.svg"
+
 import Typography from "@material-ui/core/Typography"
 
 import { IPageAnimations, IMotions } from "../../../Interfaces"
@@ -21,12 +23,12 @@ import Aos from "aos"
 import BraceletCard from "./braceletcard/BraceletCard"
 import Hidden from "@material-ui/core/Hidden/Hidden"
 
-import Icon from "@material-ui/core/Icon/Icon"
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery"
 import useTheme from "@material-ui/core/styles/useTheme"
 
 import { useScrollPosition } from "@n8tb1t/use-scroll-position"
 import makeStyles from "@material-ui/core/styles/makeStyles"
+import FilterDrawer from "../../ui/filterDrawer/FilterDrawer"
 
 export interface IProps {
   setValue: React.Dispatch<React.SetStateAction<number>>
@@ -98,36 +100,6 @@ const useStyles = makeStyles((theme) => ({
   braceletCardWrapper: {
     borderBottom: "0.8px solid #52390610",
   },
-  filterDrawer: {
-    position: "fixed",
-    top: "45%",
-    left: "-0.11%",
-    padding: "5px 10px",
-    lineHeight: 3,
-    listStyle: "none",
-    borderRadius: "4px",
-    backgroundColor: "#b9ac9210",
-    opacity: 0.85,
-    zIndex: 3,
-    color: theme.palette.common.dimegray,
-    boxShadow: `0px 0px 12px #52390650`,
-    [theme.breakpoints.up("md")]: {
-      padding: "5px 35px",
-    },
-  },
-  filterDrawerBtn: {
-    color: theme.palette.common.dimegray,
-    textTransform: "none",
-    fontFamily: "Raleway",
-    letterSpacing: "1.8px",
-    [theme.breakpoints.down("xs")]: {
-      fontSize: "0.75rem",
-    },
-  },
-  filterDrawerBtnArrow: {
-    fontSize: "0.85rem",
-    color: theme.palette.common.kitkatOrange,
-  },
 }))
 
 export let CATEGORIES: any = {
@@ -141,7 +113,6 @@ export let CATEGORIES: any = {
 
 export function Collections(props: IProps) {
   const classes = useStyles()
-  const [mobileMode, setMobileMode] = useState(false)
   const [revealCaption, setRevealCaption] = useState(false) // Caption 'Filter By:' above Luxury, Team Colors, Frat&Sor
   const [filterCategory, setFilterCategory] = useState<string>("")
   const [revealFilterDrawer, setRevealFilterDrawer] = useState(false)
@@ -159,14 +130,9 @@ export function Collections(props: IProps) {
       : bracelets.filter((item) => item.category === filterCategory)
 
   useEffect(() => {
-    /* data-aos='fade-up or down'. This is a css effect when element appears */
-    Aos.init({ duration: 900 })
+    Aos.init({ duration: 900 }) /*This is for a css effect when element appears, fades into dom */
   }, [])
 
-  const roundValue = (num: number, decimals = 2) => {
-    let scaling = 10 ** decimals
-    return Math.round((num + Number.EPSILON) * scaling) / scaling
-  }
   const scrollEvent = (event: SyntheticEvent) => {
     const target = event.target as HTMLTextAreaElement
     console.log("Current Scroll Position: ", target.scrollTop)
@@ -182,21 +148,8 @@ export function Collections(props: IProps) {
     }
   })
 
-  const resizeListener = () => {
-    if (window.innerWidth < 960) {
-      setMobileMode(true)
-    } else {
-      setMobileMode(false)
-    }
-  }
-  window.addEventListener("resize", resizeListener)
-
-  function checkProps() {
-    console.log("Motion Object: ", props.motions)
-  }
   return (
     <>
-      {checkProps()}
       <div onScroll={scrollEvent}>
         <motion.div
           style={props.pageStyle}
@@ -400,86 +353,7 @@ export function Collections(props: IProps) {
             {/* EO Cards ITEM */}
           </Grid>
         </motion.div>
-        {revealFilterDrawer === true ? (
-          <Typography
-            variant="body1"
-            component="ul"
-            className={classes.filterDrawer}
-            data-aos="fade-up"
-          >
-            <motion.span
-              style={{
-                position: "absolute",
-                left: "15px",
-                color: filterCategory === "" ? "white" : "darkorange",
-              }}
-              initial={{
-                y: 1,
-              }}
-              animate={{
-                y:
-                  filterCategory === ""
-                    ? 1
-                    : CATEGORIES[`${filterCategory}`].filterArrowPos,
-              }}
-              transition={{
-                duration: 0.4,
-              }}
-            >
-              {matches.md && filterCategory !== "" ? (
-                <Icon className={classes.filterDrawerBtnArrow}>
-                  arrow_forward_ios
-                </Icon>
-              ) : null}
-            </motion.span>
-            <li>
-              <Button
-                className={classes.filterDrawerBtn}
-                style={{
-                  color:
-                    filterCategory === CATEGORIES["Luxury"].name
-                      ? theme.palette.common.kitkatOrange
-                      : theme.palette.common.dimegray,
-                }}
-                onClick={() => setFilterCategory(CATEGORIES["Luxury"].name)}
-              >
-                Luxury
-              </Button>
-            </li>
-            <li>
-              <Button
-                className={classes.filterDrawerBtn}
-                style={{
-                  color:
-                    filterCategory === CATEGORIES["Fraternity & Sorority"].name
-                      ? theme.palette.common.kitkatOrange
-                      : theme.palette.common.dimegray,
-                }}
-                onClick={() =>
-                  setFilterCategory(CATEGORIES["Fraternity & Sorority"].name)
-                }
-              >
-                Frat & Sor
-              </Button>
-            </li>
-            <li>
-              <Button
-                className={classes.filterDrawerBtn}
-                style={{
-                  color:
-                    filterCategory === CATEGORIES["Team Colors"].name
-                      ? theme.palette.common.kitkatOrange
-                      : theme.palette.common.dimegray,
-                }}
-                onClick={() =>
-                  setFilterCategory(CATEGORIES["Team Colors"].name)
-                }
-              >
-                Team Colors
-              </Button>
-            </li>
-          </Typography>
-        ) : null}
+        {revealFilterDrawer === true ? <FilterDrawer filterCategory={filterCategory} /> : null}
       </div>
     </>
   )
