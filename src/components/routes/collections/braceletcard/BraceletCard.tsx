@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import React from "react";
 
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import { IBraceletData } from "../../../../Interfaces";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography/Typography";
 import Button from "@material-ui/core/Button/Button";
+import UseImgFile from '../../../ui/useImgFile/UseImgFile';
 
 interface IProps {
   name: IBraceletData["name"];
@@ -68,7 +69,7 @@ export default function BraceletCard(props: IProps) {
     <Button component={Link} to={itemsRoute} onClick={() => props.setValue(1)} data-testid='bracelet-card'>
       {/* {categoryFirstInitial} */}
       <div className={classes.braceletCard}>
-        <Typography variant="caption">{props.name}</Typography>
+        <Typography variant="caption">{props.name} {UseImgFile(props.category)}</Typography>
 
         <img
           src={props.src}

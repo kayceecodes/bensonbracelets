@@ -41,7 +41,7 @@ interface IProps {
 
 interface ITabLinks {
   show: boolean
-  tabProps: {name: string, route: string}[]
+  tabProps: { name: string; route: string }[]
   routeIndex: number
 }
 
@@ -56,21 +56,21 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tabLinks: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
-    left: 'calc(50% - 75px)',
-    top: '8px',
-    color: '#ffffffcf'
+    left: "calc(50% - 75px)",
+    top: "8px",
+    color: "#ffffffcf",
   },
   tabLinksBtn: {
-    minWidth: '75px',
+    minWidth: "75px",
   },
   tabsIndicator: {
-    height: '2.5px'
+    height: "2.5px",
   },
   featuredHeroBtnWrapper: {
-    padding: "4.5px",
-    border: `5px solid ${theme.palette.common.orange}27`,
+    padding: "4px",
+    border: `11px solid ${theme.palette.common.orange}27`,
     borderRadius: "5px",
     position: "fixed",
     left: "50%",
@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       top: "170px",
+      border: `8px solid ${theme.palette.common.orange}27`,
     },
   },
   featuredHeroButton: {
@@ -229,7 +230,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-
 export default function Home(props: IProps) {
   const classes = useStyles()
   const theme = useTheme()
@@ -244,28 +244,33 @@ export default function Home(props: IProps) {
   const featuredBracelets = [bracelets[0], bracelets[1], bracelets[2]]
 
   /** Return tabs to be highlighted when route is chosen and clicked
-   * @param {show, routeIndex, tabProps} 
+   * @param {show, routeIndex, tabProps}
    */
-  function TabLinks({
-    show,
-    routeIndex,
-    tabProps, 
-  }: ITabLinks) {
+  function TabLinks({ show, routeIndex, tabProps }: ITabLinks) {
     return (
-        <Tabs
-          className={classes.tabLinks}
-          classes={{root: classes.tabLinksBtn, indicator: classes.tabsIndicator}}
-          style={{display: show ? 'block' : 'none'}}
-          value={routeIndex}
-          aria-label="Mobile View Navigation - Width less than md: 960px"
-        >
-          {tabProps.map((tabProp: {name: string, route: string}) => (
-            <Tab label={tabProp.name} component={Link} to={tabProp.route} classes={{textColorInherit: classes.tabLinksBtn }} />
-          ))}
-        </Tabs>
+      <Tabs
+        className={classes.tabLinks}
+        classes={{
+          root: classes.tabLinksBtn,
+          indicator: classes.tabsIndicator,
+        }}
+        style={{ display: show ? "block" : "none" }}
+        value={routeIndex}
+        aria-label="Mobile View Navigation - Width less than md: 960px"
+      >
+        {tabProps.map((tabProp: { name: string; route: string }) => (
+          <Tab
+            key={tabProp.name + tabProp.route}
+            label={tabProp.name}
+            component={Link}
+            to={tabProp.route}
+            classes={{ textColorInherit: classes.tabLinksBtn }}
+          />
+        ))}
+      </Tabs>
     )
   }
- /* Aos adds on screen effects, changes opacity, scaleX & scaleY*/
+  /* Aos adds on screen effects, changes opacity, scaleX & scaleY*/
   useEffect(() => {
     Aos.init({ duration: 900 })
   }, [])
@@ -301,15 +306,16 @@ export default function Home(props: IProps) {
         variants={props.pageAnimations.variants} //pageAnimations obj broken up to 2 nested objs, variant & transitions
         transition={props.pageAnimations.transition}
       >
-        { matches.sm ? <TabLinks
-          
-          show={matches.sm}
-          routeIndex={props.value}
-          tabProps={[
-            { name: "Home", route: "/" },
-            { name: "Cart", route: "/shoppingcart" },
-          ]}
-        /> : null}
+        {matches.sm ? (
+          <TabLinks
+            show={matches.sm}
+            routeIndex={props.value}
+            tabProps={[
+              { name: "Home", route: "/" },
+              { name: "Cart", route: "/shoppingcart" },
+            ]}
+          />
+        ) : null}
         <div
           className={classes.overlayWrapper}
           style={{
@@ -330,27 +336,28 @@ export default function Home(props: IProps) {
             }}
             bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
           >
-           {matches.sm === false ? <div className={classes.featuredHeroBtnWrapper}>
-              <Button
-                className={classes.featuredHeroButton}
-                onClick={() => props.jumpTo("#featuredBracelets")}
-              >
-                <p>Featured</p>
-              </Button>
-            </div>
-            :
-            <div className={classes.featuredHeroBtnWrapper}>
-              <Button
-                className={classes.featuredHeroButton}
-                onClick={() => { 
-                  history.push("/collections")
-                  props.setValue(3)
-                }}
-              >
-                <p>Collections</p>
-              </Button>
-            </div>
-             }
+            {matches.sm === false ? (
+              <div className={classes.featuredHeroBtnWrapper}>
+                <Button
+                  className={classes.featuredHeroButton}
+                  onClick={() => props.jumpTo("#featuredBracelets")}
+                >
+                  <p>Featured</p>
+                </Button>
+              </div>
+            ) : (
+              <div className={classes.featuredHeroBtnWrapper}>
+                <Button
+                  className={classes.featuredHeroButton}
+                  onClick={() => {
+                    history.push("/collections")
+                    props.setValue(3)
+                  }}
+                >
+                  <p>Collections</p>
+                </Button>
+              </div>
+            )}
             <p className={classes.heroCompanyName}>Benson Bracelets</p>
           </Parallax>
         </div>

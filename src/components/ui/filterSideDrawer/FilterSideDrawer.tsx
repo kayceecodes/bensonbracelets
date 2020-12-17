@@ -12,6 +12,7 @@ import { CATEGORIES } from "../../routes/collections/Collections"
 
 interface IFilterDrawerProps {
   filterCategory: string
+  setFilterCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     top: "45%",
     left: "-0.11%",
-    padding: "5px 10px",
+    padding: "4px 3px",
     lineHeight: 3,
     listStyle: "none",
     borderRadius: "4px",
@@ -92,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Raleway",
     letterSpacing: "1.8px",
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.75rem",
+      fontSize: "0.68rem",
     },
   },
   filterDrawerBtnArrow: {
@@ -152,7 +153,7 @@ const FilterDrawer = (props: IFilterDrawerProps) => {
                 ? theme.palette.common.kitkatOrange
                 : theme.palette.common.dimegray,
           }}
-          onClick={() => setFilterCategory(CATEGORIES["Luxury"].name)}
+          onClick={() => props.setFilterCategory(CATEGORIES["Luxury"].name)}
         >
           <i
             style={{ paddingRight: "8px", fontSize: "9px" }}
@@ -172,7 +173,7 @@ const FilterDrawer = (props: IFilterDrawerProps) => {
                 : theme.palette.common.dimegray,
           }}
           onClick={() =>
-            setFilterCategory(CATEGORIES["Fraternity & Sorority"].name)
+            props.setFilterCategory(CATEGORIES["Fraternity & Sorority"].name)
           }
         >
           <i
@@ -191,7 +192,7 @@ const FilterDrawer = (props: IFilterDrawerProps) => {
                 ? theme.palette.common.kitkatOrange
                 : theme.palette.common.dimegray,
           }}
-          onClick={() => setFilterCategory(CATEGORIES["Team Colors"].name)}
+          onClick={() => props.setFilterCategory(CATEGORIES["Team Colors"].name)}
         >
           <Icon style={{ fontSize: "12px", paddingRight: "6px" }}>
             sports_basketball
