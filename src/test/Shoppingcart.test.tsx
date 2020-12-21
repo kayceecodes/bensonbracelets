@@ -36,15 +36,6 @@ const DisplayItemBaseProps: DisplayItemProps = {
   category: "",
 }
 
-const CollectionsBaseProps: CollectionsProps = {
-  setValue: () => {},
-  setSelectedIndex: () => {},
-  pageStyle: {},
-  pageAnimations: { transition: {}, variants: {} },
-  motions: { animate: "", initial: "", exit: "" },
-  jumpTo: (jumpingTarget: string | number | Element): void => {},
-}
-
 const categoryCount = (category: string) =>
   bracelets.reduce(
     (acc, elem, index, arr): any =>
@@ -60,29 +51,34 @@ const renderUI = (
 ) =>
   render(
     <>
-      {/* <Shoppingcart {...baseProps} {...props} /> */}
+      <Shoppingcart {...baseProps} {...props} />
       <DisplayItem {...DisplayItemBaseProps} {...props} />
-      <Collections {...CollectionsBaseProps} {...props} />
     </>,
     {}
   )
+/**select one random item and add to cart - for testing qty in cart */
+const addNewItem = () => {
+  testMaterial.selectOption(screen.getByTestId(/quantity/), /5/)
+  userEvent.click(screen.getByTestId(/add-to-cart/))
+}
 
 describe("When user clicks on add quantity", () => {
   let initialTotalQty: any
   beforeEach(() => {
     const { debug } = renderUI({})
-
-    /* Look for value and store it */
   })
 
-  // test("the initial total to be 0 in Shoppingcart.tsx", () => {
-  //   initialTotalQty = screen.getByTestId(/cart-total-qty/).innerHTML
-  //   expect(initialTotalQty).toBe("0")
-  // })
-
+  test("the initial total to be 0 in Shoppingcart.tsx", () => {
+    addNewItem()
+    expect(screen.getByTestId(/cart-total-qty/)).toHaveTextContent(/0/)
+  }) 
+ 
   test("the cart total is increased", () => {
-    // testMaterial.selectOption(screen.getByTestId(/quantity-select-btn/), /4/)
-    screen.getByText(/Display Item/)
-    // debug()
+    
+    //  addNewItem()
+    //  userEvent.click(screen.getByTestId(/add-qty-btn/)) 
+    // //  screen.getByTestId(/price/)
+    // //  const currentQuantity = screen.getByTestId(/cart-total-qty/)
+    // //  expect(screen.getByTestId(/cart-total-qty/)).toHaveTextContent(/0.00/)
   })
-})
+}) 

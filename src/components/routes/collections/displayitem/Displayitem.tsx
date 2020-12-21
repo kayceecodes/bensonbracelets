@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function DisplayItem(props: IProps) {
+function DisplayItem(props: IProps) {
   const classes = useStyles()
   const dispatch: Dispatch<any> = useDispatch()
   const [open, setOpen] = useState(false)
@@ -215,7 +215,7 @@ export function DisplayItem(props: IProps) {
             setOpen={setOpen}
             clearValues={clearValues}
           />
-          <p>Display Item</p>
+
           <Grid container alignItems="center" direction="column">
             <div className={classes.sectionMargin} />
             <Grid item style={{ flexGrow: 1 }} xs={12}>
@@ -381,7 +381,9 @@ export function DisplayItem(props: IProps) {
                     {/* PRICE - CALCULATED */}
                     <Grid item style={{ paddingTop: "10px" }}>
                       <Typography variant="body1">
-                        Price: ${(props.price * values.quantity).toFixed(2)}
+                        Price: <span data-testid='price'>
+                          ${(props.price * values.quantity).toFixed(2)}
+                        </span>
                       </Typography>
                     </Grid>
                     {/* QUANTITY CONTROLS */}

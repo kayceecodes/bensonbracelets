@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import { motion, MotionStyle } from "framer-motion"
 import { IPageAnimations, IMotions, ICartItems } from "../../../Interfaces"
-import Cartcard from "./cartcard/Cartcard"
+import Item from "./item/Item"
 import CheckoutForm from "./checkout/CheckoutForm"
 import Grid from "@material-ui/core/Grid/Grid"
 import Typography from "@material-ui/core/Typography/Typography"
@@ -153,7 +153,7 @@ const Shoppingcart = (props: IProps) => {
                 {/* Cart is either empty or has items */}
                 {props.cartItems.length > 0 ? (
                   props.cartItems.map((item: ICartItems, index) => (
-                    <Cartcard
+                    <Item
                       key={item.name + item.size + index}
                       getQtyTotal={getQtyTotal}
                       name={item.name}
