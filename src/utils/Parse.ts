@@ -10,4 +10,4 @@ export const fixedTitleLength = (str: string, numOfChar: number) => {
   return str.length > numOfChar ? shortenedStr.concat("...") : str
 }
 
-console.log(fixedTitleLength('Night Stones of Blue', 15))
+// console.log(fixedTitleLength('Night Stones of Blue', 15))

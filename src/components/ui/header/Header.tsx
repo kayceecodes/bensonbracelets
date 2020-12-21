@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1,
     boxShadow: "none",
   },
-  homeBtn : {
-    '&:hover': {
+  homeBtn: {
+    "&:hover": {
       // backgroundColor: 'transparent',
     },
   },
@@ -79,12 +79,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     padding: "1px 4px",
     border: `3px solid ${theme.palette.common.dimegray}`,
-    textDecoration: 'none',
+    textDecoration: "none",
   },
   logoOuterBorder: {
-    marginLeft: '30px',
-    padding: '5px 2px',
-    borderRadius: '4px',
+    marginLeft: "30px",
+    padding: "5px 2px",
+    borderRadius: "4px",
     border: `0.8px solid #ffffff90`,
   },
   secondToolbar: {
@@ -108,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   toolbarGrid: {
+    borderTop: `0.5px solid ${theme.palette.common.dimegray}99`,
     backgroundColor: theme.palette.common.antiqueWhite,
     padding: "0px 0px 30px",
   },
@@ -236,8 +237,12 @@ export default function Header(props: any) {
   }
 
   const handleAutoComplete = (name: string) => {
-    history.push(convertToRoute("/collections/", name))
-    console.log("Name inside of handleAutoCOmplete :", name)
+    console.log('String in Autocomplet: ', typeof name);
+    if (name !== null) {
+      history.push(convertToRoute("/collections/", name))
+    } else {
+      history.push('/collections')
+    }
   }
 
   return (
@@ -245,7 +250,8 @@ export default function Header(props: any) {
       <HideOnScroll>
         <AppBar className={classes.appbar} position="fixed">
           <Toolbar disableGutters>
-            <Link style={{textDecoration: 'none'}}
+            <Link
+              style={{ textDecoration: "none" }}
               className={classes.homeBtn}
               onClick={() => props.setValue(0)}
               to="/"

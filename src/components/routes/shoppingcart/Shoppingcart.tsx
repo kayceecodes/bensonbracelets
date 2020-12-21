@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 
 import { motion, MotionStyle } from "framer-motion"
@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
   scrollOverflow: {
     overflow: "auto",
     height: "350px",
-    marginTop: '20px',
+    marginTop: "20px",
     border: `1px solid ${theme.palette.common.dimegray}10`,
     backgroundColor: theme.palette.common.offWhite,
-    borderRadius: '4px',
+    borderRadius: "4px",
   },
   absolutePos: {
     position: "absolute",
@@ -93,7 +93,6 @@ const Shoppingcart = (props: IProps) => {
       numberOfItems += obj.quantity
     }
     setNumberOfItems(numberOfItems)
-    console.log('getQtyTotal Called')
   }
 
   useEffect(() => {
@@ -142,8 +141,11 @@ const Shoppingcart = (props: IProps) => {
               className={classes.totalItems}
               style={{ textAlign: "left" }}
             >
-              <span data-testid='cart-total'>{"Cart Total: $" + props.cartTotal.toFixed(2)}</span> <br />
-              {"Total Items in Cart: " + numberOfItems + ' items'}
+              {"Cart Total: $" + props.cartTotal.toFixed(2)}
+              <br />
+              {"Total Items in Cart: "}
+                <span data-testid="cart-total-qty">{numberOfItems}</span>
+                {" items"}
             </Grid>
             <div className={classes.bottomBorder} />
             <Grid item xs={12} style={{ width: "100%" }}>
@@ -174,11 +176,7 @@ const Shoppingcart = (props: IProps) => {
         <div className={classes.sectionMargin} />
         {/* CHECKOUTFORM */}
         <Grid item xs={12} md={6}>
-          <Grid
-            container
-            direction="column"
-            alignContent="center"
-          >
+          <Grid container direction="column" alignContent="center">
             <CheckoutForm />
           </Grid>
         </Grid>

@@ -7,13 +7,10 @@ import React, {
 
 import { motion } from "framer-motion"
 
-import HexagonOutline from "../../../images/icons/hexagon-outline.svg"
-
 import Typography from "@material-ui/core/Typography"
 
 import { IPageAnimations, IMotions } from "../../../Interfaces"
 import { bracelets } from "../../../data/Data"
-import Button from "@material-ui/core/Button/Button"
 import Grid from "@material-ui/core/Grid/Grid"
 
 import Aos from "aos"
@@ -38,7 +35,7 @@ export interface IProps {
 }
 
 /* Collections will show the gallery of the products and the other routes with the 
-bracelets will simply be a filtered page the whole colleciton/gallery */
+bracelets will simply be a filtered page the whole gallery */
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
     [theme.breakpoints.up("sm")]: {
@@ -51,10 +48,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  header: {
-    borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
+  headersUnderline: {
+    padding: '0px 13px 10px',
+    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`
   },
-  body1: {},
   braceletCardsContainer: {
   },
   braceletCardWrapper: {
@@ -132,9 +129,9 @@ export function Collections(props: IProps) {
             justify="center"
             alignItems="center"
           >
-            <Grid item className={classes.header}>
+            <Grid item>
               <Typography component="h3" variant="h3">
-                Collections
+                <div className={classes.headersUnderline}>Collections</div>
               </Typography>
             </Grid>
             <Hidden smDown>
@@ -143,10 +140,10 @@ export function Collections(props: IProps) {
                 variant="caption"
                 style={{
                   transition: "all 0.7s",
-                  color: revealCaption === true ? "#6e6656" : "white",
+                  color: "#6e6656",
                 }}
               >
-                Filter By:
+                <strong style={{marginRight: '5px'}}>Filter By:</strong>
                 {filterCategory.length === 0
                   ? "(Pick Category Below)"
                   : filterCategory}

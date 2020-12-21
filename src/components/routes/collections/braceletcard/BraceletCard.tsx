@@ -65,9 +65,11 @@ export default function BraceletCard(props: IProps) {
 
   const itemsRoute = "/collections/" + convertToRoute(props.name);
 
+  // const countCharacters = (str: string) => console.log('Name length: ', str + ' ' + str.length)
+
   return (
     <Button component={Link} to={itemsRoute} onClick={() => props.setValue(1)} data-testid='bracelet-card'>
-      {/* {categoryFirstInitial} */}
+      {/* {countCharacters(props.name)} */}
       <div className={classes.braceletCard}>
         <Typography variant="caption">{props.name} {UseImgFile(props.category)}</Typography>
 

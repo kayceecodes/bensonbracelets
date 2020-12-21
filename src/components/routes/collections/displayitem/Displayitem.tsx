@@ -29,7 +29,6 @@ import { addToCart, addQuantityToItem } from "../../../../store/actions"
 import theme from "../../../ui/Theme"
 
 import CartSummaryModal from "../cartSummaryModal/CartSummaryModal"
-import { parsePrice } from "../../../App"
 
 interface IDisplayItemProps {
   setValue: React.Dispatch<React.SetStateAction<number>>
@@ -59,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
   },
   arrow: {
     fontSize: "1.6rem",
+  },
+  headersUnderline: {
+    padding: "0px 13px 10px",
+    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
   },
   boxShadows: {
     boxShadow: "0px 0px 8px 10px #efefef50",
@@ -167,8 +170,6 @@ function DisplayItem(props: IProps) {
     ids.includes(newItem.id)
       ? dispatch(addQuantityToItem(newItem))
       : dispatch(addToCart(newItem))
-
-    clearValues()
   }
 
   /* Clears values in the options */
@@ -212,6 +213,7 @@ function DisplayItem(props: IProps) {
             item={values}
             open={open}
             setOpen={setOpen}
+            clearValues={clearValues}
           />
 
           <Grid container alignItems="center" direction="column">
@@ -231,22 +233,15 @@ function DisplayItem(props: IProps) {
                     </Button>
                   </Typography>
                 </Grid>
-                <Grid
-                  item
-                  xs={10}
-                  sm={9}
-                  style={{
-                    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
-                  }}
-                >
+                <Grid item xs={10} sm={9}>
                   {/* Right Side of Cantainer - The Item's Name */}
                   <Typography variant="h3" className={classes.itemName}>
-                    {props.name}
+                    <div className={classes.headersUnderline}>{props.name}</div>
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
-            <div className={classes.sectionMargin} />{" "}
+            <div className={classes.sectionMargin} />
             {/*Separate Name from item's img and details*/}
             <Grid item>
               {/* Second Item in the main container of Displayitem component - img left & details/options right */}
@@ -257,7 +252,7 @@ function DisplayItem(props: IProps) {
                     src={props.src}
                     className={classes.itemImg}
                     alt="bracelet displayed"
-                  />{" "}
+                  />
                   {/* Img Of Item - Bracelet */}
                 </Grid>
                 <Grid item sm={4}>
@@ -284,7 +279,7 @@ function DisplayItem(props: IProps) {
                           Size
                         </InputLabel>
                         <Select
-                          data-testid="size"
+                          data-testid="size-select-btn"
                           labelId="size-label-id"
                           id="size"
                           value={values.size}
@@ -320,7 +315,7 @@ function DisplayItem(props: IProps) {
                           Qty
                         </InputLabel>
                         <Select
-                          data-testid="quantity"
+                          data-testid="quantity-select-btn"
                           labelId="quantity-label-id"
                           value={values.quantity}
                           onChange={(
@@ -350,34 +345,27 @@ function DisplayItem(props: IProps) {
                   */}
 
                     <Grid item>
-                      {loading === true ? (
-                        <Button
-                          className={classes.addShoppingcartBtn}
-                          variant="outlined"
-                          color="primary"
-                        >
-                          <CircularProgress size={24} />
-                        </Button>
-                      ) : (
-                        <Button
-                          className={classes.addShoppingcartBtn}
-                          variant="outlined"
-                          color="primary"
-                          disabled={
-                            values.size === 0 || values.quantity === 0
-                              ? true
-                              : false
-                          }
-                          onClick={() => {
-                            onAddToCart(values)
-                            setLoading(true)
-                            setProgress()
-                            // setOpen(true)
-                          }}
-                        >
-                          <Icon>add_shopping_cart</Icon>
-                        </Button>
-                      )}
+                      <Button
+                        className={classes.addShoppingcartBtn}
+                        variant="outlined"
+                        color="primary"
+                        data-testid="add-to-cart"
+                        disabled={
+                          values.size === 0 || values.quantity === 0
+                            ? true
+                            : false
+                        }
+                        onClick={() => {
+                          onAddToCart(values)
+                          setLoading(true)
+                          setProgress()
+                        }}
+                      >
+                        {loading ? 
+                        (<CircularProgress size={24} />) 
+                        : 
+                        (<Icon>add_shopping_cart</Icon>)}
+                      </Button>
                     </Grid>
                     <Grid item>
                       <Button

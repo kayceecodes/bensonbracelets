@@ -55,6 +55,13 @@ const useStyles = makeStyles((theme) => ({
       margin: "35px",
     },
   },
+  centering: {
+    margin: '0 auto',
+  },
+  headersUnderline: {
+    padding: '0px 13px 10px',
+    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`
+  },
   tabLinks: {
     position: "absolute",
     zIndex: 1,
@@ -161,7 +168,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "850px",
     margin: "80px auto 0px",
     paddingBottom: "80px",
-    borderBottom: `2px solid ${theme.palette.common.antiqueWhite}`,
     [theme.breakpoints.up("sm")]: {
       margin: "140px auto 90px",
       fontSize: "1.10rem",
@@ -183,10 +189,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "5px auto",
     paddingBottom: "50px",
     [theme.breakpoints.up("sm")]: {
-      margin: "70px auto 100px",
-    },
-    [theme.breakpoints.up("sm")]: {
       marginBottom: "140px",
+      marginTop: '100px',
     },
   },
   braceletImgs: {
@@ -246,7 +250,7 @@ export default function Home(props: IProps) {
   /** Return tabs to be highlighted when route is chosen and clicked
    * @param {show, routeIndex, tabProps}
    */
-  function TabLinks({ show, routeIndex, tabProps }: ITabLinks) {
+  const TabLinks = ({ show, routeIndex, tabProps }: ITabLinks) => {
     return (
       <Tabs
         className={classes.tabLinks}
@@ -365,10 +369,10 @@ export default function Home(props: IProps) {
         <div className={classes.sectionMargin} />
 
         <Grid container direction="column" justify="center">
-          <Grid item xs={12}>
+          <Grid item style={{margin: '0 auto'}}>
             {/* Header - About.. */}
             <Typography variant="h2" component="h2">
-              About Our Bracelets
+              <div className={classes.headersUnderline}>About Benson Bracelets</div>
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -385,14 +389,16 @@ export default function Home(props: IProps) {
             </p>
           </Grid>
           {/* Header - Featured Bracelets */}
+          <div className={classes.centering}>
           <Typography
             component="h2"
             variant="h2"
             data-aos="fade-left"
             id="featuredBracelets"
           >
-            Featured Bracelets
+            <div className={classes.headersUnderline}>Featured Bracelets</div>
           </Typography>
+          </div>
           {/* Bracelet Container */}
           <Grid
             container

@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 
 import Button from "@material-ui/core/Button/Button"
 import Grid from "@material-ui/core/Grid/Grid"
-// import Popover from "@material-ui/core/Popover/Popover"
 import makeStyles from "@material-ui/core/styles/makeStyles"
 import Typography from "@material-ui/core/Typography/Typography"
 import Popover from "@material-ui/core/Popover/Popover"
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery"
 import theme from "../../../ui/Theme"
-
 
 import { ICartItems } from "../../../../Interfaces"
 
@@ -18,13 +16,13 @@ import Aos from "aos"
 import "aos/dist/aos.css"
 import Backdrop from "@material-ui/core/Backdrop/Backdrop"
 
-
 interface IProps {
   setValue: React.Dispatch<React.SetStateAction<number>>
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   open: boolean
   item: ICartItems
   cartTotal: number
+  clearValues(): void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -87,10 +85,17 @@ const CartSummaryModal = (props: IProps) => {
     xl: useMediaQuery(theme.breakpoints.up("xl")),
   } // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles based on width of the window
 
-  const handleClose = () => {props.setOpen(false)}
+  /*Close Modal backdrop*/
+  const handleClose = () => {
+    props.setOpen(false)
+  }
 
+  /** 1 Close modal,
+   *  2 clear values in the form->DisplayItem,
+   *  3 then route to checkout */
   const handleRouteToCheckout = () => {
     handleClose()
+    props.clearValues()
     props.setValue(3)
   }
 
@@ -99,7 +104,14 @@ const CartSummaryModal = (props: IProps) => {
   }, [])
 
   return (
-<Backdrop style={{zIndex: 1}} onClick={() => handleClose()} open={props.open}>
+    <Backdrop
+      style={{ zIndex: 1 }}
+      onClick={() => {
+        handleClose()
+        props.clearValues()
+      }}
+      open={props.open}
+    >
       <Popover
         open={props.open}
         anchorOrigin={{
@@ -123,8 +135,12 @@ const CartSummaryModal = (props: IProps) => {
             <Grid container justify="flex-start" alignItems="flex-end">
               {/* Container Name Price Size & Total*/}
               <Grid item xs={6} sm={4}>
-                <img src={props.item.src} className={classes.itemImg} data-aos='fade-right' alt={props.item.name} />
-                
+                <img
+                  src={props.item.src}
+                  className={classes.itemImg}
+                  data-aos="fade-right"
+                  alt={props.item.name}
+                />
               </Grid>
               <Grid item xs={6} sm={4}>
                 <Grid
@@ -166,7 +182,7 @@ const CartSummaryModal = (props: IProps) => {
                     <strong
                       style={{ fontSize: "20px", fontFamily: "system-ui" }}
                     >
-                      ${(props.cartTotal).toFixed(2)}
+                      ${props.cartTotal.toFixed(2)}
                     </strong>
                   </Typography>
                 </Grid>
@@ -191,7 +207,10 @@ const CartSummaryModal = (props: IProps) => {
               <Grid item xs={12} sm={6}>
                 <Button
                   className={classes.summaryBtn}
-                  onClick={() => handleClose()}
+                  onClick={() => {
+                    handleClose()
+                    props.clearValues()
+                  }}
                 >
                   Continue Shopping
                 </Button>
@@ -200,7 +219,7 @@ const CartSummaryModal = (props: IProps) => {
           </Grid>
         </Grid>
       </Popover>
-</Backdrop>
+    </Backdrop>
   )
 }
 

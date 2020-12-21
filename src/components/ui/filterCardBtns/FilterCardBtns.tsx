@@ -9,6 +9,7 @@ import { CATEGORIES } from "../../routes/collections/Collections"
 import luxury from "../../../images/bracelets/collections/luxury88by1ratio.jpg"
 import fraternity from "../../../images/bracelets/collections/fraternity88by1ratio753x856px.jpg"
 import teamcolors from "../../../images/bracelets/collections/teamcolors88by1ratio440x500px.jpg"
+import UseImgFile from "../useImgFile/UseImgFile"
 
 interface IProps {
   filterCategory: string
@@ -55,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(165,152,136, 0.95)",
     boxShadow: "0px 0px 12px #52390680",
   },
+  cardBtnIcons: {
+    color: `${theme.palette.common.dimegray}`
+  },
   categoryCardImgs: {
     width: "100%",
     paddingBottom: "12px",
@@ -64,11 +68,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+/** These buttons will set the filter category and the state of the filterCategory
+ * @param props: {setRevealCaption, filterCategory, setFilterCategory}
+ * @return {filterCategory: string}
+ */
+
 export default function FilterCardBtns(props: IProps) {
   const classes = useStyles()
 
   return (
-    <Grid item xs={12} onMouseOver={() => props.setRevealCaption(true)}>
+    <Grid item xs={12}>
       {/* On mouse hover, caption 'filter by:' appears*/}
       <Grid container spacing={3} justify="center">
         {/*Container of the categories - card*/}
@@ -99,9 +108,10 @@ export default function FilterCardBtns(props: IProps) {
                 alignContent="center"
               >
                 <Grid item>
-                  <Typography className={classes.caption} variant="caption">
+                  <Typography className={classes.caption} variant="caption" style={{marginRight: '4px'}}>
                     Luxury
                   </Typography>
+                  <span className={classes.cardBtnIcons}>{UseImgFile('Luxury')}</span>
                 </Grid>
               </Grid>
             </div>
@@ -134,9 +144,10 @@ export default function FilterCardBtns(props: IProps) {
                 alignContent="center"
               >
                 <Grid item>
-                  <Typography className={classes.caption} variant="caption">
-                    Fraternity & Sorority
+                  <Typography className={classes.caption} variant="caption" style={{marginRight: '4px'}}>
+                    Fraternity & Sorority 
                   </Typography>
+                  <span className={classes.cardBtnIcons}>{UseImgFile('Fraternity & Sorority')}</span>
                 </Grid>
               </Grid>
             </div>
@@ -169,9 +180,10 @@ export default function FilterCardBtns(props: IProps) {
                 alignContent="center"
               >
                 <Grid item id="gallery">
-                  <Typography className={classes.caption} variant="caption">
+                  <Typography className={classes.caption} variant="caption" style={{marginRight: '4px'}}>
                     Team Colors
                   </Typography>
+                  <span className={classes.cardBtnIcons}>{UseImgFile('Team Colors')}</span>
                 </Grid>
               </Grid>
             </div>

@@ -8,7 +8,6 @@ import { bracelets } from "../data/Data"
 import { getByTestId, screen } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 import { debug } from "console"
-import MenuItem from "@material-ui/core/MenuItem/MenuItem"
 
 type DisplayItemProps = React.ComponentProps<typeof DisplayItem>
 
@@ -35,11 +34,11 @@ describe("When a Selection - Option is clicked", () => {
   })
   test("select value updates text for sizes", () => {
     testMaterial.selectOption(screen.getByTestId(/quantity/), /4/)
-    expect(screen.getByTestId(/quantity/)).toHaveTextContent(/4/)
+    expect(screen.getByTestId(/quantity-select-btn/)).toHaveTextContent(/4/)
   })
 
   test("select value updates text for sizes", () => {
     testMaterial.selectOption(screen.getByTestId(/size/), /4.5"/)
-    expect(screen.getByTestId(/size/)).toHaveTextContent(/4.5"/)
+    expect(screen.getByTestId(/size-select-btn/)).toHaveTextContent(/4.5"/)
   })
 })

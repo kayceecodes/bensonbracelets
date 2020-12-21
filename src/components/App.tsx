@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties, useEffect } from "react"
+import React, { useState, CSSProperties } from "react"
 import Header from "../components/ui/header/Header"
 // import Footer from '../components/ui/footer/Footer';
 import { ThemeProvider } from "@material-ui/styles"
@@ -135,6 +135,7 @@ function App() {
                       pageStyle={pageStyle}
                       pageAnimations={pageAnimations}
                       motions={motions}
+                      value={value}
                       setValue={setValue}
                       setSelectedIndex={setSelectedIndex}
                       jumpTo={setJump}

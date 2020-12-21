@@ -1,75 +1,9 @@
 import { ICartItems } from "../../Interfaces"
 import * as actionTypes from "../actions/actionTypes"
-import Bracelet1 from "../../images/bracelets/bracelet1.jpg"
 
 const initialState: { cartTotal: number; cartItems: ICartItems[] } = {
   cartTotal: 0,
-  cartItems: [
-    // {
-    //   name: "Bracelet 1 Gold",
-    //   src: Bracelet1,
-    //   size: 2,
-    //   quantity: 4,
-    //   price: 32.85,
-    //   id: '2030'
-    // }
-    // {
-    //   name: "Bracelet 1 Blue",
-    //   src: Bracelet1,
-    //   size: 4,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Black",
-    //   src: Bracelet1,
-    //   size: 6,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Green",
-    //   src: Bracelet1,
-    //   size: 1,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Pink",
-    //   src: Bracelet1,
-    //   size: 9,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Blue",
-    //   src: Bracelet1,
-    //   size: 4,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Black",
-    //   src: Bracelet1,
-    //   size: 6,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Green",
-    //   src: Bracelet1,
-    //   size: 1,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-    // {
-    //   name: "Bracelet 1 Pink",
-    //   src: Bracelet1,
-    //   size: 9,
-    //   quantity: 2,
-    //   price: 32.85,
-    // },
-  ],
+  cartItems: [],
 }
  
 

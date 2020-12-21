@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
       margin: "90px",
     },
   },
+  headersUnderline: {
+    padding: '0px 13px 10px',
+    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`
+  },
   root: {},
 }));
 
@@ -49,13 +53,11 @@ export default function Contact(props: IProps) {
       <div className={classes.sectionMargin}></div>
       
       <Grid container direction="column" alignContent='center'>
-
-
         <Grid item xs={10} md={6} xl={10}>
           <Grid container direction="column" alignContent='space-between' spacing={3}>
             <Grid item xs={12}>
               <Grid container>
-                <Typography variant="h2">Reach Us</Typography>
+                <Typography variant="h2"><div className={classes.headersUnderline}>Reach Us</div></Typography>
               </Grid>
             </Grid>
             <Grid item xs={12} style={{ textAlign: "left" }}>

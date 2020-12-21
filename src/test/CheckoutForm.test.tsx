@@ -9,7 +9,6 @@ import { screen } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 import { Elements } from "@stripe/react-stripe-js"
 import { StripeProvider } from "react-stripe-elements"
-import { debug } from "console"
 
 type CheckoutFormProps = React.ComponentProps<typeof CheckoutForm>
 
