@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function DisplayItem(props: IProps) {
+export function DisplayItem(props: IProps) {
   const classes = useStyles()
   const dispatch: Dispatch<any> = useDispatch()
   const [open, setOpen] = useState(false)
@@ -215,7 +215,7 @@ function DisplayItem(props: IProps) {
             setOpen={setOpen}
             clearValues={clearValues}
           />
-
+          <p>Display Item</p>
           <Grid container alignItems="center" direction="column">
             <div className={classes.sectionMargin} />
             <Grid item style={{ flexGrow: 1 }} xs={12}>
