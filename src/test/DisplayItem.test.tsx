@@ -7,7 +7,6 @@ import { bracelets } from "../data/Data"
 
 import { getByTestId, screen } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
-import { debug } from "console"
 
 type DisplayItemProps = React.ComponentProps<typeof DisplayItem>
 
@@ -24,7 +23,7 @@ const baseProps: DisplayItemProps = {
   src: "",
   category: "",
 }
-
+ 
 const renderUI = (props: Partial<DisplayItemProps>) =>
   render(<DisplayItem {...baseProps} {...props} />, {})
 

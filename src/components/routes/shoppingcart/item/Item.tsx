@@ -1,34 +1,36 @@
-import React, { Dispatch, useEffect, useState } from "react"
+import React, { Dispatch, useEffect, useState } from "react";
 
-import { ICartItems } from "../../../../Interfaces"
-import { useDispatch } from "react-redux"
+import { ICartItems } from "../../../../Interfaces";
+import { connect, useDispatch } from "react-redux";
 
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress"
-import Grid from "@material-ui/core/Grid/Grid"
-import makeStyles from "@material-ui/core/styles/makeStyles"
-import Typography from "@material-ui/core/Typography/Typography"
-import Button from "@material-ui/core/Button/Button"
-import Icon from "@material-ui/core/Icon/Icon"
-import Aos from "aos"
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import Grid from "@material-ui/core/Grid/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography/Typography";
+import Button from "@material-ui/core/Button/Button";
+import Icon from "@material-ui/core/Icon/Icon";
+
+import Aos from "aos";
 
 import {
   addQuantityToItem,
   clearIDFromCart,
   removeAllQuantityFromItem,
   removeQuantityFromItem,
-} from "../../../../store/actions"
+} from "../../../../store/actions";
 
-import { fixedTitleLength } from "../../../../utils/Parse"
+import { fixedTitleLength } from "../../../../utils/Parse";
+import CenteredAbsolute from "../../../ui/hoc/CenteredAbsolute";
 
 /**
  * @typedef {Object} ICartCardProps
  * @property {function} getQtyTotal - Update quantity total with each
  */
 interface ICartCardProps {
-  getQtyTotal: () => void
+  getQtyTotal: () => void;
 }
 
-type IProps = ICartCardProps & ICartItems
+type IProps = ICartCardProps & ICartItems;
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -70,6 +72,16 @@ const useStyles = makeStyles((theme) => ({
       width: "70px",
     },
   },
+  currentQty: {
+    color: `${theme.palette.common.dimGray}`,
+    letterSpacing: "0.5px",
+    fontSize: "0.75rem",
+    fontFamily: "Roboto",
+    lineHeight: 1.55,
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "0.85rem",
+    },
+  },
   deleteCard: {
     position: "absolute",
     color: "lightGray",
@@ -81,51 +93,50 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.common.dimegray,
     },
   },
-}))
+}));
 
 export default function Item(props: IProps) {
-  const classes = useStyles()
-  const [mounted, setMounted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const dispatch: Dispatch<any> = useDispatch()
+  const classes = useStyles();
+  const [mounted, setMounted] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const dispatch: Dispatch<any> = useDispatch();
 
-  /**
-   * Takes an action to add or remove. It dertermines if it should dispatch add one, remove one, or clear item completely.
+  /** Takes an action to add or remove. It dertermines if it should dispatch add one, remove one, or clear item completely.
    *  Inside of case "remove quantity" it determines if it should remove an item by 1 or clear the item from the cart list
-   * @param editAction 
+   * @param editAction
    */
   const editQuantity = (editAction: string): void => {
     switch (editAction) {
       case "add quantity": {
-        dispatch(addQuantityToItem({ ...props, quantity: 1 }))
-        props.getQtyTotal()
-        return
+        dispatch(addQuantityToItem({ ...props, quantity: 1 }));
+        props.getQtyTotal();
+        return;
       }
       case "remove quantity": {
         if (props.quantity === 1) {
-          dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
-          props.getQtyTotal()
-          dispatch(clearIDFromCart({ ...props }))
-        } else dispatch(removeQuantityFromItem({ ...props, quantity: 1 }))
-        props.getQtyTotal() /* Update numberofItems in cart after every editQuantity Call*/
-        return
+          dispatch(removeQuantityFromItem({ ...props, quantity: 1 }));
+          props.getQtyTotal();
+          dispatch(clearIDFromCart({ ...props }));
+        } else dispatch(removeQuantityFromItem({ ...props, quantity: 1 }));
+        props.getQtyTotal(); /* Update numberofItems in cart after every editQuantity Call*/
+        return;
       }
     }
-  }
+  };
 
   const clearCard = () => {
-    dispatch(removeAllQuantityFromItem({...props}))
-    dispatch(clearIDFromCart({...props}))
-    props.getQtyTotal()
-  }
+    dispatch(removeAllQuantityFromItem({ ...props }));
+    dispatch(clearIDFromCart({ ...props }));
+    props.getQtyTotal();
+  };
 
   useEffect(() => {
-    Aos.init({ duration: 900 })
-  }, [])
+    Aos.init({ duration: 900 });
+  }, []);
 
-  const setProgress = () => setTimeout(() => setLoading(false), 500)
+  const setProgress = () => setTimeout(() => setLoading(false), 500);
 
-  setTimeout(() => setMounted(true), 1000)
+  setTimeout(() => setMounted(true), 1000);
 
   return (
     <Grid
@@ -197,11 +208,12 @@ export default function Item(props: IProps) {
                 variant="outlined"
                 color="primary"
                 disabled={loading ? true : false}
-                data-testid='add-qty-btn'
+                data-testid="add-qty-btn"
                 onClick={() => {
-                  editQuantity("add quantity")
-                  setLoading(true)
-                  setProgress()
+                  dispatch(addQuantityToItem({ ...props, quantity: 1 }));
+                  // editQuantity("add quantity");
+                  setLoading(true);
+                  setProgress();
                 }}
               >
                 <Icon>add</Icon>
@@ -212,11 +224,11 @@ export default function Item(props: IProps) {
                 variant="outlined"
                 color="primary"
                 disabled={loading ? true : false}
-                data-testid='remove-qty-btn'
+                data-testid="remove-qty-btn"
                 onClick={() => {
-                  editQuantity("remove quantity")
-                  setLoading(true)
-                  setProgress()
+                  editQuantity("remove quantity");
+                  setLoading(true);
+                  setProgress();
                 }}
               >
                 <Icon>remove</Icon>
@@ -225,21 +237,31 @@ export default function Item(props: IProps) {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography style={{ letterSpacing: "0.5px" }} variant="body2">
+            <div className={classes.currentQty}>
               <strong>Qty</strong> <br />
-              {loading ? <CircularProgress size={8} /> : props.quantity}
-            </Typography>
+              <CenteredAbsolute>
+                {/* <span data-testid="item-qty">{props.quantity}</span> */}
+                {loading === true ? (
+                  <>
+                    <CircularProgress size={8} />
+                    <span data-testid="item-qty" style={{position: 'absolute', visibility: 'hidden'}}>{props.quantity}</span>
+                  </>
+                ) : (
+                  <span data-testid="item-qty">{props.quantity}</span>
+                )}
+              </CenteredAbsolute>
+            </div>
           </Grid>
         </Grid>
       </Grid>
       <Icon
         className={classes.deleteCard}
         onClick={() => {
-          clearCard()
+          clearCard();
         }}
       >
         close
       </Icon>
     </Grid>
-  )
+  );
 }

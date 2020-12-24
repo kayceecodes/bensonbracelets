@@ -5,15 +5,11 @@ import React from "react"
 
 import { render } from "./test-utils"
 import Collections from "../components/routes/collections/Collections"
-
 import { bracelets } from "../data/Data"
-
 import { screen } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 
 type CollectionsProps = React.ComponentProps<typeof Collections>
-
-
 
 const baseProps: CollectionsProps = {
   setValue: () => {},
@@ -24,12 +20,6 @@ const baseProps: CollectionsProps = {
   jumpTo: (jumpingTarget: string | number | Element): void => {},
 }
 
-/**
- *
- *
- * braceletKeys.includes(elem.category)
- *     return acc + 1 :
- */
 
 const categoryCount = (category: string) =>
   bracelets.reduce(

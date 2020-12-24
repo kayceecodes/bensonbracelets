@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography/Typography"
 import makeStyles from "@material-ui/core/styles/makeStyles"
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery"
 import useTheme from "@material-ui/core/styles/useTheme"
+import { ICart } from "../../../store/reducers/cart_reducer"
 
 interface IProps {
   pageStyle: MotionStyle
@@ -185,9 +186,12 @@ const Shoppingcart = (props: IProps) => {
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: {cart: ICart}) => ({
   cartItems: state.cart.cartItems,
   cartTotal: state.cart.cartTotal,
 })
 
-export default connect(mapStateToProps)(Shoppingcart)
+export default connect((state: {cart: ICart}) => ({
+  cartItems: state.cart.cartItems,
+  cartTotal: state.cart.cartTotal,
+}))(Shoppingcart)

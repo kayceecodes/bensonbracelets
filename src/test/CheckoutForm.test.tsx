@@ -1,5 +1,5 @@
 import React from "react"
-
+ 
 import { render } from "./test-utils"
 import CheckoutForm from "../components/routes/shoppingcart/checkout/CheckoutForm"
 
@@ -30,21 +30,11 @@ const categoryCount = (category: string) =>
 
 const renderUI = (props: Partial<CheckoutFormProps>) =>
   render(
-    <StripeProvider apiKey="pk_test_G9lapOcMCey2HEiGguvpqIi1">
-    <Elements stripe={null}>
       <CheckoutForm {...baseProps} {...props} />
-    </Elements>
-    </StripeProvider>,
-    {}
+    ,{}
   )
 
-  describe("When user clicks on add quantity", () => {
-    beforeEach(() => {
-      // renderUI({})
-    })
-  
-    test('empty', () => {
-      
-    })
-  })
+  test('empty', () => {})
+
+
   

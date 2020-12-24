@@ -1,7 +1,12 @@
 import { ICartItems } from "../../Interfaces"
 import * as actionTypes from "../actions/actionTypes"
 
-const initialState: { cartTotal: number; cartItems: ICartItems[] } = {
+export interface ICart {
+  cartTotal: number
+  cartItems: ICartItems[]
+}
+
+const initialState: ICart = {
   cartTotal: 0,
   cartItems: [],
 }
