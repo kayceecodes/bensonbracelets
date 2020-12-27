@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useState } from "react";
 
 import { ICartItems } from "../../../../Interfaces";
-import { connect, useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import Grid from "@material-ui/core/Grid/Grid";
@@ -27,7 +27,9 @@ import CenteredAbsolute from "../../../ui/hoc/CenteredAbsolute";
  * @property {function} getQtyTotal - Update quantity total with each
  */
 interface ICartCardProps {
-  getQtyTotal: () => void;
+  getQtyTotal: () => void
+  // onAddQuantityToItem: ({props, quantity}: any) => void
+  // addQuantityToItem?: ({props, quantity}: any) => void
 }
 
 type IProps = ICartCardProps & ICartItems;
@@ -108,7 +110,8 @@ export default function Item(props: IProps) {
   const editQuantity = (editAction: string): void => {
     switch (editAction) {
       case "add quantity": {
-        dispatch(addQuantityToItem({ ...props, quantity: 1 }));
+        dispatch(addQuantityToItem({...props, quantity: 1}))
+        // props.onAddQuantityToItem({ ...props, quantity: 1 });
         props.getQtyTotal();
         return;
       }
@@ -210,8 +213,7 @@ export default function Item(props: IProps) {
                 disabled={loading ? true : false}
                 data-testid="add-qty-btn"
                 onClick={() => {
-                  dispatch(addQuantityToItem({ ...props, quantity: 1 }));
-                  // editQuantity("add quantity");
+                  editQuantity("add quantity");
                   setLoading(true);
                   setProgress();
                 }}

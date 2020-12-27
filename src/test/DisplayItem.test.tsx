@@ -28,15 +28,15 @@ const renderUI = (props: Partial<DisplayItemProps>) =>
   render(<DisplayItem {...baseProps} {...props} />, {})
 
 describe("When a Selection - Option is clicked", () => {
-  beforeEach(() => {
-    renderUI({})
-  })
+  
   test("select value updates text for sizes", () => {
+    renderUI({})
     testMaterial.selectOption(screen.getByTestId(/quantity/), /4/)
     expect(screen.getByTestId(/quantity-select-btn/)).toHaveTextContent(/4/)
   })
 
   test("select value updates text for sizes", () => {
+    renderUI({})
     testMaterial.selectOption(screen.getByTestId(/size/), /4.5"/)
     expect(screen.getByTestId(/size-select-btn/)).toHaveTextContent(/4.5"/)
   })

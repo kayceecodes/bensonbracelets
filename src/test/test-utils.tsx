@@ -1,36 +1,18 @@
 // test-utils.js
-import React, { PropsWithChildren, ReactNode } from "react";
-
+import React, { PropsWithChildren } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "../store/store";
+import { createStore } from "redux";
+import rootReducer, {initialState as reducerInitialState} from '../store/reducers/index'
 
-import { Matcher, render, RenderOptions } from "@testing-library/react";
 import { ThemeProvider } from "@material-ui/styles";
-
 import theme from "../components/ui/Theme";
 
-import rootReducer from "../store/reducers/index";
-
 /** from davidgilbertson @ https://github.com/testing-library/react-testing-library/issues/322 */
-import { within, waitForElementToBeRemoved } from "@testing-library/react";
+import { within, waitForElementToBeRemoved, Matcher, render } from "@testing-library/react";
 import UserEvent from "@testing-library/user-event";
-import { StripeProvider, Elements } from "react-stripe-elements";
-import { createStore } from "redux";
 
-// const AllTheProviders = ({ children }: PropsWithChildren<{}>,{store = createStore(rootReducer)} = {}) => {
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <Provider store={store}>
-//         <StripeProvider stripe={null}>
-//           <Elements>
-//             <BrowserRouter>{children}</BrowserRouter>
-//           </Elements>
-//         </StripeProvider>
-//       </Provider>
-//     </ThemeProvider>
-//   )
-// }
+import { StripeProvider, Elements } from "react-stripe-elements";
 
 /** from davidgilbertson @ https://github.com/testing-library/react-testing-library/issues/322 */
 export const testMaterial = {
@@ -56,10 +38,32 @@ export const testMaterial = {
     }),
 };
 
+const thunk = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
+  if (typeof action === 'function') {
+    return action(dispatch, getState)
+  }
+
+  return next(action)
+}
+
+export const create = () => {
+  const store = {
+    getState: jest.fn(() => ({})),
+    dispatch: jest.fn()
+  }
+  const next = jest.fn()
+
+  const invoke = (action: any) => thunk(store)(next)(action)
+
+  return { store, next, invoke }
+}
+
 const customRender = (
   ui: JSX.Element,
-  { store = createStore(rootReducer), ...options } = {}
+  { initialState = reducerInitialState,
+    store = createStore(rootReducer), ...options } = {}
 ) =>
+
   render(ui, {
     wrapper: ({ children }: PropsWithChildren<{}>) => (
       <ThemeProvider theme={theme}>

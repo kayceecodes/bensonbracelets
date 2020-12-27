@@ -56,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     height: "350px",
     marginTop: "20px",
+    paddingRight: '15px',
+    paddingLeft: '15px',
     border: `1px solid ${theme.palette.common.dimegray}10`,
     backgroundColor: theme.palette.common.offWhite,
     borderRadius: "4px",

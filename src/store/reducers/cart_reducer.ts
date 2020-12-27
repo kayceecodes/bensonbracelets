@@ -6,7 +6,7 @@ export interface ICart {
   cartItems: ICartItems[]
 }
 
-const initialState: ICart = {
+export const initialState: ICart = {
   cartTotal: 0,
   cartItems: [],
 }

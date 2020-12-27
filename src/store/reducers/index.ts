@@ -2,6 +2,8 @@
 import { combineReducers } from 'redux';
 import cart_reducer from './cart_reducer';
 
+export {initialState} from './cart_reducer';
+
 const rootReducer = combineReducers({
     cart: cart_reducer
 }); 

@@ -24,6 +24,7 @@ import { motion } from "framer-motion"
 
 import { connect, useDispatch } from "react-redux"
 import { Dispatch } from "redux"
+import * as actionTypes from '../../../../store/actions/actionTypes'
 import { addToCart, addQuantityToItem } from "../../../../store/actions"
 
 import theme from "../../../ui/Theme"
@@ -434,5 +435,11 @@ function DisplayItem(props: IProps) {
 const mapStateToProps = (state: any) => ({
   cartItems: state.cart.cartItems,
 })
+
+// const mapDispatchToProps = (dispatch: Dispatch) => {
+//   return {
+//     onAddToCart: (newItem: ICartItems) => dispatch(addToCart(newItem))
+//   }     
+// }
 
 export default connect(mapStateToProps)(DisplayItem)
