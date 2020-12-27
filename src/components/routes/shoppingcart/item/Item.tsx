@@ -29,7 +29,7 @@ import CenteredAbsolute from "../../../ui/hoc/CenteredAbsolute";
 interface ICartCardProps {
   getQtyTotal: () => void
   // onAddQuantityToItem: ({props, quantity}: any) => void
-  // addQuantityToItem?: ({props, quantity}: any) => void
+  addQuantityToItem?: ({props, quantity}: any) => void
 }
 
 type IProps = ICartCardProps & ICartItems;
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Item(props: IProps) {
+export default function Item(props: any) {
   const classes = useStyles();
   const [mounted, setMounted] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -181,6 +181,7 @@ export default function Item(props: IProps) {
                 fontWeight: "bold",
                 fontFamily: "Nunito",
                 letterSpacing: "0.5px",
+                marginLeft: '4px',
               }}
               variant="body2"
             >

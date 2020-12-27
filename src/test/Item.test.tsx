@@ -27,19 +27,22 @@ const renderUI = (props: Partial<ItemProps>) =>
 
 
 describe("When user clicks on add quantity", () => {
-        let wrapper: HTMLElement, getByTestId: 
+        let wrapper: HTMLElement, debug: any, getByTestId: 
         { (arg0: string): any; (text: Matcher, options?: MatcherOptions | undefined, waitForElementOptions?: unknown): HTMLElement; };
         let mockAddQtyToItem: any;
   beforeEach( () => {
         mockAddQtyToItem = jest.fn
-        const utils = renderUI({})
-        getByTestId = utils.getByTestId;
+        const utils = renderUI({addQuantityToItem: mockAddQtyToItem})
+        getByTestId = utils.getByTestId
+        debug = utils.debug
       })  
     it('dispatches addQuantityToItem with an increased quantity of 1', () => {
       create()  
       const button = getByTestId('add-qty-btn') 
-        userEvent.click(button) 
-        userEvent.click(screen.getByTestId(/add-qty-btn/))
+        userEvent.click(button)
+        // expect(getByTestId(/item-qty/)).toHaveTextContent(/4/)
+        debug()
+        // userEvent.click(screen.getByTestId(/add-qty-btn/))
         // expect(mockAddQtyToItem).toHaveBeenCalled()
 
         // expect(addQuantityToItem).toHaveBeenCalledWith(addQuantityToItem({...baseProps, quantity: 1 }))
