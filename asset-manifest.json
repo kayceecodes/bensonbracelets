@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/bensonbracelets/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/bensonbracelets/static/js/main.30fb64a1.chunk.js",
-    "main.js.map": "/bensonbracelets/static/js/main.30fb64a1.chunk.js.map",
+    "main.js": "/bensonbracelets/static/js/main.dac25681.chunk.js",
+    "main.js.map": "/bensonbracelets/static/js/main.dac25681.chunk.js.map",
     "runtime-main.js": "/bensonbracelets/static/js/runtime-main.17ed17b1.js",
     "runtime-main.js.map": "/bensonbracelets/static/js/runtime-main.17ed17b1.js.map",
     "static/css/2.4707e12a.chunk.css": "/bensonbracelets/static/css/2.4707e12a.chunk.css",
     "static/js/2.7693f5ff.chunk.js": "/bensonbracelets/static/js/2.7693f5ff.chunk.js",
     "static/js/2.7693f5ff.chunk.js.map": "/bensonbracelets/static/js/2.7693f5ff.chunk.js.map",
     "index.html": "/bensonbracelets/index.html",
-    "precache-manifest.35958983d0fd05f24819c2b17ce68718.js": "/bensonbracelets/precache-manifest.35958983d0fd05f24819c2b17ce68718.js",
+    "precache-manifest.b124492483491895f9784900e7d8a1ca.js": "/bensonbracelets/precache-manifest.b124492483491895f9784900e7d8a1ca.js",
     "service-worker.js": "/bensonbracelets/service-worker.js",
     "static/css/2.4707e12a.chunk.css.map": "/bensonbracelets/static/css/2.4707e12a.chunk.css.map",
     "static/css/main.5ecd60fb.chunk.css.map": "/bensonbracelets/static/css/main.5ecd60fb.chunk.css.map",
@@ -37,6 +37,6 @@
     "static/css/2.4707e12a.chunk.css",
     "static/js/2.7693f5ff.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.30fb64a1.chunk.js"
+    "static/js/main.dac25681.chunk.js"
   ]
 }
