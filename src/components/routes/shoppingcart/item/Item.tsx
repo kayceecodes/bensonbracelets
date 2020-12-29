@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useState } from "react";
 
 import { ICartItems } from "../../../../Interfaces";
-import {useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import Grid from "@material-ui/core/Grid/Grid";
@@ -27,9 +27,9 @@ import CenteredAbsolute from "../../../ui/hoc/CenteredAbsolute";
  * @property {function} getQtyTotal - Update quantity total with each
  */
 interface ICartCardProps {
-  getQtyTotal: () => void
+  getQtyTotal: () => void;
   // onAddQuantityToItem: ({props, quantity}: any) => void
-  addQuantityToItem?: ({props, quantity}: any) => void
+  addQuantityToItem?: ({ props, quantity }: any) => void;
 }
 
 type IProps = ICartCardProps & ICartItems;
@@ -70,9 +70,15 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px 2px",
     boxShadow: "0px 0px 8px rgba(0,0,0,0.05)",
     color: `${theme.palette.common.slateTan}`,
-    [theme.breakpoints.up("lg")]: {
+    minWidth: '50px',
+    [theme.breakpoints.up("xs")]: {
       width: "70px",
     },
+    [theme.breakpoints.up("lg")]: {
+      width: "65px",
+    },
+    
+
   },
   currentQty: {
     color: `${theme.palette.common.dimGray}`,
@@ -110,7 +116,7 @@ export default function Item(props: any) {
   const editQuantity = (editAction: string): void => {
     switch (editAction) {
       case "add quantity": {
-        dispatch(addQuantityToItem({...props, quantity: 1}))
+        dispatch(addQuantityToItem({ ...props, quantity: 1 }));
         // props.onAddQuantityToItem({ ...props, quantity: 1 });
         props.getQtyTotal();
         return;
@@ -181,24 +187,25 @@ export default function Item(props: any) {
                 fontWeight: "bold",
                 fontFamily: "Nunito",
                 letterSpacing: "0.5px",
-                marginLeft: '4px',
               }}
               variant="body2"
             >
               {fixedTitleLength(props.name, 15)}
+              <br />
               <span
                 style={{
                   color: "#afafaf",
                   fontSize: "0.68rem",
                   letterSpacing: "0.5px",
                   display: "inline",
+                  marginLeft: "4px",
                 }}
               >
-                {props.size + '"'}
+                {"Size " + props.size + '"'}
               </span>
             </Typography>
 
-            <Typography variant="body2">{props.price}</Typography>
+            <Typography variant="body2">{'$' + props.price}</Typography>
           </Grid>
           <Grid item>
             <Grid
@@ -247,7 +254,12 @@ export default function Item(props: any) {
                 {loading === true ? (
                   <>
                     <CircularProgress size={8} />
-                    <span data-testid="item-qty" style={{position: 'absolute', visibility: 'hidden'}}>{props.quantity}</span>
+                    <span
+                      data-testid="item-qty"
+                      style={{ position: "absolute", visibility: "hidden" }}
+                    >
+                      {props.quantity}
+                    </span>
                   </>
                 ) : (
                   <span data-testid="item-qty">{props.quantity}</span>

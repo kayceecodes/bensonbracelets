@@ -1,5 +1,6 @@
 import { ICartItems } from "../../Interfaces"
 import * as actionTypes from "../actions/actionTypes"
+import Bracelet1 from '../../images/bracelets/bracelet1.jpg'
 
 export interface ICart {
   cartTotal: number
@@ -8,7 +9,15 @@ export interface ICart {
 
 export const initialState: ICart = {
   cartTotal: 0,
-  cartItems: [],
+  cartItems: [
+   { name: 'Bracelet Example Number 1',
+      quantity: 2,
+      size: 5.5,
+      price: 13.85,
+      src: Bracelet1,
+      id: '0000d',
+}
+  ],
 }
  
 
