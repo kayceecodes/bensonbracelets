@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.common.slateTan}`,
     minWidth: '50px',
     [theme.breakpoints.up("xs")]: {
-      width: "70px",
+      width: "62px",
     },
     [theme.breakpoints.up("lg")]: {
       width: "65px",
@@ -249,7 +249,7 @@ export default function Item(props: any) {
           <Grid item>
             <div className={classes.currentQty}>
               <strong>Qty</strong> <br />
-              <CenteredAbsolute>
+
                 {/* <span data-testid="item-qty">{props.quantity}</span> */}
                 {loading === true ? (
                   <>
@@ -264,7 +264,6 @@ export default function Item(props: any) {
                 ) : (
                   <span data-testid="item-qty">{props.quantity}</span>
                 )}
-              </CenteredAbsolute>
             </div>
           </Grid>
         </Grid>
