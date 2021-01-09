@@ -24,7 +24,6 @@ import { motion } from "framer-motion"
 
 import { connect, useDispatch } from "react-redux"
 import { Dispatch } from "redux"
-import * as actionTypes from '../../../../store/actions/actionTypes'
 import { addToCart, addQuantityToItem } from "../../../../store/actions"
 
 import theme from "../../../ui/Theme"
@@ -66,10 +65,6 @@ const useStyles = makeStyles((theme) => ({
   },
   boxShadows: {
     boxShadow: "0px 0px 8px 10px #efefef50",
-  },
-  popoverCartSummary: {
-    width: "600px",
-    height: "450px",
   },
   itemImg: {
     width: "160px",
@@ -130,6 +125,8 @@ function DisplayItem(props: IProps) {
   const classes = useStyles()
   const dispatch: Dispatch<any> = useDispatch()
   const [open, setOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>()
+ 
   const matches = {
     sm: useMediaQuery(theme.breakpoints.up("sm")),
     md: useMediaQuery(theme.breakpoints.up("md")),
@@ -184,10 +181,12 @@ function DisplayItem(props: IProps) {
       id: "",
     })
 
-  const setProgress = () => {
+  const handleClick = (e: any) => {
+    setAnchorEl(e.currentTarget)
     setTimeout(() => setLoading(false), 500)
     setTimeout(() => setOpen(true), 500)
   }
+
 
   useEffect(() => {
     props.setValue(1)
@@ -211,6 +210,7 @@ function DisplayItem(props: IProps) {
         >
           <CartSummaryModal
             setValue={props.setValue}
+            anchorEl={anchorEl}
             item={values}
             open={open}
             setOpen={setOpen}
@@ -356,10 +356,10 @@ function DisplayItem(props: IProps) {
                             ? true
                             : false
                         }
-                        onClick={() => {
+                        onClick={(e: any) => {
                           onAddToCart(values)
                           setLoading(true)
-                          setProgress()
+                          handleClick(e)
                         }}
                       >
                         {loading ? 

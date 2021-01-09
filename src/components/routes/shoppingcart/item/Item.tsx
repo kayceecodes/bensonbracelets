@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Item(props: any) {
+export default function Item(props: IProps) {
   const classes = useStyles();
   const [mounted, setMounted] = useState(true);
   const [loading, setLoading] = useState(false);

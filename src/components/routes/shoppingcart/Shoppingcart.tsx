@@ -121,7 +121,7 @@ const Shoppingcart = (props: IProps) => {
       <Grid
         container
         justify="space-around"
-        alignItems="center"
+        alignItems="flex-start"
         className={classes.shoppingcartContainer}
         style={{ position: "relative" }}
       >
@@ -180,18 +180,13 @@ const Shoppingcart = (props: IProps) => {
         {/* CHECKOUTFORM */}
         <Grid item xs={12} md={6}>
           <Grid container direction="column" alignContent="center">
-            <CheckoutForm />
+            <CheckoutForm cartTotal={props.cartTotal} cartItems={props.cartItems} />
           </Grid>
         </Grid>
       </Grid>
     </motion.div>
   )
 }
-
-const mapStateToProps = (state: {cart: ICart}) => ({
-  cartItems: state.cart.cartItems,
-  cartTotal: state.cart.cartTotal,
-})
 
 export default connect((state: {cart: ICart}) => ({
   cartItems: state.cart.cartItems,

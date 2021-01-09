@@ -1,19 +1,21 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import axios from "axios";
+import { ChangeEvent, FormEvent } from "../../../App";
 
-import { ChangeEvent, FormEvent } from "../../../App"
-
-import FormControl from "@material-ui/core/FormControl/FormControl"
-import Grid from "@material-ui/core/Grid/Grid"
-import TextField from "@material-ui/core/TextField/TextField"
-import makeStyles from "@material-ui/core/styles/makeStyles"
-import MenuItem from "@material-ui/core/MenuItem/MenuItem"
+import FormControl from "@material-ui/core/FormControl/FormControl";
+import Grid from "@material-ui/core/Grid/Grid";
+import TextField from "@material-ui/core/TextField/TextField";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 
 import {
   injectStripe,
   ReactStripeElements,
   CardElement,
-} from "react-stripe-elements"
-import Button from "@material-ui/core/Button/Button"
+} from "react-stripe-elements";
+import Button from "@material-ui/core/Button/Button";
+import { StateLocations } from "../../../../utils/States";
+import { ICartItems } from "../../../../Interfaces";
 
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   formTextFields: {
-    margin: "15px 0px",
+    margin: "10px 0px",
     width: "240px",
     [theme.breakpoints.up("sm")]: {
       width: "260px",
@@ -37,106 +39,85 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "4px",
   },
   submitBtn: {
-    marginBottom: '90px',
-    textTransform: 'none',
+    marginBottom: "90px",
+    textTransform: "none",
     color: theme.palette.common.orange,
-    backgroundColor: theme.palette.common.offWhite
+    backgroundColor: theme.palette.common.offWhite,
   },
-}))
+}));
 
-interface State {
-  name: string
-  stateLocation: string
-  streetAddress: string
-  zipcode: string
+interface IStripeProps extends ReactStripeElements.InjectedStripeProps {}
+//Allow for props to be passed on to CheckoutForm from Stripe API wthout passing them in directly ourselves
+
+interface IFormProps {
+  cartTotal: number;
+  cartItems: ICartItems[]
 }
 
-const stateLocations = [
-  { value: "Alabama", label: "AL" },
-  { value: "Alaska", label: "AK" },
-  { value: "Arizona", label: "AZ" },
-  { value: "Arkansas", label: "AR" },
-  { value: "California", label: "CA" },
-  { value: "Colorado", label: "CO" },
-  { value: "Connecticut", label: "CT" },
-  { value: "Delaware", label: "DE" },
-  { value: "Florida", label: "FL" },
-  { value: "Georgia", label: "GA" },
-  { value: "Hawaii", label: "HI" },
-  { value: "Idaho", label: "ID" },
-  { value: "Illinois", label: "IL" },
-  { value: "Indiana", label: "IN" },
-  { value: "Iowa", label: "IA" },
-  { value: "Kansas", label: "KS" },
-  { value: "Kentucky", label: "KY" },
-  { value: "Louisiana", label: "LA" },
-  { value: "Maine", label: "ME" },
-  { value: "Maryland", label: "MD" },
-  { value: "Massachusetts", label: "MA" },
-  { value: "Michigan", label: "MI" },
-  { value: "Minnesota", label: "MN" },
-  { value: "Mississippi", label: "MS" },
-  { value: "Missouri", label: "MO" },
-  { value: "Montana", label: "MT" },
-  { value: "Nebraska", label: "NE" },
-  { value: "Nevada", label: "NV" },
-  { value: "New Hampshire", label: "NH" },
-  { value: "New Jersey", label: "NJ" },
-  { value: "New Mexico", label: "NM" },
-  { value: "New York", label: "NY" },
-  { value: "North Carolina", label: "NC" },
-  { value: "North Dakota", label: "ND" },
-  { value: "Ohio", label: "OH" },
-  { value: "Oklahoma", label: "OK" },
-  { value: "Oregon", label: "OR" },
-  { value: "Pennsylvania", label: "PA" },
-  { value: "Rhode Island", label: "RI" },
-  { value: "South Carolina", label: "SC" },
-  { value: "South Dakota", label: "SD" },
-  { value: "Tennessee", label: "TN" },
-  { value: "Texas", label: "TX" },
-  { value: "Utah", label: "UT" },
-  { value: "Vermont", label: "VT" },
-  { value: "Virginia", label: "VA" },
-  { value: "Washington", label: "WA" },
-  { value: "West Virginia", label: "WV" },
-  { value: "Wisconsin", label: "WI" },
-  { value: "Wyoming", label: "WY" },
-]
+type IProps = IFormProps & IStripeProps;
 
-export const CheckoutForm = (props: IFormProps) => {
-  const [stateLocation, setStateLocation] = useState<string>("")
+interface State {
+  name: string;
+  email: string;
+  stateLocation: string;
+  streetAddress: string;
+  zipcode: string;
+}
+
+export const CheckoutForm = (props: IProps) => {
+  const [stateLocation, setStateLocation] = useState<string>("");
 
   const [values, setValues] = React.useState<State>({
-    name: "",
-    stateLocation: "",
-    streetAddress: "",
-    zipcode: "",
-  })
+    name: "John Doe",
+    email: "kcee403@gmail.com",
+    stateLocation: "AL",
+    streetAddress: "123 A Street",
+    zipcode: "02300",
+  });
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    
-    try {
-      let token = await (props.stripe !== null 
-        ? props.stripe.createToken({ name: values.name }) : null)
-      console.log(token)
-    } catch (e) {
-      throw e
-    }
-  }
+    e.preventDefault();
 
-  const handleClick = (value: any) => setStateLocation(value)
+    try {
+      let token = await (props.stripe !== null
+        ? props.stripe.createToken({ name: values.name })
+        : null);
+      console.log(token);
+    } catch (e) {
+      console.log("Error in Handle Sumbit, not Send: ", e);
+    }
+  };
+  
+  const send = async () => {
+    await axios
+      .post( 'http://127.0.0.1:3333/send-email', {
+        name: values.name,
+        email: values.email,
+        streetAddress: values.streetAddress,
+        stateLocation: values.stateLocation,
+        zipcode: values.zipcode,
+        total: props.cartTotal,
+        bracelets: props.cartItems
+      })
+      .then((res) => {
+        console.log("Response->Data->Name in Res: ", res.config);
+      })
+      .catch((err) => {
+        console.log("Error in Send(): ", err);
+      });
+  };
+
+  const handleClick = (value: any) => setStateLocation(value);
 
   return (
     <>
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)} data-testid='form' >
+      <form onSubmit={(e: FormEvent) => handleSubmit(e)} data-testid="form">
         <Grid
           container
           direction="column"
@@ -156,6 +137,20 @@ export const CheckoutForm = (props: IFormProps) => {
               />
             </FormControl>
           </Grid>
+          {/*GRID ITEM 
+           -- NAME INPUT */}
+          <Grid item>
+            <FormControl className={classes.formTextFields}>
+              <TextField
+                required
+                id="email"
+                label="Email Address"
+                onChange={handleChange("email")}
+                value={values.email}
+              />
+            </FormControl>
+          </Grid>
+
           {/*GRID ITEM 
            -- STREET ADDRESS INPUT */}
           <Grid item>
@@ -183,30 +178,32 @@ export const CheckoutForm = (props: IFormProps) => {
                 id="outlined-select-currency"
                 select
                 label="Select"
-                value={stateLocation}
+                value={stateLocation} 
                 helperText="Select your state"
                 variant="outlined"
                 size="small"
                 style={{ width: "140px" }}
               >
-                {/* stateloaction map() objects to each menu item for this Select-Textfield  */}
-                {stateLocations.map(
-                  (stateObj: { label: string; value: string }) => (
+                {/* Mapping the Constant Stateloactions, and the individual 
+                values are of type {label:string, value:string} */}
+                {StateLocations.map(
+                  (location: { label: string; value: string }) => (
                     <MenuItem
-                      key={stateObj.value}
-                      value={stateObj.value}
-                      onClick={() => handleClick(stateObj.value)}
+                      key={location.value}
+                      value={location.value}
+                      onClick={() => handleClick(location.value)}
+                      // onClick={() => handleChange("stateLocation")}
                     >
-                      {stateObj.label}
+                      {location.label}
                     </MenuItem>
                   )
                 )}
-                {stateLocation}
+                {values.stateLocation}
               </TextField>
             </div>
           </Grid>
-          {/*GRID ITEM 
-            */}
+          {/*GRID ITEM
+           */}
           <Grid item>
             <FormControl className={classes.formTextFields}>
               <TextField
@@ -228,20 +225,19 @@ export const CheckoutForm = (props: IFormProps) => {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-          <Button data-testid='submit' variant='outlined' className={classes.submitBtn}>
-            Sumbit Payment
-          </Button>
-          
+            <Button
+              data-testid="submit"
+              variant="outlined"
+              className={classes.submitBtn}
+              onClick={() => send()}
+            >
+              Sumbit Payment
+            </Button>
           </Grid>
         </Grid>
       </form>
-
     </>
-  )
-}
+  );
+};
 
-interface IFormProps extends ReactStripeElements.InjectedStripeProps {
-}
-//Allow for props to be passed on to CheckoutForm from Stripe API wthout passing them in directly ourselves
-
-export default injectStripe(CheckoutForm)
+export default injectStripe(CheckoutForm);

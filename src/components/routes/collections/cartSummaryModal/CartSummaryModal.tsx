@@ -23,6 +23,7 @@ interface IProps {
   item: ICartItems
   cartTotal: number
   clearValues(): void
+  anchorEl: HTMLElement | undefined
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -115,7 +116,7 @@ const CartSummaryModal = (props: IProps) => {
       <Popover
         open={props.open}
         anchorOrigin={{
-          vertical: matches.sm ? 500 : 280,
+          vertical: matches.sm ? 500 : 80,
           horizontal: "center",
         }}
         transformOrigin={{

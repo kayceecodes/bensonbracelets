@@ -1,48 +1,48 @@
-import React, { CSSProperties, useEffect } from "react"
-import { Link, useHistory } from "react-router-dom"
+import React, { CSSProperties, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
-import { IPageAnimations, IMotions } from "../../../Interfaces"
+import { IPageAnimations, IMotions } from "../../../Interfaces";
 
-import { Parallax } from "react-parallax"
+import { Parallax } from "react-parallax";
 
-import HeroMobileImg5 from "../../../images/bracelets/heroImgMobile5.jpg"
-import HeroParallax from "../../../images/bracelets/bensonbracelet-hero-parallax.jpg"
-import Bracelet1 from "../../../images/bracelets/bracelet1.jpg"
-import Bracelet2 from "../../../images/bracelets/bracelet2.jpg"
-import Bracelet3 from "../../../images/bracelets/bracelet3.jpg"
+import HeroMobileImg5 from "../../../images/bracelets/heroImgMobile5.jpg";
+import HeroParallax from "../../../images/bracelets/bensonbracelet-hero-parallax.jpg";
+import Bracelet1 from "../../../images/bracelets/bracelet1.jpg";
+import Bracelet2 from "../../../images/bracelets/bracelet2.jpg";
+import Bracelet3 from "../../../images/bracelets/bracelet3.jpg";
 
-import useMediaQuery from "@material-ui/core/useMediaQuery"
-import { useTheme } from "@material-ui/core/styles"
-import makeStyles from "@material-ui/core/styles/makeStyles"
-import Button from "@material-ui/core/Button/Button"
-import Grid from "@material-ui/core/Grid/Grid"
-import Typography from "@material-ui/core/Typography"
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Button from "@material-ui/core/Button/Button";
+import Grid from "@material-ui/core/Grid/Grid";
+import Typography from "@material-ui/core/Typography";
 
-import Aos from "aos"
-import "aos/dist/aos.css"
+import Aos from "aos";
+import "aos/dist/aos.css";
 
-import Footer from "../../ui/footer/Footer"
+import Footer from "../../ui/footer/Footer";
 
-import { bracelets } from "../../../data/Data"
-import Tab from "@material-ui/core/Tab/Tab"
-import Tabs from "@material-ui/core/Tabs/Tabs"
+import { bracelets } from "../../../data/Data";
+import Tab from "@material-ui/core/Tab/Tab";
+import Tabs from "@material-ui/core/Tabs/Tabs";
 
 interface IProps {
-  value: number
-  setValue: (value: number) => void
-  setSelectedIndex: (value: number) => void
-  pageStyle: CSSProperties
-  pageAnimations: IPageAnimations
-  motions: IMotions
-  jumpTo: (jumpingTarget: string | number | Element) => void
+  value: number;
+  setValue: (value: number) => void;
+  setSelectedIndex: (value: number) => void;
+  pageStyle: CSSProperties;
+  pageAnimations: IPageAnimations;
+  motions: IMotions;
+  jumpTo: (jumpingTarget: string | number | Element) => void;
 }
 
 interface ITabLinks {
-  show: boolean
-  tabProps: { name: string; route: string }[]
-  routeIndex: number
+  show: boolean;
+  tabProps: { name: string; route: string }[];
+  routeIndex: number;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -56,11 +56,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   centering: {
-    margin: '0 auto',
+    margin: "0 auto",
   },
   headersUnderline: {
-    padding: '0px 13px 10px',
-    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`
+    padding: "0px 13px 10px",
+    borderBottom: `3px solid ${theme.palette.common.antiqueWhite}`,
   },
   tabLinks: {
     position: "absolute",
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   tabsIndicator: {
     height: "2.5px",
   },
-  featuredHeroBtnWrapper: {
+  heroBtnWrapper: {
     padding: "4px",
     border: `11px solid ${theme.palette.common.orange}27`,
     borderRadius: "5px",
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
       border: `8px solid ${theme.palette.common.orange}27`,
     },
   },
-  featuredHeroButton: {
+  heroBtn: {
     textTransform: "none",
     letterSpacing: "2.8px",
     backgroundColor: "rgb(0, 0, 0, 0.005)",
@@ -101,13 +101,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "0px",
     textShadow: "0px 0px 8px rgba(0,0,0,0.99)",
     transition: "opacity 0.4s",
+    padding: "0 45px",
     [theme.breakpoints.up("sm")]: {
       font: "1.25rem Raleway",
-      padding: "0 70px",
     },
     [theme.breakpoints.down("sm")]: {
       font: "0.8rem Raleway",
-      padding: "0 45px",
     },
     "&:hover": {
       opacity: "0.6",
@@ -190,7 +189,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "50px",
     [theme.breakpoints.up("sm")]: {
       marginBottom: "140px",
-      marginTop: '100px',
+      marginTop: "100px",
     },
   },
   braceletImgs: {
@@ -232,20 +231,20 @@ const useStyles = makeStyles((theme) => ({
     },
     // border: `2px solid ${theme.palette.common.dimegray}`,
   },
-}))
+}));
 
 export default function Home(props: IProps) {
-  const classes = useStyles()
-  const theme = useTheme()
-  const history = useHistory() //History obj from react-router
-  const collectionsPath = "/collections/"
+  const classes = useStyles();
+  const theme = useTheme();
+  const history = useHistory(); //History obj from react-router
+  const collectionsPath = "/collections/";
   const matches = {
     sm: useMediaQuery(theme.breakpoints.down("sm")),
     md: useMediaQuery(theme.breakpoints.down("md")),
     lg: useMediaQuery(theme.breakpoints.down("lg")),
     xl: useMediaQuery(theme.breakpoints.down("xl")),
-  } // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
-  const featuredBracelets = [bracelets[0], bracelets[1], bracelets[2]]
+  }; // If query matches sm,md,lg or xl then we'll use the 'matches' object to change styles
+  const featuredBracelets = [bracelets[0], bracelets[1], bracelets[2]];
 
   /** Return tabs to be highlighted when route is chosen and clicked
    * @param {show, routeIndex, tabProps}
@@ -272,12 +271,12 @@ export default function Home(props: IProps) {
           />
         ))}
       </Tabs>
-    )
-  }
+    );
+  };
   /* Aos adds on screen effects, changes opacity, scaleX & scaleY*/
   useEffect(() => {
-    Aos.init({ duration: 900 })
-  }, [])
+    Aos.init({ duration: 900 });
+  }, []);
 
   const dimegrayOverlay: CSSProperties = {
     position: "absolute",
@@ -287,18 +286,20 @@ export default function Home(props: IProps) {
     backgroundColor: theme.palette.common.brightMudBrown,
     opacity: 0.8,
     zIndex: 3,
-  }
+  };
 
   function convertToRoute(nestedRoute: string, itemName: string) {
     // Example www.website.com/nestedRoute/itemName
-    itemName = nestedRoute + itemName
-    let spaces = new RegExp("[ ]+", "g")
-    let namedRoute = itemName.replace(spaces, "")
+    itemName = nestedRoute + itemName;
+    let spaces = new RegExp("[ ]+", "g");
+    let namedRoute = itemName.replace(spaces, "");
     // return namedRoute;
-    let uppercase = new RegExp("[A-Z]", "g")
+    let uppercase = new RegExp("[A-Z]", "g");
 
-    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase())
+    return namedRoute.replace(uppercase, (x: string) => x.toLowerCase());
   }
+ 
+  const setRouteToCollections = () => {history.push("/collections"); props.setValue(3)}  
 
   return (
     <div>
@@ -340,28 +341,14 @@ export default function Home(props: IProps) {
             }}
             bgImage={matches.sm ? HeroMobileImg5 : HeroParallax}
           >
-            {matches.sm === false ? (
-              <div className={classes.featuredHeroBtnWrapper}>
+            <div className={classes.heroBtnWrapper}>
                 <Button
-                  className={classes.featuredHeroButton}
-                  onClick={() => props.jumpTo("#featuredBracelets")}
+                  className={classes.heroBtn}
+                  onClick={() => setRouteToCollections()}
                 >
-                  <p>Featured</p>
+                  {matches.sm === false ? <p>Shop Collections</p> : <p>Shop Collections</p>}
                 </Button>
               </div>
-            ) : (
-              <div className={classes.featuredHeroBtnWrapper}>
-                <Button
-                  className={classes.featuredHeroButton}
-                  onClick={() => {
-                    history.push("/collections")
-                    props.setValue(3)
-                  }}
-                >
-                  <p>Collections</p>
-                </Button>
-              </div>
-            )}
             <p className={classes.heroCompanyName}>Benson Bracelets</p>
           </Parallax>
         </div>
@@ -369,10 +356,12 @@ export default function Home(props: IProps) {
         <div className={classes.sectionMargin} />
 
         <Grid container direction="column" justify="center">
-          <Grid item style={{margin: '0 auto'}}>
+          <Grid item style={{ margin: "0 auto" }}>
             {/* Header - About.. */}
             <Typography variant="h2" component="h2">
-              <div className={classes.headersUnderline}>About Benson Bracelets</div>
+              <div className={classes.headersUnderline}>
+                About Benson Bracelets
+              </div>
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -390,14 +379,14 @@ export default function Home(props: IProps) {
           </Grid>
           {/* Header - Featured Bracelets */}
           <div className={classes.centering}>
-          <Typography
-            component="h2"
-            variant="h2"
-            data-aos="fade-left"
-            id="featuredBracelets"
-          >
-            <div className={classes.headersUnderline}>Featured Bracelets</div>
-          </Typography>
+            <Typography
+              component="h2"
+              variant="h2"
+              data-aos="fade-left"
+              id="featuredBracelets"
+            >
+              <div className={classes.headersUnderline}>Featured Bracelets</div>
+            </Typography>
           </div>
           {/* Bracelet Container */}
           <Grid
@@ -517,5 +506,5 @@ export default function Home(props: IProps) {
         />
       </motion.div>
     </div>
-  )
+  );
 }
