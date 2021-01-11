@@ -17,6 +17,43 @@ import Button from "@material-ui/core/Button/Button";
 import { StateLocations } from "../../../../utils/States";
 import { ICartItems } from "../../../../Interfaces";
 
+const state = {
+  controls: {
+    email: {
+      elementType: 'input',
+      elementConfig: {
+          type: 'email',
+          placeholder: 'Mail Address'
+      },
+      value: '',
+      validation: {
+        required: true,
+        isMail: true,
+        minLength: 5,
+      },
+      valid: false,
+      touched: false
+    },
+    password: {
+      elementType: 'input',
+      elementConfig: {
+          type: 'password',
+          placeholder: 'Password',
+      },
+      value: '',
+      validation: {
+        required: true,
+        isMail: true,
+        minLength: 6,
+      },
+      valid: false,
+      touched: false
+    },
+
+  },
+  isSignup: true,
+}
+
 const useStyles = makeStyles((theme) => ({
   sectionMargin: {
     [theme.breakpoints.up("sm")]: {
@@ -65,14 +102,19 @@ interface State {
 }
 
 export const CheckoutForm = (props: IProps) => {
-  const [stateLocation, setStateLocation] = useState<string>("");
-
+  const [stateLocation, setStateLocation] = useState<string>("")
+  const [formFinished, setFormFinished] = useState<boolean>(false)
   const [values, setValues] = React.useState<State>({
     name: "John Doe",
     email: "kcee403@gmail.com",
     stateLocation: "AL",
     streetAddress: "123 A Street",
     zipcode: "02300",
+    // name: "",
+    // email: "",
+    // stateLocation: "",
+    // streetAddress: "",
+    // zipcode: "",
   });
 
   const classes = useStyles();
@@ -93,8 +135,19 @@ export const CheckoutForm = (props: IProps) => {
       console.log("Error in Handle Sumbit, not Send: ", e);
     }
   };
-  
+  const validateEmail = (email: string) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
   const send = async () => {
+    /**
+     * validate return true
+     * if validate true the make call
+     */
+    let invalidMessage;
+    let validated = validateEmail(values.email)
+
+    if(validated) {
     await axios
       .post( 'http://127.0.0.1:3333/send-email', {
         name: values.name,
@@ -111,6 +164,10 @@ export const CheckoutForm = (props: IProps) => {
       .catch((err) => {
         console.log("Error in Send(): ", err);
       });
+    }
+      else {
+        invalidMessage = 'Email format not valid'
+      }
   };
 
   const handleClick = (value: any) => setStateLocation(value);
@@ -226,6 +283,7 @@ export const CheckoutForm = (props: IProps) => {
           </Grid>
           <Grid item xs={12}>
             <Button
+              disabled={formFinished}
               data-testid="submit"
               variant="outlined"
               className={classes.submitBtn}
